@@ -135,7 +135,7 @@ func ResizeInstance(c *golangsdk.ServiceClient, id string, opts ResizeInstanceOp
 
 	var rst golangsdk.Result
 	_, err = c.Post(resizeResourceURL(c, id), b, &rst.Body, &golangsdk.RequestOpts{
-		OkCodes:     []int{200},
+		OkCodes:     []int{200, 204},
 		MoreHeaders: RequestOpts.MoreHeaders,
 	})
 	if err == nil {
