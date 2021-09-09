@@ -22,9 +22,9 @@ type LoadThesaurusReq struct {
 	SynonymObject string `json:"synonymObject,omitempty"`
 }
 
-func QueryIKThesaurusStatus(c *golangsdk.ServiceClient, clusterId string) (*ThesaurusStatusResp, error) {
+func Get(c *golangsdk.ServiceClient, clusterId string) (*ThesaurusStatusResp, error) {
 	var rst ThesaurusStatusResp
-	_, err := c.Get(queryIKThesaurusStatusURL(c, clusterId), &rst, &golangsdk.RequestOpts{
+	_, err := c.Get(getURL(c, clusterId), &rst, &golangsdk.RequestOpts{
 		MoreHeaders: RequestOpts.MoreHeaders,
 	})
 	if err == nil {
@@ -34,7 +34,7 @@ func QueryIKThesaurusStatus(c *golangsdk.ServiceClient, clusterId string) (*Thes
 }
 
 // LoadIKThesaurus
-func LoadIKThesaurus(c *golangsdk.ServiceClient, clusterId string, opts LoadThesaurusReq) *golangsdk.ErrResult {
+func Load(c *golangsdk.ServiceClient, clusterId string, opts LoadThesaurusReq) *golangsdk.ErrResult {
 	var r golangsdk.ErrResult
 
 	b, err := golangsdk.BuildRequestBody(opts, "")
@@ -43,16 +43,16 @@ func LoadIKThesaurus(c *golangsdk.ServiceClient, clusterId string, opts LoadThes
 		return &r
 	}
 
-	_, r.Err = c.Post(loadIKThesaurusURL(c, clusterId), b, nil, &golangsdk.RequestOpts{
+	_, r.Err = c.Post(loadURL(c, clusterId), b, nil, &golangsdk.RequestOpts{
 		MoreHeaders: RequestOpts.MoreHeaders,
 	})
 	return &r
 }
 
 // DeleteIKThesaurus
-func DeleteIKThesaurus(c *golangsdk.ServiceClient, clusterId string) *golangsdk.ErrResult {
+func Delete(c *golangsdk.ServiceClient, clusterId string) *golangsdk.ErrResult {
 	var r golangsdk.ErrResult
-	_, r.Err = c.Delete(deleteIKThesaurusURL(c, clusterId), &golangsdk.RequestOpts{
+	_, r.Err = c.Delete(deleteURL(c, clusterId), &golangsdk.RequestOpts{
 		MoreHeaders: RequestOpts.MoreHeaders,
 	})
 	return &r

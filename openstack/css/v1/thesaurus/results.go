@@ -10,7 +10,7 @@ type ThesaurusStatusResp struct {
 	MainObj       string `json:"mainObj"`       // Main word dictionary file object.
 	StopObj       string `json:"stopObj"`       // Stop word dictionary file object.
 	SynonymObj    string `json:"synonymObj"`    // Synonym word dictionary file object.
-	UpdateTime    string `json:"updateTime"`    // Last word dictionary update time.
+	UpdateTime    int    `json:"updateTime"`    // Last word dictionary update time.
 	UpdateDetails string `json:"updateDetails"` // Update details.
 	ClusterId     string `json:"clusterId"`
 	OperateStatus string `json:"operateStatus"`
