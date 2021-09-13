@@ -182,8 +182,7 @@ func Action(c *golangsdk.ServiceClient, id string, opts ActionOptsBuilder) (r Ac
 		r.Err = err
 		return
 	}
-	_, r.Err = c.Put(resourceURL(c, id), b, &r.Body, &golangsdk.RequestOpts{
-		OkCodes: []int{200},
-	})
+
+	_, r.Err = c.Post(actionURL(c, id), b, &r.Body, nil)
 	return
 }
