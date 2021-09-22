@@ -16,6 +16,7 @@ func TestList(t *testing.T) {
 	listResult, err := cluster.List(client.ServiceClient(), cluster.ListOpts{})
 	th.AssertNoErr(t, err)
 	th.AssertEquals(t, listResult.Clusters[0].ID, id)
+	th.AssertEquals(t, listResult.Clusters[0].PublicIp.PublicBindType, cluster.PublicBindTypeAuto)
 }
 
 func TestGet(t *testing.T) {
@@ -29,7 +30,7 @@ func TestGet(t *testing.T) {
 
 	th.AssertNoErr(t, err)
 	th.AssertEquals(t, clusterDetail.ID, id)
-	th.AssertEquals(t, clusterDetail.ResizeInfo.OriginNodeNum, "3")
+	th.AssertEquals(t, clusterDetail.ResizeInfo.OriginNodeNum, 3)
 }
 func TestNodeType(t *testing.T) {
 	th.SetupHTTP()

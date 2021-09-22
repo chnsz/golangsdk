@@ -5,32 +5,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/chnsz/golangsdk/openstack/dli/v1/queues"
 	th "github.com/chnsz/golangsdk/testhelper"
 	"github.com/chnsz/golangsdk/testhelper/client"
-)
-
-// expected object
-var (
-	expectedListResponseData = queues.Queue{
-		QueueName:           "tf_acc_test_dli_queue_h8yr3",
-		Description:         "",
-		Owner:               "niuzhenguo",
-		CreateTime:          1626771444081,
-		QueueType:           "sql",
-		CuCount:             16,
-		ChargingMode:        1,
-		ResourceId:          "b483aa39-ab65-442b-8c20-2f578a9d868b",
-		EnterpriseProjectId: "",
-		CidrInVpc:           "172.16.0.0/12",
-		CidrInMgntsubnet:    "172.24.128.0/18",
-		CidrInSubnet:        "172.24.0.0/18",
-		ResourceMode:        1,
-		Platform:            "x86_64",
-		IsRestarting:        false,
-		Feature:             "basic",
-		QueueResourceType:   "vm",
-	}
 )
 
 //mock response body string
@@ -130,8 +106,8 @@ var (
             "end_time": "02:00"
         },
         "resize_info": {
-            "target_node_num": "6",
-            "origin_node_num": "3",
+            "target_node_num": 6,
+            "origin_node_num": 3,
             "status": "GROWING",
             "start_time": "2018-02-14T14:28:14Z",
             "origin_node_type": "dws.m1.xlarge.ultrahigh",
