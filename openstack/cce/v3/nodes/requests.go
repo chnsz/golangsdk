@@ -196,6 +196,38 @@ func Add(c *golangsdk.ServiceClient, clusterid string, opts AddOptsBuilder) (r A
 	return
 }
 
+type ResetOpts struct {
+	// API type, fixed value List
+	Kind string `json:"kind" required:"true"`
+	// API version, fixed value v3
+	ApiVersion string `json:"apiversion" required:"true"`
+	// List of nodes to reset
+	NodeList []ResetNode `json:"nodeList" required:"true"`
+}
+
+type ResetNode struct {
+	NodeID string      `json:"nodeID" required:"true"`
+	Spec   AddNodeSpec `json:"spec" required:"true"`
+}
+
+type ResetOptsBuilder interface {
+	ToNodeResetMap() (map[string]interface{}, error)
+}
+
+func (opts ResetOpts) ToNodeResetMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "")
+}
+
+func Reset(c *golangsdk.ServiceClient, clusterid string, opts ResetOptsBuilder) (r AddResult) {
+	b, err := opts.ToNodeResetMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	_, r.Err = c.Post(resetNodeURL(c, clusterid), b, &r.Body, nil)
+	return
+}
+
 // Get retrieves a particular nodes based on its unique ID and cluster ID.
 func Get(c *golangsdk.ServiceClient, clusterid, nodeid string) (r GetResult) {
 	_, r.Err = c.Get(resourceURL(c, clusterid, nodeid), &r.Body, &golangsdk.RequestOpts{
