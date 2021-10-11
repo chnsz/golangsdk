@@ -3,7 +3,7 @@ package testing
 import (
 	"testing"
 
-	"github.com/chnsz/golangsdk/openstack/dws/cluster"
+	"github.com/chnsz/golangsdk/openstack/dws/v1/cluster"
 	th "github.com/chnsz/golangsdk/testhelper"
 	"github.com/chnsz/golangsdk/testhelper/client"
 )
@@ -31,15 +31,4 @@ func TestGet(t *testing.T) {
 	th.AssertNoErr(t, err)
 	th.AssertEquals(t, clusterDetail.ID, id)
 	th.AssertEquals(t, clusterDetail.ResizeInfo.OriginNodeNum, 3)
-}
-func TestNodeType(t *testing.T) {
-	th.SetupHTTP()
-	defer th.TeardownHTTP()
-
-	handleNodeType(t)
-
-	nodeTypes, err := cluster.ListNodeTypes(client.ServiceClient())
-
-	th.AssertNoErr(t, err)
-	th.AssertEquals(t, len(nodeTypes.NodeTypes[0].Detail), 3)
 }
