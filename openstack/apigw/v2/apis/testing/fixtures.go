@@ -153,6 +153,50 @@ const (
 		}
 	]
 }`
+
+	expectedPublishAPIResponse = `
+{
+	"api_id": "2b0253cba7d348f698de45abacd3ae29",
+	"env_id": "c5b32727186c4fe6b60408a8a297be09",
+	"publish_id": "8ecdb96299a64e10ad1c7f37a5d24bdb",
+	"publish_time": "2021-10-12T07:02:12.72743121Z",
+	"remark": "Version 1",
+	"version_id": "eaf45032b6a649349cfbfe736d41a711"
+}`
+
+	expectedListPublishHistoriesResponse = `
+{
+	"api_versions": [
+		{
+			"api_id": "2b0253cba7d348f698de45abacd3ae29",
+			"env_id": "c5b32727186c4fe6b60408a8a297be09",
+			"env_name": "tf_lance_apig_environment_demo",
+			"publish_time": "2021-10-12T07:02:12Z",
+			"remark": "Version 1",
+			"status": 1,
+			"version_id": "eaf45032b6a649349cfbfe736d41a711",
+			"version_no": "20211012150212"
+		}
+	]
+}`
+
+	expectedVersionSwitchResponse = `
+{
+	"api_id": "2b0253cba7d348f698de45abacd3ae29",
+	"env_id": "c5b32727186c4fe6b60408a8a297be09",
+	"publish_id": "b8a167517eca451f9f0a68d1e7ee96b8",
+	"publish_time": "2021-10-12T07:37:00.212793535Z",
+	"remark": "Version 1",
+	"version_id": "eaf45032b6a649349cfbfe736d41a711"
+}`
+
+	expectedOfflineAPIResponse = `
+{
+	"api_id": "2b0253cba7d348f698de45abacd3ae29",
+	"env_id": "c5b32727186c4fe6b60408a8a297be09",
+	"api_name": "tf_lance_apig_api_demo",
+	"publish_time": "0001-01-01T00:00:00Z"
+}`
 )
 
 var (
@@ -326,6 +370,59 @@ var (
 			UpdateTime:   "2021-08-05T03:33:35Z",
 		},
 	}
+
+	publishOpts = apis.PublishOpts{
+		Action:      "online",
+		ApiId:       "2b0253cba7d348f698de45abacd3ae29",
+		EnvId:       "c5b32727186c4fe6b60408a8a297be09",
+		Description: "Version 1",
+	}
+
+	expectedPublishResponseData = &apis.PublishResp{
+		ApiId:       "2b0253cba7d348f698de45abacd3ae29",
+		EnvId:       "c5b32727186c4fe6b60408a8a297be09",
+		PublishId:   "8ecdb96299a64e10ad1c7f37a5d24bdb",
+		PublishTime: "2021-10-12T07:02:12.72743121Z",
+		Description: "Version 1",
+		VersionId:   "eaf45032b6a649349cfbfe736d41a711",
+	}
+
+	listPublishHistoriesOpts = apis.ListPublishHistoriesOpts{}
+
+	expectedListPublishHistoriesResponseData = []apis.ApiVersionInfo{
+		{
+			ApiId:       "2b0253cba7d348f698de45abacd3ae29",
+			EnvId:       "c5b32727186c4fe6b60408a8a297be09",
+			EnvName:     "tf_lance_apig_environment_demo",
+			PublishTime: "2021-10-12T07:02:12Z",
+			Description: "Version 1",
+			Status:      1,
+			VersionId:   "eaf45032b6a649349cfbfe736d41a711",
+			Version:     "20211012150212",
+		},
+	}
+
+	expectedVersionSwitchResponseData = &apis.PublishResp{
+		ApiId:       "2b0253cba7d348f698de45abacd3ae29",
+		EnvId:       "c5b32727186c4fe6b60408a8a297be09",
+		PublishId:   "b8a167517eca451f9f0a68d1e7ee96b8",
+		PublishTime: "2021-10-12T07:37:00.212793535Z",
+		Description: "Version 1",
+		VersionId:   "eaf45032b6a649349cfbfe736d41a711",
+	}
+
+	offlineOpts = apis.PublishOpts{
+		Action: "offline",
+		ApiId:  "2b0253cba7d348f698de45abacd3ae29",
+		EnvId:  "c5b32727186c4fe6b60408a8a297be09",
+	}
+
+	expectedOfflineAPIResponseData = &apis.PublishResp{
+		ApiId:       "2b0253cba7d348f698de45abacd3ae29",
+		EnvId:       "c5b32727186c4fe6b60408a8a297be09",
+		ApiName:     "tf_lance_apig_api_demo",
+		PublishTime: "0001-01-01T00:00:00Z",
+	}
 )
 
 func handleV2APICreate(t *testing.T) {
@@ -379,5 +476,49 @@ func handleV2APIDelete(t *testing.T) {
 			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
 			w.Header().Add("Content-Type", "application/json")
 			w.WriteHeader(http.StatusNoContent)
+		})
+}
+
+func handleV2APIPublish(t *testing.T) {
+	th.Mux.HandleFunc("/instances/33fc92ffb7e749df952ecc7729d972bc/apis/action",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "POST")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusCreated)
+			_, _ = fmt.Fprint(w, expectedPublishAPIResponse)
+		})
+}
+
+func handleV2APIVersionSwitch(t *testing.T) {
+	th.Mux.HandleFunc("/instances/33fc92ffb7e749df952ecc7729d972bc/apis/publish/2b0253cba7d348f698de45abacd3ae29",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "PUT")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			_, _ = fmt.Fprint(w, expectedVersionSwitchResponse)
+		})
+}
+
+func handleV2APIListPublishHistories(t *testing.T) {
+	th.Mux.HandleFunc("/instances/33fc92ffb7e749df952ecc7729d972bc/apis/publish/2b0253cba7d348f698de45abacd3ae29",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "GET")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			_, _ = fmt.Fprint(w, expectedListPublishHistoriesResponse)
+		})
+}
+
+func handleV2APIOffline(t *testing.T) {
+	th.Mux.HandleFunc("/instances/33fc92ffb7e749df952ecc7729d972bc/apis/action",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "POST")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusCreated)
+			_, _ = fmt.Fprint(w, expectedOfflineAPIResponse)
 		})
 }
