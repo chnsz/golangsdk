@@ -14,10 +14,6 @@ type UpdateOpts struct {
 	AutoScaleMaxPartitionCount *int   `json:"auto_scale_max_partition_count,omitempty"`
 }
 
-var RequestOpts = golangsdk.RequestOpts{
-	MoreHeaders: map[string]string{"Content-Type": "application/json", "X-Language": "en-us"},
-}
-
 func Update(c *golangsdk.ServiceClient, name string, opts UpdateOpts) (*golangsdk.Result, error) {
 	b, err := golangsdk.BuildRequestBody(opts, "")
 	if err != nil {
@@ -26,7 +22,10 @@ func Update(c *golangsdk.ServiceClient, name string, opts UpdateOpts) (*golangsd
 
 	var r golangsdk.Result
 	_, err = c.Put(UpdateURL(c, name), b, &r.Body, &golangsdk.RequestOpts{
-		MoreHeaders: RequestOpts.MoreHeaders,
+		MoreHeaders: map[string]string{
+			"Content-Type": "application/json",
+			"region":       c.AKSKAuthOptions.Region,
+		},
 	})
 	return &r, err
 }
