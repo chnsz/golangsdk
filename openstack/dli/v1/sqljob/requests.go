@@ -56,6 +56,7 @@ type ListJobsOpts struct {
 	// DELETE、RESTART_QUEUE、SCALE_QUEUE, To query all types of jobs, enter ALL
 	JobType   string `q:"job-type"`
 	JobStatus string `q:"job-status"`
+	JobId     string `q:"job-id"`
 	DbName    string `q:"db_name"`
 	TableName string `q:"table_name"`
 	// Specifies queue_name as the filter to query jobs running on the specified queue.
