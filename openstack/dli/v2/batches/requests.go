@@ -7,13 +7,13 @@ type CreateOpts struct {
 	// Name of the package that is of the JAR or pyFile type and has been uploaded to the DLI resource management
 	// system. You can also specify an OBS path, for example, obs://Bucket name/Package name.
 	File string `json:"file" required:"true"`
-	// Java/Spark main class of the batch processing job.
-	ClassName string `json:"class_name" required:"true"`
 	// Queue name. Set this parameter to the name of the created DLI queue.
 	// NOTE: This parameter is compatible with the cluster_name parameter. That is, if cluster_name is used to specify a
 	//       queue, the queue is still valid.
 	// You are advised to use the queue parameter. The queue and cluster_name parameters cannot coexist.
 	Queue string `json:"queue" required:"true"`
+	// Java/Spark main class of the batch processing job.
+	ClassName *string `json:"class_name,omitempty"`
 	// Queue name. Set this parameter to the created DLI queue name.
 	// NOTE: You are advised to use the queue parameter. The queue and cluster_name parameters cannot coexist.
 	ClusterName string `json:"cluster_name,omitempty"`
