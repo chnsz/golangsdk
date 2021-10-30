@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/chnsz/golangsdk"
 	"github.com/chnsz/golangsdk/openstack/dli/v2/batches"
 	th "github.com/chnsz/golangsdk/testhelper"
 	"github.com/chnsz/golangsdk/testhelper/client"
@@ -33,7 +34,7 @@ const (
 
 var (
 	createOpts = batches.CreateOpts{
-		ClassName: "driver_behavior",
+		ClassName: golangsdk.MaybeString("driver_behavior"),
 		Queue:     "terraform_test",
 		Name:      "terraform_spark_job",
 		Configurations: map[string]interface{}{
