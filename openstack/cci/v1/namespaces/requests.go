@@ -59,9 +59,9 @@ type Annotations struct {
 	// Whether to enable container network.
 	NetworkEnable string `json:"network.cci.io/ready-before-pod-run,omitempty"`
 	// IP Pool Warm-up for Namespace.
-	PoolSize string `json:"network.cci.io/warm-pool-size,omitempty"`
+	PoolSize int `json:"network.cci.io/warm-pool-size,omitempty,string"`
 	// IP Address Recycling Interval, in hour.
-	RecyclingInterval string `json:"network.cci.io/warm-pool-recycle-interval,omitempty"`
+	RecyclingInterval int `json:"network.cci.io/warm-pool-recycle-interval,omitempty,string"`
 }
 
 // Initializers is a controller which enforces some system invariant at namespace creation time.

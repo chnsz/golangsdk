@@ -61,9 +61,9 @@ type AnnotationsResp struct {
 	// Whether to enable container network.
 	NetworkEnable string `json:"network.cci.io/ready-before-pod-run"`
 	// IP Pool Warm-up for Namespace.
-	PoolSize string `json:"network.cci.io/warm-pool-size"`
+	PoolSize int `json:"network.cci.io/warm-pool-size,string"`
 	// IP Address Recycling Interval, in hour.
-	RecyclingInterval string `json:"network.cci.io/warm-pool-recycle-interval"`
+	RecyclingInterval int `json:"network.cci.io/warm-pool-recycle-interval,string"`
 }
 
 // CreateResult represents a result of the Create method.
