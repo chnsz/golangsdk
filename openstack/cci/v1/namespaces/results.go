@@ -45,7 +45,7 @@ type MetaResp struct {
 // AnnotationsResp is an object of unstructured key value map.
 type AnnotationsResp struct {
 	// Whether to enable elastic scheduling.
-	AutoExpend string `json:"namespace.kubernetes.io/allowed-on-shared-node"`
+	AutoExpend bool `json:"namespace.kubernetes.io/allowed-on-shared-node,string"`
 	// Flavor of the cluster to which the namespace belongs.
 	Flavor string `json:"namespace.kubernetes.io/flavor"`
 	// Indicates whether to support dynamic storage creation.
