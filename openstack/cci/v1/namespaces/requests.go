@@ -55,7 +55,7 @@ type Annotations struct {
 	// Currently, GPU-accelerated and general-computing clusters are supported.
 	Flavor string `json:"namespace.kubernetes.io/flavor" required:"true"`
 	// Whether to enable elastic scheduling.
-	AutoExpend string `json:"namespace.kubernetes.io/allowed-on-shared-node,omitempty"`
+	AutoExpend bool `json:"namespace.kubernetes.io/allowed-on-shared-node,string"`
 	// Whether to enable container network.
 	NetworkEnable string `json:"network.cci.io/ready-before-pod-run,omitempty"`
 	// IP Pool Warm-up for Namespace.
@@ -80,7 +80,7 @@ type Pending struct {
 type Labels struct {
 	// Role-based access control (RBAC).
 	// If enabled, access to resources in the namespace will be controlled by RBAC policies.
-	RbacEnable string `json:"rbac.authorization.cci.io/enable-k8s-rbac,omitempty"`
+	RbacEnable bool `json:"rbac.authorization.cci.io/enable-k8s-rbac,string"`
 	// ID of enterprise project.
 	EnterpriseProjectID string `json:"sys_enterprise_project_id,omitempty"`
 }
