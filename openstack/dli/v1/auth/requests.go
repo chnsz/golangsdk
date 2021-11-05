@@ -80,7 +80,7 @@ func GrantDataPermission(c *golangsdk.ServiceClient, opts GrantDataPermissionOpt
 	}
 
 	var rst CommonResp
-	_, err = c.Post(grantDataPermissionURL(c), b, &rst, &golangsdk.RequestOpts{
+	_, err = c.Put(grantDataPermissionURL(c), b, &rst, &golangsdk.RequestOpts{
 		MoreHeaders: RequestOpts.MoreHeaders,
 	})
 	return &rst, err
@@ -108,7 +108,7 @@ func GrantQueuePermission(c *golangsdk.ServiceClient, opts GrantQueuePermissionO
 	}
 
 	var rst CommonResp
-	_, err = c.Post(grantQueuePermissionURL(c), b, &rst, &golangsdk.RequestOpts{
+	_, err = c.Put(grantQueuePermissionURL(c), b, &rst, &golangsdk.RequestOpts{
 		MoreHeaders: RequestOpts.MoreHeaders,
 	})
 	return &rst, err

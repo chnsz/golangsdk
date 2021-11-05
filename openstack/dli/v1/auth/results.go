@@ -1,7 +1,7 @@
 package auth
 
 type CommonResp struct {
-	IsSuccess bool   `json:"is_success,string"`
+	IsSuccess bool   `json:"is_success"`
 	Message   string `json:"message"`
 }
 
