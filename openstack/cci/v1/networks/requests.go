@@ -37,7 +37,7 @@ type CreateMetaData struct {
 // Specifications to create a network
 type Spec struct {
 	// Network CIDR
-	Cidr string `json:"type,omitempty"`
+	CIDR string `json:"cidr,omitempty"`
 	// Network VPC ID
 	AttachedVPC string `json:"attachedVPC" required:"true"`
 	// Network Type
