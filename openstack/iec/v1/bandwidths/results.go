@@ -33,3 +33,19 @@ func (r UpdateResult) Extract() (*BandWidthObject, error) {
 	err := r.ExtractIntoStructPtr(&entity, "")
 	return &entity, err
 }
+
+// BandWidths 共享带宽列表对象
+type BandWidths struct {
+	BandWidth []common.Bandwidth `json:"bandwidths"`
+	Count     int                `json:"count"`
+}
+
+type ListResult struct {
+	commonResult
+}
+
+func (r ListResult) Extract() (*BandWidths, error) {
+	var entity BandWidths
+	err := r.ExtractIntoStructPtr(&entity, "")
+	return &entity, err
+}

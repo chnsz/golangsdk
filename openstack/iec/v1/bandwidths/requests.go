@@ -48,3 +48,36 @@ func Update(client *golangsdk.ServiceClient, bandwidthId string, opts UpdateOpts
 	})
 	return
 }
+
+type ListOpts struct {
+	Limit  int    `q:"limit"`
+	Offset int    `q:"offset"`
+	SiteID string `q:"site_id"`
+}
+
+type ListBandwidthsOptsBuilder interface {
+	ToListBandwidthsQuery() (string, error)
+}
+
+func (opts ListOpts) ToListBandwidthsQuery() (string, error) {
+	b, err := golangsdk.BuildQueryString(&opts)
+	if err != nil {
+		return "", err
+	}
+	return b.String(), nil
+}
+
+func List(client *golangsdk.ServiceClient, opts ListBandwidthsOptsBuilder) (r ListResult) {
+	listURL := listURL(client)
+	if opts != nil {
+		query, err := opts.ToListBandwidthsQuery()
+		if err != nil {
+			r.Err = err
+			return r
+		}
+		listURL += query
+	}
+
+	_, r.Err = client.Get(listURL, &r.Body, nil)
+	return
+}
