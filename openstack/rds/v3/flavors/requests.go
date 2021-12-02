@@ -7,6 +7,7 @@ import (
 
 type DbFlavorsOpts struct {
 	Versionname string `q:"version_name"`
+	SpecCode    string `q:"spec_code"`
 }
 
 type DbFlavorsBuilder interface {
