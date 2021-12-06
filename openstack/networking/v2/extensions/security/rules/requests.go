@@ -43,36 +43,14 @@ func List(c *golangsdk.ServiceClient, opts ListOpts) pagination.Pager {
 }
 
 type RuleDirection string
-type RuleProtocol string
 type RuleEtherType string
 
 // Constants useful for CreateOpts
 const (
-	DirIngress        RuleDirection = "ingress"
-	DirEgress         RuleDirection = "egress"
-	EtherType4        RuleEtherType = "IPv4"
-	EtherType6        RuleEtherType = "IPv6"
-	ProtocolAH        RuleProtocol  = "ah"
-	ProtocolDCCP      RuleProtocol  = "dccp"
-	ProtocolEGP       RuleProtocol  = "egp"
-	ProtocolESP       RuleProtocol  = "esp"
-	ProtocolGRE       RuleProtocol  = "gre"
-	ProtocolICMP      RuleProtocol  = "icmp"
-	ProtocolIGMP      RuleProtocol  = "igmp"
-	ProtocolIPv6Encap RuleProtocol  = "ipv6-encap"
-	ProtocolIPv6Frag  RuleProtocol  = "ipv6-frag"
-	ProtocolIPv6ICMP  RuleProtocol  = "ipv6-icmp"
-	ProtocolIPv6NoNxt RuleProtocol  = "ipv6-nonxt"
-	ProtocolIPv6Opts  RuleProtocol  = "ipv6-opts"
-	ProtocolIPv6Route RuleProtocol  = "ipv6-route"
-	ProtocolOSPF      RuleProtocol  = "ospf"
-	ProtocolPGM       RuleProtocol  = "pgm"
-	ProtocolRSVP      RuleProtocol  = "rsvp"
-	ProtocolSCTP      RuleProtocol  = "sctp"
-	ProtocolTCP       RuleProtocol  = "tcp"
-	ProtocolUDP       RuleProtocol  = "udp"
-	ProtocolUDPLite   RuleProtocol  = "udplite"
-	ProtocolVRRP      RuleProtocol  = "vrrp"
+	DirIngress RuleDirection = "ingress"
+	DirEgress  RuleDirection = "egress"
+	EtherType4 RuleEtherType = "IPv4"
+	EtherType6 RuleEtherType = "IPv6"
 )
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -109,9 +87,8 @@ type CreateOpts struct {
 	// value must be an ICMP type.
 	PortRangeMin int `json:"port_range_min,omitempty"`
 
-	// The protocol that is matched by the security group rule. Valid values are
-	// "tcp", "udp", "icmp" or an empty string.
-	Protocol RuleProtocol `json:"protocol,omitempty"`
+	// The protocol that is matched by the security group rule.
+	Protocol string `json:"protocol,omitempty"`
 
 	// The remote group ID to be associated with this security group rule. You can
 	// specify either RemoteGroupID or RemoteIPPrefix.
