@@ -118,7 +118,7 @@ type Volume struct {
 	// Arbitrary key-value pairs defined by the metadata field table.
 	Metadata VolumeMetadata `json:"metadata"`
 	// Arbitrary key-value pairs defined by the user.
-	Tags map[string]string `json:"tags"`
+	Tags map[string]interface{} `json:"tags"`
 	// UserID is the id of the user who created the volume.
 	UserID string `json:"user_id"`
 	// The date when this volume was created.
