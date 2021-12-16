@@ -40,11 +40,13 @@ type Detail struct {
 
 // ProductInfo for dms
 type ProductInfo struct {
-	Storage   string `json:"storage"`
-	NodeNum   string `json:"node_num"`
-	ProductID string `json:"product_id"`
-	SpecCode  string `json:"spec_code"`
-	IOs       []IO   `json:"io"`
+	Storage          string   `json:"storage"`
+	NodeNum          string   `json:"node_num"`
+	ProductID        string   `json:"product_id"`
+	SpecCode         string   `json:"spec_code"`
+	IOs              []IO     `json:"io"`
+	AvailableZones   []string `json:"available_zones"`
+	UnavailableZones []string `json:"unavailable_zones"`
 }
 
 type IO struct {
