@@ -85,7 +85,7 @@ type Nic struct {
 	// enable ipv6 or not
 	Ipv6Enable bool `json:"ipv6_enable,omitempty"`
 	// bandWidth id when ipv6 is enabled
-	BandWidth *Ipv6BandWidth `json:"ipv6_bandWidth,omitempty"`
+	BandWidth *Ipv6BandWidth `json:"ipv6_bandwidth,omitempty"`
 }
 
 type Ipv6BandWidth struct {
