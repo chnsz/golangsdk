@@ -10,8 +10,8 @@ type CreateSecretOpts struct {
 	Name         string `json:"name" required:"true"`
 	KmsKeyID     string `json:"kms_key_id,omitempty"`
 	Description  string `json:"description,omitempty"`
-	SecretBinary string `json:"secret_binary,omitempty"`
-	SecretString string `json:"secret_string,omitempty"`
+	SecretBinary string `json:"secret_binary,omitempty" xor:"SecretString"`
+	SecretString string `json:"secret_string,omitempty" xor:"SecretBinary"`
 }
 
 func Create(c *golangsdk.ServiceClient, opts CreateSecretOpts) (*Secret, error) {
@@ -76,8 +76,8 @@ func Delete(c *golangsdk.ServiceClient, secretName string) error {
 }
 
 type CreateVersionOpts struct {
-	SecretBinary  string   `json:"secret_binary,omitempty"`
-	SecretString  string   `json:"secret_string,omitempty"`
+	SecretBinary  string   `json:"secret_binary,omitempty" xor:"SecretString"`
+	SecretString  string   `json:"secret_string,omitempty" xor:"SecretBinary"`
 	VersionStages []string `json:"version_stages,omitempty"`
 }
 
