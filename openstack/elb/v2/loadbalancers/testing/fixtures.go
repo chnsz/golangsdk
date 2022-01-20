@@ -8,10 +8,10 @@ import (
 	th "github.com/chnsz/golangsdk/testhelper"
 	"github.com/chnsz/golangsdk/testhelper/client"
 
+	"github.com/chnsz/golangsdk/openstack/elb/v2/listeners"
 	"github.com/chnsz/golangsdk/openstack/elb/v2/loadbalancers"
-	"github.com/chnsz/golangsdk/openstack/networking/v2/extensions/lbaas_v2/listeners"
-	"github.com/chnsz/golangsdk/openstack/networking/v2/extensions/lbaas_v2/monitors"
-	"github.com/chnsz/golangsdk/openstack/networking/v2/extensions/lbaas_v2/pools"
+	"github.com/chnsz/golangsdk/openstack/elb/v2/monitors"
+	"github.com/chnsz/golangsdk/openstack/elb/v2/pools"
 )
 
 // LoadbalancersListBody contains the canned body of a loadbalancer list response.
