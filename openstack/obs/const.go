@@ -714,6 +714,9 @@ const (
 	// SubResourceEncryption subResource value: encryption
 	SubResourceEncryption SubResourceType = "encryption"
 
+	// SubResourceReplication subResource value: replication
+	SubResourceReplication SubResourceType = "replication"
+
 	// SubResourceTagging subResource value: tagging
 	SubResourceTagging SubResourceType = "tagging"
 
@@ -828,6 +831,14 @@ const (
 
 	// GroupLogDelivery grantee uri type: LogDelivery
 	GroupLogDelivery GroupUriType = "LogDelivery"
+)
+
+// EnabledType defines a common status type
+type EnabledType string
+
+const (
+	Enabled  EnabledType = "Enabled"
+	Disabled EnabledType = "Disabled"
 )
 
 // VersioningStatusType defines bucket version status
