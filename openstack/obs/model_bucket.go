@@ -222,34 +222,6 @@ type GetBucketMetadataInput struct {
 	RequestHeader string
 }
 
-// SetObjectMetadataInput is the input parameter of SetObjectMetadata function
-type SetObjectMetadataInput struct {
-	Bucket                  string
-	Key                     string
-	VersionId               string
-	MetadataDirective       MetadataDirectiveType
-	Expires                 string
-	WebsiteRedirectLocation string
-	StorageClass            StorageClassType
-	Metadata                map[string]string
-	HttpHeader
-}
-
-// SetObjectMetadataOutput is the result of SetObjectMetadata function
-type SetObjectMetadataOutput struct {
-	BaseModel
-	MetadataDirective       MetadataDirectiveType
-	CacheControl            string
-	ContentDisposition      string
-	ContentEncoding         string
-	ContentLanguage         string
-	ContentType             string
-	Expires                 string
-	WebsiteRedirectLocation string
-	StorageClass            StorageClassType
-	Metadata                map[string]string
-}
-
 // GetBucketMetadataOutput is the result of GetBucketMetadata function
 type GetBucketMetadataOutput struct {
 	BaseModel
@@ -279,8 +251,8 @@ type GetBucketLoggingConfigurationOutput struct {
 	BucketLoggingStatus
 }
 
-// BucketLifecyleConfiguration defines the bucket lifecycle configuration
-type BucketLifecyleConfiguration struct {
+// BucketLifecycleConfiguration defines the bucket lifecycle configuration
+type BucketLifecycleConfiguration struct {
 	XMLName        xml.Name        `xml:"LifecycleConfiguration"`
 	LifecycleRules []LifecycleRule `xml:"Rule"`
 }
@@ -288,13 +260,13 @@ type BucketLifecyleConfiguration struct {
 // SetBucketLifecycleConfigurationInput is the input parameter of SetBucketLifecycleConfiguration function
 type SetBucketLifecycleConfigurationInput struct {
 	Bucket string `xml:"-"`
-	BucketLifecyleConfiguration
+	BucketLifecycleConfiguration
 }
 
 // GetBucketLifecycleConfigurationOutput is the result of GetBucketLifecycleConfiguration function
 type GetBucketLifecycleConfigurationOutput struct {
 	BaseModel
-	BucketLifecyleConfiguration
+	BucketLifecycleConfiguration
 }
 
 // SetBucketEncryptionInput is the input parameter of SetBucketEncryption function
@@ -307,18 +279,6 @@ type SetBucketEncryptionInput struct {
 type GetBucketEncryptionOutput struct {
 	BaseModel
 	BucketEncryptionConfiguration
-}
-
-// SetBucketReplicationInput is the input parameter of SetBucketReplication function
-type SetBucketReplicationInput struct {
-	Bucket string `xml:"-"`
-	BucketReplicationConfiguration
-}
-
-// GetBucketReplicationOutput is the result of GetBucketReplication function
-type GetBucketReplicationOutput struct {
-	BaseModel
-	BucketReplicationConfiguration
 }
 
 // SetBucketTaggingInput is the input parameter of SetBucketTagging function
