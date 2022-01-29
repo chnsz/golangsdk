@@ -597,6 +597,45 @@ func (obsClient ObsClient) DeleteBucketEncryption(bucketName string, extensions 
 	return
 }
 
+// SetBucketReplication sets the cross-region replication for a bucket.
+//
+// You can use this API to create or update the cross-region replication for a bucket.
+func (obsClient ObsClient) SetBucketReplication(input *SetBucketReplicationInput, extensions ...extensionOptions) (output *BaseModel, err error) {
+	if input == nil {
+		return nil, errors.New("SetBucketReplicationInput is nil")
+	}
+	output = &BaseModel{}
+	err = obsClient.doActionWithBucket("SetBucketReplication", HTTP_PUT, input.Bucket, input, output, extensions)
+	if err != nil {
+		output = nil
+	}
+	return
+}
+
+// GetBucketReplication gets the cross-region replication configuration of a bucket.
+//
+// You can use this API to obtain the cross-region replication configuration of a bucket.
+func (obsClient ObsClient) GetBucketReplication(bucketName string, extensions ...extensionOptions) (output *GetBucketReplicationOutput, err error) {
+	output = &GetBucketReplicationOutput{}
+	err = obsClient.doActionWithBucket("GetBucketReplication", HTTP_GET, bucketName, newSubResourceSerial(SubResourceReplication), output, extensions)
+	if err != nil {
+		output = nil
+	}
+	return
+}
+
+// DeleteBucketReplication deletes the cross-region replication configuration of a bucket.
+//
+// You can use this API to delete the cross-region replication configuration of a bucket.
+func (obsClient ObsClient) DeleteBucketReplication(bucketName string, extensions ...extensionOptions) (output *BaseModel, err error) {
+	output = &BaseModel{}
+	err = obsClient.doActionWithBucket("DeleteBucketReplication", HTTP_DELETE, bucketName, newSubResourceSerial(SubResourceReplication), output, extensions)
+	if err != nil {
+		output = nil
+	}
+	return
+}
+
 // SetBucketTagging sets bucket tags.
 //
 // You can use this API to set bucket tags.
