@@ -135,7 +135,8 @@ func IDFromName(client *golangsdk.ServiceClient, name string) (string, error) {
 	var count int
 	var id string
 	opt := ListOpts{
-		Name: name,
+		Name:                name,
+		EnterpriseProjectId: "all_granted_eps",
 	}
 	secgroupList, err := List(client, opt)
 	if err != nil {
