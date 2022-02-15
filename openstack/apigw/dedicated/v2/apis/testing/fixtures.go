@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/chnsz/golangsdk"
-	"github.com/chnsz/golangsdk/openstack/apigw/v2/apis"
+	"github.com/chnsz/golangsdk/openstack/apigw/dedicated/v2/apis"
 	th "github.com/chnsz/golangsdk/testhelper"
 	"github.com/chnsz/golangsdk/testhelper/client"
 )
