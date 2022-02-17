@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/chnsz/golangsdk/openstack/apigw/v2/instances"
+	"github.com/chnsz/golangsdk/openstack/apigw/dedicated/v2/instances"
 	th "github.com/chnsz/golangsdk/testhelper"
 	"github.com/chnsz/golangsdk/testhelper/client"
 )
