@@ -181,7 +181,7 @@ func ListImages(c *golangsdk.ServiceClient, opts ListImageOpts) (*pagination.Pag
 	url += query.String()
 
 	page := pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		p := ImagePage{pagination.OffsetPagebase{PageResult: r}}
+		p := ImagePage{pagination.OffsetPageBase{PageResult: r}}
 		return p
 	})
 
