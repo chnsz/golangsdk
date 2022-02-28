@@ -141,7 +141,8 @@ func UpdateLease(c *golangsdk.ServiceClient, id string, duration int) (*Lease, e
 	url := updateLeaseURL(c, id)
 	url += fmt.Sprintf("?duration=%d", duration)
 	var rst Lease
-	_, err := c.Patch(url, nil, &rst, &golangsdk.RequestOpts{
+	emptyBody := make(map[string]string)
+	_, err := c.Patch(url, emptyBody, &rst, &golangsdk.RequestOpts{
 		MoreHeaders: RequestOpts.MoreHeaders,
 	})
 
@@ -153,7 +154,8 @@ func Start(c *golangsdk.ServiceClient, id string, duration int) (*Notebook, erro
 	url += fmt.Sprintf("?duration=%d", duration)
 
 	var rst Notebook
-	_, err := c.Post(url, nil, &rst, &golangsdk.RequestOpts{
+	emptyBody := make(map[string]string)
+	_, err := c.Post(url, emptyBody, &rst, &golangsdk.RequestOpts{
 		MoreHeaders: RequestOpts.MoreHeaders,
 	})
 
