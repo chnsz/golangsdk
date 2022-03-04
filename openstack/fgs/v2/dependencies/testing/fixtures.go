@@ -11,6 +11,17 @@ import (
 )
 
 const (
+	expectedGetResponse = `{
+	"description": "Created by terraform script",
+	"etag": "80d6b982fc54b77202b914b559342b11",
+	"id": "e6cc2ebe-0bae-4b69-a1d6-8198bc356ff8",
+	"link": "https://script-fgs-dependencies-bucket.obs.cn-north-4.myhuaweicloud.com/terraform_dependencies/huaweicloudsdkcore.zip",
+	"name": "script_fgs_dependencies_dependency",
+	"owner": "abc",
+	"runtime": "Python3.6",
+	"size": 1281293
+}`
+
 	expectedListPageOneResponse = `{
 	"count": 4,
 	"dependencies": [
@@ -66,8 +77,28 @@ const (
 )
 
 var (
+	desc       = "Created by terraform script"
+	createOpts = dependencies.DependOpts{
+		Name:        "custom_terraform_sdk_core",
+		Description: &desc,
+		Type:        "obs",
+		Link:        "https://script-fgs-dependencies-bucket.obs.cn-north-4.myhuaweicloud.com/terraform_dependencies/huaweicloudsdkcore.zip",
+		Runtime:     "Python3.6",
+	}
+
 	listOpts = dependencies.ListOpts{
 		Limit: "2",
+	}
+
+	expectedGetResponseData = dependencies.Dependency{
+		Description: "Created by terraform script",
+		Etag:        "80d6b982fc54b77202b914b559342b11",
+		ID:          "e6cc2ebe-0bae-4b69-a1d6-8198bc356ff8",
+		Link:        "https://script-fgs-dependencies-bucket.obs.cn-north-4.myhuaweicloud.com/terraform_dependencies/huaweicloudsdkcore.zip",
+		Name:        "script_fgs_dependencies_dependency",
+		Owner:       "abc",
+		Runtime:     "Python3.6",
+		Size:        1281293,
 	}
 
 	expectedListResponseData = []dependencies.Dependency{
@@ -113,6 +144,28 @@ var (
 	}
 )
 
+func handleV2DependencyCreate(t *testing.T) {
+	th.Mux.HandleFunc("/fgs/dependencies",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "POST")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			_, _ = fmt.Fprint(w, expectedGetResponse)
+		})
+}
+
+func handleV2DependencyGet(t *testing.T) {
+	th.Mux.HandleFunc("/fgs/dependencies/e6cc2ebe-0bae-4b69-a1d6-8198bc356ff8",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "GET")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			_, _ = fmt.Fprint(w, expectedGetResponse)
+		})
+}
+
 func handleV2DependenciesList(t *testing.T) {
 	th.Mux.HandleFunc("/fgs/dependencies", func(w http.ResponseWriter, r *http.Request) {
 		th.TestMethod(t, r, "GET")
@@ -130,4 +183,25 @@ func handleV2DependenciesList(t *testing.T) {
 			t.Fatalf("Unexpected marker: [%s]", marker)
 		}
 	})
+}
+
+func handleV2DependencyUpdate(t *testing.T) {
+	th.Mux.HandleFunc("/fgs/dependencies/e6cc2ebe-0bae-4b69-a1d6-8198bc356ff8",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "PUT")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			_, _ = fmt.Fprint(w, expectedGetResponse)
+		})
+}
+
+func handleV2DependencyDelete(t *testing.T) {
+	th.Mux.HandleFunc("/fgs/dependencies/e6cc2ebe-0bae-4b69-a1d6-8198bc356ff8",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "DELETE")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusNoContent)
+		})
 }
