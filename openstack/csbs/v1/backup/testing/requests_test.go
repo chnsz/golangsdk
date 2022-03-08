@@ -155,7 +155,6 @@ func TestList(t *testing.T) {
 				ResourceAz:           "eu-de-02",
 				ImageType:            "backup",
 				FinishedAt:           FinishedAt,
-				AverageSpeed:         19,
 				CopyStatus:           "na",
 				Incremental:          false,
 				TaskId:               "1afcab08-9f97-11e8-9526-286ed488ca8c",
