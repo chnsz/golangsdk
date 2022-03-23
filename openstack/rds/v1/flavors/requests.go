@@ -1,6 +1,8 @@
 package flavors
 
 import (
+	"fmt"
+
 	"github.com/chnsz/golangsdk"
 )
 
@@ -10,8 +12,9 @@ var RequestOpts golangsdk.RequestOpts = golangsdk.RequestOpts{
 
 //list the flavors informations about a specified id of database
 func List(client *golangsdk.ServiceClient, dataStoreID string, region string) (r ListResult) {
-
-	_, r.Err = client.Get(listURL(client, dataStoreID, region), &r.Body, &golangsdk.RequestOpts{
+	url := listURL(client)
+	url += fmt.Sprintf("?dbId=%s&region=%s", dataStoreID, region)
+	_, r.Err = client.Get(url, &r.Body, &golangsdk.RequestOpts{
 		OkCodes:     []int{200},
 		MoreHeaders: RequestOpts.MoreHeaders, JSONBody: nil,
 	})

@@ -2,6 +2,8 @@ package backendmember
 
 import (
 	//"fmt"
+	"fmt"
+
 	"github.com/chnsz/golangsdk"
 	//"github.com/chnsz/golangsdk/pagination"
 )
@@ -104,6 +106,9 @@ func Remove(c *golangsdk.ServiceClient, listener_id string, id string) (r Remove
 
 // Get retrieves a particular Health Monitor based on its unique ID.
 func Get(c *golangsdk.ServiceClient, listener_id, id string) (r GetResult) {
-	_, r.Err = c.Get(resourceURL(c, listener_id, id), &r.Body, nil)
+	url := resourceURL(c, listener_id)
+	url += fmt.Sprintf("?id=%s", id)
+
+	_, r.Err = c.Get(url, &r.Body, nil)
 	return
 }
