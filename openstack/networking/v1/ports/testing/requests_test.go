@@ -3,9 +3,9 @@ package testing
 import (
 	"testing"
 
+	client "github.com/chnsz/golangsdk/openstack/networking/v1/common"
 	"github.com/chnsz/golangsdk/openstack/networking/v1/ports"
 	th "github.com/chnsz/golangsdk/testhelper"
-	"github.com/chnsz/golangsdk/testhelper/client"
 )
 
 func TestCreateV1NetworkVIP(t *testing.T) {
