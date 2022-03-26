@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
+	client "github.com/chnsz/golangsdk/openstack/networking/v1/common"
 	"github.com/chnsz/golangsdk/openstack/networking/v1/ports"
 	th "github.com/chnsz/golangsdk/testhelper"
-	"github.com/chnsz/golangsdk/testhelper/client"
 )
 
 const (
@@ -83,37 +83,37 @@ var (
 )
 
 func handleV1NetworkVIPCreate(t *testing.T) {
-	th.Mux.HandleFunc("/ports", func(w http.ResponseWriter, r *http.Request) {
+	th.Mux.HandleFunc("/v1/85636478b0bd8e67e89469c7749d4127/ports", func(w http.ResponseWriter, r *http.Request) {
 		th.TestMethod(t, r, "POST")
 		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
 		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusAccepted)
-		_, _ = fmt.Fprint(w, expectedCreateResponse)
+		fmt.Fprint(w, expectedCreateResponse)
 	})
 }
 
 func handleV1NetworkVIPGet(t *testing.T) {
-	th.Mux.HandleFunc("/ports/05547c10-e318-4067-9db2-01f5dc30be38", func(w http.ResponseWriter, r *http.Request) {
+	th.Mux.HandleFunc("/v1/85636478b0bd8e67e89469c7749d4127/ports/05547c10-e318-4067-9db2-01f5dc30be38", func(w http.ResponseWriter, r *http.Request) {
 		th.TestMethod(t, r, "GET")
 		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
 		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		_, _ = fmt.Fprint(w, expectedCreateResponse)
+		fmt.Fprint(w, expectedCreateResponse)
 	})
 }
 
 func handleV1NetworkVIPUpdate(t *testing.T) {
-	th.Mux.HandleFunc("/ports/05547c10-e318-4067-9db2-01f5dc30be38", func(w http.ResponseWriter, r *http.Request) {
+	th.Mux.HandleFunc("/v1/85636478b0bd8e67e89469c7749d4127/ports/05547c10-e318-4067-9db2-01f5dc30be38", func(w http.ResponseWriter, r *http.Request) {
 		th.TestMethod(t, r, "PUT")
 		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
 		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		_, _ = fmt.Fprint(w, expectedCreateResponse)
+		fmt.Fprint(w, expectedCreateResponse)
 	})
 }
 
 func handleV1NetworkVIPDelete(t *testing.T) {
-	th.Mux.HandleFunc("/ports/05547c10-e318-4067-9db2-01f5dc30be38", func(w http.ResponseWriter, r *http.Request) {
+	th.Mux.HandleFunc("/v1/85636478b0bd8e67e89469c7749d4127/ports/05547c10-e318-4067-9db2-01f5dc30be38", func(w http.ResponseWriter, r *http.Request) {
 		th.TestMethod(t, r, "DELETE")
 		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
 		w.Header().Add("Content-Type", "application/json")
