@@ -202,21 +202,13 @@ type Egress struct {
 	BandwidthSize    int    `json:"bandwidthSize"`
 }
 
-// ExtractStr is a method to interpret a json string as an Egress.
-// This is a temporary solution to the API problem.
-func (r EgressResult) ExtractStr() (*Egress, error) {
+// Call its Extract method to interpret it as a Egress.
+func (r EgressResult) Extract() (*Egress, error) {
 	var s Egress
 	if r.Err != nil {
 		return &s, r.Err
 	}
 	err := json.Unmarshal([]byte(r.Body.(string)), &s)
-	return &s, err
-}
-
-// ExtractStr is a method to interpret the response body as an Egress.
-func (r EgressResult) Extract() (*Egress, error) {
-	var s Egress
-	err := r.ExtractInto(&s)
 	return &s, err
 }
 
