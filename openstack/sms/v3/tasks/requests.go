@@ -22,6 +22,8 @@ type CreateOpts struct {
 	SourceServer SourceServerRequest `json:"source_server" required:"true"`
 	// 目的端虚拟机信息
 	TargetServer TargetServerRequest `json:"target_server" required:"true"`
+	// 进程优先级, 0:低, 1:标准, 2:高
+	Priority int `json:"priority,omitempty"`
 	// 迁移ip,如果是自动创建虚拟机,不需要此参数
 	MigrationIp string `json:"migration_ip,omitempty"`
 	// 自动创建虚拟机使用模板
@@ -45,7 +47,7 @@ type SourceServerRequest struct {
 // TargetServerRequest 目的端虚拟机信息
 type TargetServerRequest struct {
 	// 虚拟机名称
-	Name string `json:"name" required:"true"`
+	Name string `json:"name,omitempty"`
 	// 虚拟机id, 如果是自动创建虚拟机,不需要此参数
 	VMID string `json:"vm_id,omitempty"`
 	// 磁盘信息

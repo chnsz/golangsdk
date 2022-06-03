@@ -51,9 +51,9 @@ type MigrateTask struct {
 	// 连接状态
 	Connected bool `json:"connected"`
 	// 迁移速率,单位:MB/S
-	MigrateSpeed int `json:"migrate_speed"`
+	MigrateSpeed float32 `json:"migrate_speed"`
 	// 压缩率
-	CompressRate int `json:"compress_rate"`
+	CompressRate float32 `json:"compress_rate"`
 	// 错误信息
 	ErrorMsg string `json:"error_json"`
 
@@ -364,7 +364,7 @@ type SubTask struct {
 	// 子任务结束时间(如果子任务还没有结束,则为空)
 	EndDate int `json:"end_date"`
 	// 迁移速率,Mbit/s
-	MigrateSpeed int `json:"migrate_speed"`
+	MigrateSpeed float32 `json:"migrate_speed"`
 	// 触发子任务的用户操作名称
 	UserOp string `json:"user_op"`
 	// 迁移或同步时,具体的迁移详情
