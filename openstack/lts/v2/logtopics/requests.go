@@ -35,7 +35,10 @@ func Create(client *golangsdk.ServiceClient, groupId string, ops CreateOptsBuild
 
 // Delete a log topic by id
 func Delete(client *golangsdk.ServiceClient, groupId string, id string) (r DeleteResult) {
-	_, r.Err = client.Delete(deleteURL(client, groupId, id), nil)
+	opts := golangsdk.RequestOpts{
+		MoreHeaders: map[string]string{"Content-Type": "application/json;charset=utf8"},
+	}
+	_, r.Err = client.Delete(deleteURL(client, groupId, id), &opts)
 	return
 }
 
