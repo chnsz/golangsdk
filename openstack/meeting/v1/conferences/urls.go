@@ -28,6 +28,10 @@ func historyURL(client *golangsdk.ServiceClient) string {
 	return client.ServiceURL(rootPath, "conferences", "history", "confDetail")
 }
 
+func historiesURL(client *golangsdk.ServiceClient) string {
+	return client.ServiceURL(rootPath, "conferences", "history")
+}
+
 func controlURL(client *golangsdk.ServiceClient) string {
 	return client.ServiceURL(rootPath, "conference", "duration")
 }

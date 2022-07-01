@@ -362,6 +362,58 @@ func GetHistory(c *golangsdk.ServiceClient, opts GetHistoryOpts) (*GetResp, erro
 	return &r, err
 }
 
+type ListHistoryOpts struct {
+	// User UUID.
+	UserUUID string `q:"userUUID"`
+	// Offset from which the query starts.
+	// If the offset is less than 0, the value is automatically converted to 0. Default to 0.
+	Offset int `q:"offset"`
+	// Number of items displayed on each page. The valid values are range form 1 to 500, default to 20.
+	Limit int `q:"limit"`
+	// Query historical conferences based on the conference subject, the reservation and the string of conference ID
+	// keywords.
+	SearchKey string `q:"searchKey"`
+	// Whether to query the meeting records of all users under the enterprise.
+	// If the login account is not an enterprise administrator, this field is invalid.
+	// If this field is true, the userUUID field has no effect.
+	// The default value is 'false'.
+	QueryAll bool `q:"queryAll"`
+	// The query's starting date in milliseconds. For example: 1583078400000
+	StartDate int `q:"startDate"`
+	// The query deadline in milliseconds. For example: 1585756799000
+	EndDate int `q:"endDate"`
+	//ASC_StartTIME: Sort by meeting start time in ascending order.
+	// DSC_StartTIME: Sort in descending order according to the conference start time.
+	// ASC_RecordTYPE: Sort according to whether there are recording files or not, and then sort according to the
+	//                 conference start time in ascending order by default.
+	// DSC_RecordTYPE: Sort according to whether there are recording files or not, and then sort by the conference
+	//                 start time in descending order by default.
+	SortType string `q:"sortType"`
+	// Authorization token.
+	Token string `json:"-"`
+}
+
+// ListHistory is a method to obtain history conference list using given parameters.
+func ListHistory(c *golangsdk.ServiceClient, opts ListHistoryOpts) ([]Conference, error) {
+	url := historiesURL(c)
+	query, err := golangsdk.BuildQueryString(opts)
+	if err != nil {
+		return nil, err
+	}
+	url += query.String()
+
+	var r struct {
+		Conferences []Conference `json:"data"`
+	}
+	_, err = c.Get(url, &r, &golangsdk.RequestOpts{
+		MoreHeaders: map[string]string{
+			"Content-Type":   "application/json;charset=UTF-8",
+			"X-Access-Token": opts.Token,
+		},
+	})
+	return r.Conferences, err
+}
+
 type UpdateOpts struct {
 	// Conference ID.
 	ConferenceID string `q:"conferenceID"`
