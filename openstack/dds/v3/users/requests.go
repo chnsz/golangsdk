@@ -2,6 +2,7 @@ package users
 
 import (
 	"github.com/chnsz/golangsdk"
+	"github.com/chnsz/golangsdk/openstack/dds/v3/roles"
 	"github.com/chnsz/golangsdk/pagination"
 )
 
@@ -21,20 +22,10 @@ type CreateOpts struct {
 	// password cracking by brute force.
 	Password string `json:"user_pwd" required:"true"`
 	// List of roles inherited by the newly created role.
-	Roles []Role `json:"roles" required:"true"`
+	Roles []roles.Role `json:"roles" required:"true"`
 	// The name of the database where the user is located.
 	// The length is 1~64 bits and can contain letters, numbers and underscores.
 	DbName string `json:"db_name,omitempty"`
-}
-
-// Role is the object that represent the role details.
-type Role struct {
-	// Role name.
-	// The length is 1~64 bits and can contain letters, numbers, hyphens, underscores and dots.
-	Name string `json:"role_name" required:"true"`
-	// The name of the database where the role is located.
-	// The length is 1~64 bits and can contain letters, numbers and underscores.
-	DbName string `json:"role_db_name" required:"true"`
 }
 
 // Create is a method to create a new database user using given parameters.
