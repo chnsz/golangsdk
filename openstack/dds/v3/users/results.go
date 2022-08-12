@@ -3,6 +3,7 @@ package users
 import (
 	"encoding/json"
 
+	"github.com/chnsz/golangsdk/openstack/dds/v3/roles"
 	"github.com/chnsz/golangsdk/pagination"
 )
 
@@ -23,37 +24,13 @@ type UserResp struct {
 	// Database name.
 	DbName string `json:"db"`
 	// The list of privileges inherited by the newly created role.
-	Privileges []Privilege `json:"privileges"`
+	Privileges []roles.Privilege `json:"privileges"`
 	// The list of privileges inherited by the newly created role, includes all privileges inherited by inherited roles.
-	InheritedPrivileges []Privilege `json:"inheritedPrivileges"`
+	InheritedPrivileges []roles.Privilege `json:"inheritedPrivileges"`
 	// The list of roles inherited by the newly created role.
-	Roles []RoleDetail `json:"roles"`
+	Roles []roles.RoleDetail `json:"roles"`
 	// The list of roles inherited by the newly created role, includes all roles inherited by inherited roles.
-	InheritedRoles []RoleDetail `json:"inheritedRoles"`
-}
-
-// Privilege is the structure that represents the privilege detail for database.
-type Privilege struct {
-	// The details of the resource to which the privilege belongs.
-	Resource Resource `json:"resource"`
-	// The operation permission list.
-	Actions []string `json:"actions"`
-}
-
-// Resource is the structure that represents the database details to which the role and user belongs.
-type Resource struct {
-	// The database to which the privilege belongs.
-	Collection string `json:"collection"`
-	// The database name.
-	DbName string `json:"db"`
-}
-
-// RoleDetail is the structure that represents the inherited role details.
-type RoleDetail struct {
-	// Role name.
-	Name string `json:"role"`
-	// The database name to which the role belongs.
-	DbName string `json:"db"`
+	InheritedRoles []roles.RoleDetail `json:"inheritedRoles"`
 }
 
 // UserPage is a single page maximum result representing a query by offset page.
