@@ -42,7 +42,7 @@ type CreateOpts struct {
 	Action string `json:"action,omitempty"`
 	// Specifies the ID of the peer security group.
 	// The value is exclusive with parameter remote_ip_prefix.
-	Priority string `json:"priority,omitempty"`
+	Priority int `json:"priority,omitempty"`
 }
 
 // Create is a method to create a new security group rule.

@@ -33,7 +33,7 @@ type SecurityGroupRule struct {
 	Action string `json:"action"`
 	// Priority
 	// Value range: 1~100, 1 represents the highest priority.
-	Priority string `json:"priority"`
+	Priority int `json:"priority"`
 	// Specifies the remote IP address.
 	// If the access control direction is set to egress, the parameter specifies the source IP address.
 	// If the access control direction is set to ingress, the parameter specifies the destination IP address.
