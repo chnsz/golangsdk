@@ -78,6 +78,6 @@ func (p SecurityGroupRulePage) IsEmpty() (bool, error) {
 // ExtractSecurityGroupRules is a method to extract the list of security group rule details.
 func ExtractSecurityGroupRules(r pagination.Page) ([]SecurityGroupRule, error) {
 	var s []SecurityGroupRule
-	r.(SecurityGroupRulePage).Result.ExtractIntoSlicePtr(&s, "security_group_rules")
-	return s, nil
+	err := r.(SecurityGroupRulePage).Result.ExtractIntoSlicePtr(&s, "security_group_rules")
+	return s, err
 }
