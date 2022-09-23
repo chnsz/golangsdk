@@ -43,30 +43,31 @@ type ChargeInfo struct {
 }
 
 type CreateGaussDBOpts struct {
-	Name                string             `json:"name" required:"true"`
-	Region              string             `json:"region,omitempty"`
-	Flavor              string             `json:"flavor_ref" required:"true"`
-	VpcId               string             `json:"vpc_id,omitempty"`
-	SubnetId            string             `json:"subnet_id,omitempty"`
-	SecurityGroupId     string             `json:"security_group_id,omitempty"`
-	Password            string             `json:"password" required:"true"`
-	Port                string             `json:"port,omitempty"`
-	DiskEncryptionId    string             `json:"disk_encryption_id,omitempty"`
-	TimeZone            string             `json:"time_zone,omitempty"`
-	AvailabilityZone    string             `json:"availability_zone" required:"true"`
-	ConfigurationId     string             `json:"configuration_id,omitempty"`
-	DsspoolId           string             `json:"dsspool_id,omitempty"`
-	ReplicaOfId         string             `json:"replica_of_id,omitempty"`
-	ShardingNum         int                `json:"sharding_num,omitempty"`
-	CoordinatorNum      int                `json:"coordinator_num,omitempty"`
-	EnterpriseProjectId string             `json:"enterprise_project_id,omitempty"`
-	DataStore           DataStoreOpt       `json:"datastore" required:"true"`
-	Volume              VolumeOpt          `json:"volume" required:"true"`
-	Ha                  *HaOpt             `json:"ha,omitempty"`
-	BackupStrategy      *BackupStrategyOpt `json:"backup_strategy,omitempty"`
-	ChargeInfo          *ChargeInfo        `json:"charge_info,omitempty"`
-	RestorePoint        *RestorePointOpt   `json:"restore_point,omitempty"`
-	ReplicaNum          int                `json:"replica_num,omitempty"`
+	Ha             *HaOpt             `json:"ha,omitempty"`
+	BackupStrategy *BackupStrategyOpt `json:"backup_strategy,omitempty"`
+	ChargeInfo     *ChargeInfo        `json:"charge_info,omitempty"`
+	RestorePoint   *RestorePointOpt   `json:"restore_point,omitempty"`
+
+	AvailabilityZone    string       `json:"availability_zone" required:"true"`
+	DataStore           DataStoreOpt `json:"datastore" required:"true"`
+	Flavor              string       `json:"flavor_ref" required:"true"`
+	Name                string       `json:"name" required:"true"`
+	Password            string       `json:"password" required:"true"`
+	Volume              VolumeOpt    `json:"volume" required:"true"`
+	Region              string       `json:"region,omitempty"`
+	VpcId               string       `json:"vpc_id,omitempty"`
+	SubnetId            string       `json:"subnet_id,omitempty"`
+	SecurityGroupId     string       `json:"security_group_id,omitempty"`
+	Port                string       `json:"port,omitempty"`
+	DiskEncryptionId    string       `json:"disk_encryption_id,omitempty"`
+	TimeZone            string       `json:"time_zone,omitempty"`
+	ConfigurationId     string       `json:"configuration_id,omitempty"`
+	DsspoolId           string       `json:"dsspool_id,omitempty"`
+	ReplicaOfId         string       `json:"replica_of_id,omitempty"`
+	ShardingNum         int          `json:"sharding_num,omitempty"`
+	CoordinatorNum      int          `json:"coordinator_num,omitempty"`
+	EnterpriseProjectId string       `json:"enterprise_project_id,omitempty"`
+	ReplicaNum          int          `json:"replica_num,omitempty"`
 }
 
 type CreateGaussDBBuilder interface {
