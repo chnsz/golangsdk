@@ -38,6 +38,7 @@ type GaussDBInstance struct {
 	MaintenanceWindow string   `json:"maintenance_window"`
 	PublicIps         []string `json:"public_ips"`
 	PrivateIps        []string `json:"private_ips"`
+	ReplicaNum        int      `json:"replica_num"`
 
 	Volume         VolumeOpt         `json:"volume"`
 	Ha             HaOpt             `json:"ha"`

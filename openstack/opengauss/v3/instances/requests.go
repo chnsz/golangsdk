@@ -57,6 +57,7 @@ type CreateGaussDBOpts struct {
 	Ha                  *HaOpt             `json:"ha,omitempty"`
 	BackupStrategy      *BackupStrategyOpt `json:"backup_strategy,omitempty"`
 	RestorePoint        *RestorePointOpt   `json:"restore_point,omitempty"`
+	ReplicaNum          int                `json:"replica_num,omitempty"`
 }
 
 type CreateGaussDBBuilder interface {
