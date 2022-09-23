@@ -12,6 +12,11 @@ type GaussDBResponse struct {
 
 type CreateResponse struct {
 	Instance GaussDBResponse `json:"instance"`
+	OrderId  string          `json:"order_id"`
+}
+
+type ChargeInfoResp struct {
+	ChargeMode string `json:"charge_mode"`
 }
 
 type UpdateResponse struct {
@@ -45,6 +50,7 @@ type GaussDBInstance struct {
 	Nodes          []Nodes           `json:"nodes"`
 	DataStore      DataStoreOpt      `json:"datastore"`
 	BackupStrategy BackupStrategyOpt `json:"backup_strategy"`
+	ChargeInfo     ChargeInfoResp    `json:"charge_info"`
 
 	EnterpriseProjectId string `json:"enterprise_project_id"`
 }

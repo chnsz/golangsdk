@@ -34,6 +34,14 @@ type RestorePointOpt struct {
 	DatabaseName map[string]string `json:"database_name,omitempty"`
 }
 
+type ChargeInfo struct {
+	ChargeMode  string `json:"charge_mode" required:"true"`
+	PeriodType  string `json:"period_type,omitempty"`
+	PeriodNum   int    `json:"period_num,omitempty"`
+	IsAutoRenew string `json:"is_auto_renew,omitempty"`
+	IsAutoPay   string `json:"is_auto_pay,omitempty"`
+}
+
 type CreateGaussDBOpts struct {
 	Name                string             `json:"name" required:"true"`
 	Region              string             `json:"region,omitempty"`
@@ -56,6 +64,7 @@ type CreateGaussDBOpts struct {
 	Volume              VolumeOpt          `json:"volume" required:"true"`
 	Ha                  *HaOpt             `json:"ha,omitempty"`
 	BackupStrategy      *BackupStrategyOpt `json:"backup_strategy,omitempty"`
+	ChargeInfo          *ChargeInfo        `json:"charge_info,omitempty"`
 	RestorePoint        *RestorePointOpt   `json:"restore_point,omitempty"`
 	ReplicaNum          int                `json:"replica_num,omitempty"`
 }
