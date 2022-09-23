@@ -146,6 +146,32 @@ func UpdateCluster(client *golangsdk.ServiceClient, opts UpdateClusterOptsBuilde
 	return
 }
 
+// UpdateOpts is the structure that used to expand sharding number, coordinator number or volume size.
+type UpdateOpts struct {
+	// Configuration required to expand sharding number or coordinator number.
+	ExpandCluster *UpdateClusterOpts `json:"expand_cluster,omitempty"`
+	// Configuration required to expand volume size.
+	EnlargeVolume *UpdateVolumeOpts `json:"enlarge_volume,omitempty"`
+	// Whether to automatically pay from the account, defaults to false.
+	IsAutoPay string `json:"is_auto_pay,omitempty"`
+}
+
+// Update is a method to update sharding number, coordinator number and volume configuration.
+// Note: The sharding number and the coordinator number can be updated at the same time, but neither of them can be
+// updated at the same time as volume
+func Update(c *golangsdk.ServiceClient, instanceId string, opts UpdateOpts) (*UpdateResponse, error) {
+	b, err := golangsdk.BuildRequestBody(opts, "")
+	if err != nil {
+		return nil, err
+	}
+
+	var r UpdateResponse
+	_, err = c.Post(updateURL(c, instanceId, "action"), b, &r, &golangsdk.RequestOpts{
+		MoreHeaders: map[string]string{"Content-Type": "application/json", "X-Language": "en-us"},
+	})
+	return &r, err
+}
+
 func Delete(client *golangsdk.ServiceClient, instanceId string) (r DeleteResult) {
 	url := deleteURL(client, instanceId)
 
