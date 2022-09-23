@@ -14,6 +14,11 @@ type CreateResponse struct {
 	Instance GaussDBResponse `json:"instance"`
 }
 
+type UpdateResponse struct {
+	JobId   string `json:"job_id"`
+	OrderId string `json:"order_id"`
+}
+
 type GaussDBInstance struct {
 	Id                string   `json:"id"`
 	Name              string   `json:"name"`
