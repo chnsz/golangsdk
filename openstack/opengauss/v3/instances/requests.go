@@ -1,6 +1,8 @@
 package instances
 
 import (
+	"fmt"
+
 	"github.com/chnsz/golangsdk"
 	"github.com/chnsz/golangsdk/pagination"
 )
@@ -242,8 +244,12 @@ func GetInstanceByID(client *golangsdk.ServiceClient, instanceId string) (GaussD
 	if err != nil {
 		return instance, err
 	}
-	if all.TotalCount == 0 {
-		return instance, nil
+	if all.TotalCount < 1 {
+		return instance, golangsdk.ErrDefault404{
+			ErrUnexpectedResponseCode: golangsdk.ErrUnexpectedResponseCode{
+				Body: []byte(fmt.Sprintf("the database instance (%s) does not exist", instanceId)),
+			},
+		}
 	}
 
 	instance = all.Instances[0]
@@ -266,8 +272,12 @@ func GetInstanceByName(client *golangsdk.ServiceClient, name string) (GaussDBIns
 	if err != nil {
 		return instance, err
 	}
-	if all.TotalCount == 0 {
-		return instance, nil
+	if all.TotalCount < 1 {
+		return instance, golangsdk.ErrDefault404{
+			ErrUnexpectedResponseCode: golangsdk.ErrUnexpectedResponseCode{
+				Body: []byte(fmt.Sprintf("the database instance (%s) does not exist", name)),
+			},
+		}
 	}
 
 	instance = all.Instances[0]
