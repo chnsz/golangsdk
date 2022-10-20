@@ -41,10 +41,22 @@ type ListOpts struct {
 
 	//Specifies the ID of the VPC to which the subnet belongs.
 	VPC_ID string `q:"vpc_id"`
+
+	//Specifies tags subnets must match (returning those matching all tags).
+	Tags string `q:"tags"`
+
+	//Specifies tags subnets must match (returning those matching at least one of the tags).
+	TagsAny string `q:"tags-any"`
+
+	//Specifies tags subnets mustn't match (returning those missing all tags).
+	NotTags string `q:"not-tags"`
+
+	//Specifies tags subnets mustn't match (returning those missing at least one of the tags).
+	NotTagsAny string `q:"not-tags-any"`
 }
 
 func (opts ListOpts) hasQueryParameter() bool {
-	return opts.VPC_ID != ""
+	return opts.VPC_ID != "" || opts.Tags != "" || opts.TagsAny != "" || opts.NotTags != "" || opts.NotTagsAny != ""
 }
 
 // ToSubnetListQuery formats a ListOpts into a query string

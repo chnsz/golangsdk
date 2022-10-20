@@ -22,6 +22,18 @@ func listSubnets(t *testing.T, opts subnets.ListOpts, mock_json string, expected
 		if opts.VPC_ID != "" {
 			expected_args["vpc_id"] = opts.VPC_ID
 		}
+		if opts.Tags != "" {
+			expected_args["tags"] = opts.Tags
+		}
+		if opts.TagsAny != "" {
+			expected_args["tags-any"] = opts.TagsAny
+		}
+		if opts.NotTags != "" {
+			expected_args["not-tags"] = opts.NotTags
+		}
+		if opts.NotTagsAny != "" {
+			expected_args["not-tags-any"] = opts.NotTagsAny
+		}
 		th.TestFormValues(t, r, expected_args)
 
 		w.Header().Add("Content-Type", "application/json")
@@ -109,6 +121,10 @@ func TestListSubnet(t *testing.T) {
 
 	listSubnets(t, subnets.ListOpts{}, subnet_mock, subnet_expected)
 	listSubnets(t, subnets.ListOpts{VPC_ID: "58c24204-170e-4ff0-9b42-c53cdea9239a"}, subnet_mock, subnet_expected)
+	listSubnets(t, subnets.ListOpts{Tags: "my-tag"}, subnet_mock, subnet_expected)
+	listSubnets(t, subnets.ListOpts{TagsAny: "my-tag"}, subnet_mock, subnet_expected)
+	listSubnets(t, subnets.ListOpts{NotTags: "my-tag"}, subnet_mock, subnet_expected)
+	listSubnets(t, subnets.ListOpts{NotTagsAny: "my-tag"}, subnet_mock, subnet_expected)
 }
 
 func TestGetSubnet(t *testing.T) {
