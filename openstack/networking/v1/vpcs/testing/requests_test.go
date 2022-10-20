@@ -22,6 +22,18 @@ func listVpcs(t *testing.T, opts vpcs.ListOpts, mock_json string, expected []vpc
 		if opts.EnterpriseProjectID != "" {
 			expected_args["enterprise_project_id"] = opts.EnterpriseProjectID
 		}
+		if opts.Tags != "" {
+			expected_args["tags"] = opts.Tags
+		}
+		if opts.TagsAny != "" {
+			expected_args["tags-any"] = opts.TagsAny
+		}
+		if opts.NotTags != "" {
+			expected_args["not-tags"] = opts.NotTags
+		}
+		if opts.NotTagsAny != "" {
+			expected_args["not-tags-any"] = opts.NotTagsAny
+		}
 		th.TestFormValues(t, r, expected_args)
 
 		w.Header().Add("Content-Type", "application/json")
@@ -99,6 +111,10 @@ func TestListVpc(t *testing.T) {
 
 	listVpcs(t, vpcs.ListOpts{}, vpc_mock, vpc_expected)
 	listVpcs(t, vpcs.ListOpts{EnterpriseProjectID: "eproject_id"}, vpc_mock, vpc_expected)
+	listVpcs(t, vpcs.ListOpts{Tags: "my-tag"}, vpc_mock, vpc_expected)
+	listVpcs(t, vpcs.ListOpts{TagsAny: "my-tag"}, vpc_mock, vpc_expected)
+	listVpcs(t, vpcs.ListOpts{NotTags: "my-tag"}, vpc_mock, vpc_expected)
+	listVpcs(t, vpcs.ListOpts{NotTagsAny: "my-tag"}, vpc_mock, vpc_expected)
 }
 
 func TestGetVpc(t *testing.T) {
