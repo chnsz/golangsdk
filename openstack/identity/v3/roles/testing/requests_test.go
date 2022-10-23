@@ -4,30 +4,9 @@ import (
 	"testing"
 
 	"github.com/chnsz/golangsdk/openstack/identity/v3/roles"
-	"github.com/chnsz/golangsdk/pagination"
 	th "github.com/chnsz/golangsdk/testhelper"
 	"github.com/chnsz/golangsdk/testhelper/client"
 )
-
-func TestListRoles(t *testing.T) {
-	th.SetupHTTP()
-	defer th.TeardownHTTP()
-	HandleListRolesSuccessfully(t)
-
-	count := 0
-	err := roles.List(client.ServiceClient(), nil).EachPage(func(page pagination.Page) (bool, error) {
-		count++
-
-		actual, err := roles.ExtractRoles(page)
-		th.AssertNoErr(t, err)
-
-		th.CheckDeepEquals(t, ExpectedRolesSlice, actual)
-
-		return true, nil
-	})
-	th.AssertNoErr(t, err)
-	th.CheckEquals(t, count, 1)
-}
 
 func TestListRolesAllPages(t *testing.T) {
 	th.SetupHTTP()
