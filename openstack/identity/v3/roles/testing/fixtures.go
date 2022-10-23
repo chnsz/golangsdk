@@ -42,6 +42,17 @@ const ListOutput = `
 }
 `
 
+const EmptyRespOutput = `
+{
+	"links": {
+		"next": null,
+		"previous": null,
+		"self": "http://example.com/identity/v3/roles?page=2\u0026per_page=300"
+	},
+	"roles": [],
+	"total_number": 2
+}`
+
 // GetOutput provides a Get result.
 const GetOutput = `
 {
@@ -186,12 +197,19 @@ var ExpectedRolesSlice = []roles.Role{FirstRole, SecondRole}
 func HandleListRolesSuccessfully(t *testing.T) {
 	th.Mux.HandleFunc("/roles", func(w http.ResponseWriter, r *http.Request) {
 		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "Accept", "application/json")
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
-
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, ListOutput)
+		r.ParseForm()
+		pageNum := r.Form.Get("page")
+		switch pageNum {
+		case "":
+			fmt.Fprintf(w, ListOutput)
+		case "2":
+			fmt.Fprintf(w, EmptyRespOutput)
+		default:
+			t.Fatalf("/roles invoked with unexpected page=[%s]", pageNum)
+		}
 	})
 }
 
