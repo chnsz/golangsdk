@@ -18,6 +18,12 @@ func listVpcs(t *testing.T, opts vpcs.ListOpts, mock_json string, expected []vpc
 		th.TestMethod(t, r, "GET")
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
 
+		expected_args := map[string]string{}
+		if opts.EnterpriseProjectID != "" {
+			expected_args["enterprise_project_id"] = opts.EnterpriseProjectID
+		}
+		th.TestFormValues(t, r, expected_args)
+
 		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 
@@ -92,6 +98,7 @@ func TestListVpc(t *testing.T) {
 	}
 
 	listVpcs(t, vpcs.ListOpts{}, vpc_mock, vpc_expected)
+	listVpcs(t, vpcs.ListOpts{EnterpriseProjectID: "eproject_id"}, vpc_mock, vpc_expected)
 }
 
 func TestGetVpc(t *testing.T) {
