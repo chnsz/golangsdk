@@ -43,6 +43,10 @@ type ListOpts struct {
 	VPC_ID string `q:"vpc_id"`
 }
 
+func (opts ListOpts) hasQueryParameter() bool {
+	return opts.VPC_ID != ""
+}
+
 // ToSubnetListQuery formats a ListOpts into a query string
 func (opts ListOpts) ToSubnetListQuery() (string, error) {
 	q, err := golangsdk.BuildQueryString(opts)
@@ -61,7 +65,7 @@ func (opts ListOpts) ToSubnetListQuery() (string, error) {
 func List(c *golangsdk.ServiceClient, opts ListOpts) ([]Subnet, error) {
 	url := rootURL(c)
 
-	if opts.VPC_ID != "" {
+	if opts.hasQueryParameter() {
 		query, err := opts.ToSubnetListQuery()
 		if err != nil {
 			return nil, err
