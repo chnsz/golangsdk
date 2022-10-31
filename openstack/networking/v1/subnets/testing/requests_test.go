@@ -18,6 +18,12 @@ func listSubnets(t *testing.T, opts subnets.ListOpts, mock_json string, expected
 		th.TestMethod(t, r, "GET")
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
 
+		expected_args := map[string]string{}
+		if opts.VPC_ID != "" {
+			expected_args["vpc_id"] = opts.VPC_ID
+		}
+		th.TestFormValues(t, r, expected_args)
+
 		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 
@@ -102,6 +108,7 @@ func TestListSubnet(t *testing.T) {
 	}
 
 	listSubnets(t, subnets.ListOpts{}, subnet_mock, subnet_expected)
+	listSubnets(t, subnets.ListOpts{VPC_ID: "58c24204-170e-4ff0-9b42-c53cdea9239a"}, subnet_mock, subnet_expected)
 }
 
 func TestGetSubnet(t *testing.T) {
