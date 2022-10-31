@@ -31,6 +31,10 @@ type ListOpts struct {
 	Status string `json:"status"`
 }
 
+func (opts ListOpts) hasQueryParameter() bool {
+	return opts.EnterpriseProjectID != ""
+}
+
 // ToVpcListQuery formats a ListOpts into a query string
 func (opts ListOpts) ToVpcListQuery() (string, error) {
 	q, err := golangsdk.BuildQueryString(opts)
@@ -48,7 +52,7 @@ func (opts ListOpts) ToVpcListQuery() (string, error) {
 // tenant who submits the request, unless an admin user submits the request.
 func List(c *golangsdk.ServiceClient, opts ListOpts) ([]Vpc, error) {
 	url := rootURL(c)
-	if opts.EnterpriseProjectID != "" {
+	if opts.hasQueryParameter() {
 		query, err := opts.ToVpcListQuery()
 		if err != nil {
 			return nil, err
