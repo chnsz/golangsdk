@@ -130,8 +130,9 @@ var (
 		},
 	}
 
-	updateOpts = instances.UpdateOpts{
-		Description:   "Updated by script",
+	descContent = "Updated by script"
+	updateOpts  = instances.UpdateOpts{
+		Description:   &descContent,
 		Name:          "terraform-update",
 		MaintainBegin: "18:00:00",
 		MaintainEnd:   "22:00:00",

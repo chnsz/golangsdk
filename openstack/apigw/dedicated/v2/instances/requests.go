@@ -114,7 +114,7 @@ func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Page
 // UpdateOpts allows to update an existing APIG dedicated instance using given parameters.
 type UpdateOpts struct {
 	// Description about the APIG dedicated instance.
-	Description string `json:"description,omitempty"`
+	Description *string `json:"description,omitempty"`
 	// Start time of the maintenance time window in the format "xx:00:00".
 	// The value of xx can be 02, 06, 10, 14, 18, or 22.
 	MaintainBegin string `json:"maintain_begin,omitempty"`
