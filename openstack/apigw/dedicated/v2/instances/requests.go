@@ -41,6 +41,11 @@ type CreateOpts struct {
 	AvailableZoneIds []string `json:"available_zone_ids,omitempty"`
 	// Whether public access with an IPv6 address is supported.
 	Ipv6Enable bool `json:"ipv6_enable,omitempty"`
+	// The type of load balancer used by the instance.
+	// The valid values are as follows:
+	// + lvs: Linux virtual server
+	// + elb: Elastic load balance
+	LoadbalancerProvider string `json:"loadbalancer_provider,omitempty"`
 }
 
 type CreateOptsBuilder interface {
