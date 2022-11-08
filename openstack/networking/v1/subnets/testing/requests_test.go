@@ -10,7 +10,7 @@ import (
 	th "github.com/chnsz/golangsdk/testhelper"
 )
 
-func TestListSubnet(t *testing.T) {
+func listSubnets(t *testing.T, opts subnets.ListOpts, mock_json string, expected []subnets.Subnet) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
 
@@ -18,10 +18,40 @@ func TestListSubnet(t *testing.T) {
 		th.TestMethod(t, r, "GET")
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
 
+		expected_args := map[string]string{}
+		if opts.VPC_ID != "" {
+			expected_args["vpc_id"] = opts.VPC_ID
+		}
+		if opts.Tags != "" {
+			expected_args["tags"] = opts.Tags
+		}
+		if opts.TagsAny != "" {
+			expected_args["tags-any"] = opts.TagsAny
+		}
+		if opts.NotTags != "" {
+			expected_args["not-tags"] = opts.NotTags
+		}
+		if opts.NotTagsAny != "" {
+			expected_args["not-tags-any"] = opts.NotTagsAny
+		}
+		th.TestFormValues(t, r, expected_args)
+
 		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 
-		fmt.Fprintf(w, `
+		fmt.Fprintf(w, mock_json)
+	})
+
+	actual, err := subnets.List(fake.ServiceClient(), opts)
+	if err != nil {
+		t.Errorf("Failed to extract subnets: %v", err)
+	}
+
+	th.AssertDeepEquals(t, expected, actual)
+}
+
+func TestListSubnet(t *testing.T) {
+	subnet_mock := `
 {
     "subnets": [
         {
@@ -32,12 +62,12 @@ func TestListSubnet(t *testing.T) {
             "vpc_id": "58c24204-170e-4ff0-9b42-c53cdea9239a",
             "gateway_ip": "192.168.200.1",
             "dhcp_enable": true,
-			"primary_dns": "114.114.114.114",
-		    "secondary_dns": "114.114.115.115",
-		    "dnsList": [
-			  "114.114.114.114",
-			  "114.114.115.115"
-		    ],
+            "primary_dns": "114.114.114.114",
+            "secondary_dns": "114.114.115.115",
+            "dnsList": [
+              "114.114.114.114",
+              "114.114.115.115"
+            ],
             "neutron_subnet_id": "3d543273-31c3-41f8-b887-ed8c2c837578"
         },
         {
@@ -48,26 +78,19 @@ func TestListSubnet(t *testing.T) {
             "vpc_id": "58c24204-170e-4ff0-9b42-c53cdea9239a",
             "gateway_ip": "192.168.200.1",
             "dhcp_enable": true,
-			"primary_dns": "114.114.114.114",
-		    "secondary_dns": "114.114.115.115",
-		    "dnsList": [
-			  "114.114.114.114",
-			  "114.114.115.115"
-		    ],
+            "primary_dns": "114.114.114.114",
+            "secondary_dns": "114.114.115.115",
+            "dnsList": [
+              "114.114.114.114",
+              "114.114.115.115"
+            ],
             "neutron_subnet_id": "3d543273-31c3-41f8-b887-ed8c2c837578"
         }
     ]
 }
+		`
 
-		`)
-	})
-
-	actual, err := subnets.List(fake.ServiceClient(), subnets.ListOpts{})
-	if err != nil {
-		t.Errorf("Failed to extract subnets: %v", err)
-	}
-
-	expected := []subnets.Subnet{
+	subnet_expected := []subnets.Subnet{
 		{
 			Status:        "ACTIVE",
 			CIDR:          "192.168.200.0/24",
@@ -95,7 +118,13 @@ func TestListSubnet(t *testing.T) {
 			SubnetId:      "3d543273-31c3-41f8-b887-ed8c2c837578",
 		},
 	}
-	th.AssertDeepEquals(t, expected, actual)
+
+	listSubnets(t, subnets.ListOpts{}, subnet_mock, subnet_expected)
+	listSubnets(t, subnets.ListOpts{VPC_ID: "58c24204-170e-4ff0-9b42-c53cdea9239a"}, subnet_mock, subnet_expected)
+	listSubnets(t, subnets.ListOpts{Tags: "my-tag"}, subnet_mock, subnet_expected)
+	listSubnets(t, subnets.ListOpts{TagsAny: "my-tag"}, subnet_mock, subnet_expected)
+	listSubnets(t, subnets.ListOpts{NotTags: "my-tag"}, subnet_mock, subnet_expected)
+	listSubnets(t, subnets.ListOpts{NotTagsAny: "my-tag"}, subnet_mock, subnet_expected)
 }
 
 func TestGetSubnet(t *testing.T) {

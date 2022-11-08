@@ -10,7 +10,7 @@ import (
 	th "github.com/chnsz/golangsdk/testhelper"
 )
 
-func TestListVpc(t *testing.T) {
+func listVpcs(t *testing.T, opts vpcs.ListOpts, mock_json string, expected []vpcs.Vpc) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
 
@@ -18,10 +18,40 @@ func TestListVpc(t *testing.T) {
 		th.TestMethod(t, r, "GET")
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
 
+		expected_args := map[string]string{}
+		if opts.EnterpriseProjectID != "" {
+			expected_args["enterprise_project_id"] = opts.EnterpriseProjectID
+		}
+		if opts.Tags != "" {
+			expected_args["tags"] = opts.Tags
+		}
+		if opts.TagsAny != "" {
+			expected_args["tags-any"] = opts.TagsAny
+		}
+		if opts.NotTags != "" {
+			expected_args["not-tags"] = opts.NotTags
+		}
+		if opts.NotTagsAny != "" {
+			expected_args["not-tags-any"] = opts.NotTagsAny
+		}
+		th.TestFormValues(t, r, expected_args)
+
 		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 
-		fmt.Fprintf(w, `
+		fmt.Fprintf(w, mock_json)
+	})
+
+	actual, err := vpcs.List(fake.ServiceClient(), opts)
+	if err != nil {
+		t.Errorf("Failed to extract vpcs: %v", err)
+	}
+
+	th.AssertDeepEquals(t, expected, actual)
+}
+
+func TestListVpc(t *testing.T) {
+	vpc_mock := `
 {
     "vpcs": [
         {
@@ -50,17 +80,9 @@ func TestListVpc(t *testing.T) {
         }
     ]
 }
-			`)
-	})
+                       `
 
-	//count := 0
-
-	actual, err := vpcs.List(fake.ServiceClient(), vpcs.ListOpts{})
-	if err != nil {
-		t.Errorf("Failed to extract vpcs: %v", err)
-	}
-
-	expected := []vpcs.Vpc{
+	vpc_expected := []vpcs.Vpc{
 		{
 			Status:           "OK",
 			CIDR:             "192.168.0.0/16",
@@ -87,7 +109,12 @@ func TestListVpc(t *testing.T) {
 		},
 	}
 
-	th.AssertDeepEquals(t, expected, actual)
+	listVpcs(t, vpcs.ListOpts{}, vpc_mock, vpc_expected)
+	listVpcs(t, vpcs.ListOpts{EnterpriseProjectID: "eproject_id"}, vpc_mock, vpc_expected)
+	listVpcs(t, vpcs.ListOpts{Tags: "my-tag"}, vpc_mock, vpc_expected)
+	listVpcs(t, vpcs.ListOpts{TagsAny: "my-tag"}, vpc_mock, vpc_expected)
+	listVpcs(t, vpcs.ListOpts{NotTags: "my-tag"}, vpc_mock, vpc_expected)
+	listVpcs(t, vpcs.ListOpts{NotTagsAny: "my-tag"}, vpc_mock, vpc_expected)
 }
 
 func TestGetVpc(t *testing.T) {
