@@ -16,6 +16,8 @@ type ListOptsBuilder interface {
 type ListOpts struct {
 	Isregistered           string `q:"__isregistered"`
 	Imagetype              string `q:"__imagetype"`
+	WholeImage             string `q:"__whole_image"`
+	SystemCmkid            string `q:"__system__cmkid"`
 	Protected              bool   `q:"protected"`
 	Visibility             string `q:"visibility"`
 	Owner                  string `q:"owner"`
