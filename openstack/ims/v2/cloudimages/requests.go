@@ -22,6 +22,7 @@ type ListOpts struct {
 	ID                     string `q:"id"`
 	Status                 string `q:"status"`
 	Name                   string `q:"name"`
+	FlavorId               string `q:"flavor_id"`
 	ContainerFormat        string `q:"container_format"`
 	DiskFormat             string `q:"disk_format"`
 	MinRam                 int    `q:"min_ram"`
