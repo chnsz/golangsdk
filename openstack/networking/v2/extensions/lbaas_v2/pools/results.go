@@ -27,6 +27,23 @@ type SessionPersistence struct {
 
 	// Name of cookie if persistence mode is set appropriately.
 	CookieName string `json:"cookie_name,omitempty"`
+
+	// The duration of persistence, in minutes.
+	Timeout int `json:"persistence_timeout,omitempty"`
+}
+
+// SlowStart specifies slow start details.
+// After you enable slow start, new backend servers added to the backend server group are warmed up,
+// and the number of requests they can receive increases linearly during the configured slow start duration.
+//
+// This parameter can be used when the protocol of the backend server group is HTTP or HTTPS.
+// An error will be returned if the protocol is not HTTP or HTTPS.
+type SlowStart struct {
+	// Specifies whether to enable slow start.
+	Enable bool `json:"enable,omitempty"`
+
+	// Specifies the slow start duration, in seconds.
+	Duration int `json:"duration,omitempty"`
 }
 
 // LoadBalancerID represents a load balancer.
@@ -56,7 +73,7 @@ type Pool struct {
 	Description string `json:"description"`
 
 	// A list of listeners objects IDs.
-	Listeners []ListenerID `json:"listeners"` //[]map[string]interface{}
+	Listeners []ListenerID `json:"listeners"` // []map[string]interface{}
 
 	// A list of member objects IDs.
 	Members []Member `json:"members"`
@@ -86,6 +103,15 @@ type Pool struct {
 	// Indicates whether connections in the same session will be processed by the
 	// same Pool member or not.
 	Persistence SessionPersistence `json:"session_persistence"`
+
+	// Specifies the IP address version supported by the backend server group.
+	IpVersion string `json:"ip_version"`
+
+	// Specifies slow start details.
+	SlowStart *SlowStart `json:"slow_start,omitempty"`
+
+	// Specifies whether to enable removal protection for the load balancer.
+	MemberDeletionProtectionEnable bool `json:"member_deletion_protection_enable,omitempty"`
 
 	// The load balancer provider.
 	Provider string `json:"provider"`

@@ -116,6 +116,15 @@ type CreateOpts struct {
 	// Omit this field to prevent session persistence.
 	Persistence *SessionPersistence `json:"session_persistence,omitempty"`
 
+	// Specifies slow start details.
+	SlowStart *SlowStart `json:"slow_start,omitempty"`
+
+	// Specifies whether to enable removal protection for the load balancer.
+	MemberDeletionProtectionEnable bool `json:"member_deletion_protection_enable,omitempty"`
+
+	// Specifies the IP address version supported by the backend server group.
+	IpVersion string `json:"ip_version,omitempty"`
+
 	// The administrative state of the Pool. A valid value is true (UP)
 	// or false (DOWN).
 	AdminStateUp *bool `json:"admin_state_up,omitempty"`
@@ -167,6 +176,16 @@ type UpdateOpts struct {
 	// The administrative state of the Pool. A valid value is true (UP)
 	// or false (DOWN).
 	AdminStateUp *bool `json:"admin_state_up,omitempty"`
+
+	// Persistence is the session persistence of the pool.
+	// Omit this field to prevent session persistence.
+	Persistence *SessionPersistence `json:"session_persistence,omitempty"`
+
+	// Specifies slow start details.
+	SlowStart *SlowStart `json:"slow_start,omitempty"`
+
+	// Specifies whether to enable removal protection for the load balancer.
+	MemberDeletionProtectionEnable bool `json:"member_deletion_protection_enable,omitempty"`
 }
 
 // ToPoolUpdateMap builds a request body from UpdateOpts.
