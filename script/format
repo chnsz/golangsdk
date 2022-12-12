@@ -1,23 +1,13 @@
 #!/usr/bin/env bash
 
-goimports="goimports"
-
-find_files() {
-  find . -not \( \
-      \( \
-        -wholename './output' \
-        -o -wholename './_output' \
-        -o -wholename './_gopath' \
-        -o -wholename './release' \
-        -o -wholename './target' \
-        -o -wholename '*/third_party/*' \
-        -o -wholename '*/vendor/*' \
-      \) -prune \
-    \) -name '*.go'
-}
-
-diff=$(find_files | xargs ${goimports} -d -e 2>&1)
-if [[ -n "${diff}" ]]; then
-  echo "${diff}"
-  exit 1
+# Check gofmt
+echo "==> Checking that code complies with gofmt requirements..."
+gofmt_files=$(gofmt -l ./ | grep -v vendor)
+if [[ -n "${gofmt_files}" ]]; then
+    echo 'gofmt needs running on the following files:'
+    echo "${gofmt_files}"
+    echo "You can use the command: \`gofmt -w ./\` to reformat code."
+    exit 1
 fi
+
+exit 0
