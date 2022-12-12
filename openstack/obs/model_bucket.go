@@ -267,18 +267,6 @@ type GetBucketEncryptionOutput struct {
 	BucketEncryptionConfiguration
 }
 
-// SetBucketReplicationInput is the input parameter of SetBucketReplication function
-type SetBucketReplicationInput struct {
-	Bucket string `xml:"-"`
-	BucketReplicationConfiguration
-}
-
-// GetBucketReplicationOutput is the result of GetBucketReplication function
-type GetBucketReplicationOutput struct {
-	BaseModel
-	BucketReplicationConfiguration
-}
-
 // SetBucketTaggingInput is the input parameter of SetBucketTagging function
 type SetBucketTaggingInput struct {
 	Bucket string `xml:"-"`
@@ -365,4 +353,13 @@ type GetBucketFetchJobInput struct {
 type GetBucketFetchJobOutput struct {
 	BaseModel
 	GetBucketFetchJobResponse
+}
+
+type GetBucketFSStatusInput struct {
+	GetBucketMetadataInput
+}
+
+type GetBucketFSStatusOutput struct {
+	GetBucketMetadataOutput
+	FSStatus FSStatusType
 }

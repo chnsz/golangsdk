@@ -80,6 +80,18 @@ func ParseStringToStorageClassType(value string) (ret StorageClassType) {
 	return
 }
 
+func ParseStringToFSStatusType(value string) (ret FSStatusType) {
+	switch value {
+	case "Enabled":
+		ret = FSStatusEnabled
+	case "Disabled":
+		ret = FSStatusDisabled
+	default:
+		ret = ""
+	}
+	return
+}
+
 func prepareGrantURI(grant Grant) string {
 	if grant.Grantee.URI == GroupAllUsers || grant.Grantee.URI == GroupAuthenticatedUsers {
 		return fmt.Sprintf("<URI>%s%s</URI>", "http://acs.amazonaws.com/groups/global/", grant.Grantee.URI)
@@ -425,53 +437,6 @@ func ConvertEncryptionConfigurationToXml(input BucketEncryptionConfiguration, re
 	}
 
 	xml = append(xml, "</ApplyServerSideEncryptionByDefault></Rule></ServerSideEncryptionConfiguration>")
-	data = strings.Join(xml, "")
-	if returnMd5 {
-		md5 = Base64Md5([]byte(data))
-	}
-	return
-}
-
-// convertReplicationConfigurationToXml converts BucketReplicationConfiguration value to XML data and returns it
-func convertReplicationConfigurationToXml(input BucketReplicationConfiguration, returnMd5 bool, isObs bool) (data string, md5 string) {
-	xml := make([]string, 0, 3+len(input.ReplicationRules)*6)
-
-	xml = append(xml, "<ReplicationConfiguration>")
-	xml = append(xml, fmt.Sprintf("<Agency>%s</Agency>", XmlTranscoding(input.Agency)))
-
-	for _, rule := range input.ReplicationRules {
-		xml = append(xml, "<Rule>")
-		xml = append(xml, fmt.Sprintf("<Status>%s</Status>", rule.Status))
-		xml = append(xml, fmt.Sprintf("<Prefix>%s</Prefix>", XmlTranscoding(rule.Prefix)))
-
-		xml = append(xml, fmt.Sprintf("<Destination><Bucket>%s</Bucket>", XmlTranscoding(rule.DestinationBucket)))
-		if rule.StorageClass != "" {
-			storageClass := string(rule.StorageClass)
-			if !isObs {
-				if storageClass == string(StorageClassWarm) {
-					storageClass = string(storageClassStandardIA)
-				} else if storageClass == string(StorageClassCold) {
-					storageClass = string(storageClassGlacier)
-				}
-			}
-			xml = append(xml, fmt.Sprintf("<StorageClass>%s</StorageClass>", storageClass))
-		}
-		if rule.DeleteDate != "" {
-			xml = append(xml, fmt.Sprintf("<DeleteDate>%s</DeleteDate>", rule.DeleteDate))
-		}
-		xml = append(xml, "</Destination>")
-
-		if rule.ID != "" {
-			xml = append(xml, fmt.Sprintf("<ID>%s</ID>", XmlTranscoding(rule.ID)))
-		}
-
-		if rule.HistoricalObjectReplication != "" {
-			xml = append(xml, fmt.Sprintf("<HistoricalObjectReplication>%s</HistoricalObjectReplication>",
-				rule.HistoricalObjectReplication))
-		}
-		xml = append(xml, "</Rule>")
-	}
-	xml = append(xml, "</ReplicationConfiguration>")
 	data = strings.Join(xml, "")
 	if returnMd5 {
 		md5 = Base64Md5([]byte(data))
@@ -1158,4 +1123,25 @@ func ParseModifyObjectOutput(output *ModifyObjectOutput) {
 	if ret, ok := output.ResponseHeaders[HEADER_ETAG]; ok {
 		output.ETag = ret[0]
 	}
+}
+
+func ParseGetBucketFSStatusOutput(output *GetBucketFSStatusOutput) {
+	ParseGetBucketMetadataOutput(&output.GetBucketMetadataOutput)
+
+	if ret, ok := output.ResponseHeaders[HEADER_FS_FILE_INTERFACE_OBS]; ok {
+		output.FSStatus = ParseStringToFSStatusType(ret[0])
+	}
+}
+
+func ParseGetAttributeOutput(output *GetAttributeOutput) {
+	ParseGetObjectMetadataOutput(&output.GetObjectMetadataOutput)
+	if ret, ok := output.ResponseHeaders[HEADER_MODE]; ok {
+		output.Mode = StringToInt(ret[0], -1)
+	} else {
+		output.Mode = -1
+	}
+}
+
+func ParseNewFolderOutput(output *NewFolderOutput) {
+	ParsePutObjectOutput(&output.PutObjectOutput)
 }
