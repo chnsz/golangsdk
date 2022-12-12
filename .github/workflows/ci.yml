@@ -24,14 +24,13 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.17
+          go-version: 1.18
 
       - name: Setup environment
         run: |
-          go get golang.org/x/crypto/ssh
-          go get golang.org/x/tools/cmd/goimports
-          go get github.com/wadey/gocovmerge
-          go get github.com/mattn/goveralls
+          go install golang.org/x/tools/cmd/goimports@latest
+          go install github.com/wadey/gocovmerge@latest
+          go install github.com/mattn/goveralls@latest
 
       - name: Run go vet
         run: go vet ./...
