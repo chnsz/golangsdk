@@ -288,6 +288,10 @@ type ExternalAccess struct {
 	Address string `json:"address,omitempty"`
 	// Port number.
 	ForwardPort int `json:"forward_port,omitempty"`
+	// Id.
+	Id string `json:"id,omitempty"`
+	// Type.
+	Type string `json:"type,omitempty"`
 }
 
 var requestOpts = golangsdk.RequestOpts{
