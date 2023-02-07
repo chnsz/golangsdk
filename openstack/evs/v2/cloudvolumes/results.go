@@ -205,3 +205,64 @@ func (r JobResult) Extract() (*JobResponse, error) {
 	err := r.ExtractInto(job)
 	return job, err
 }
+
+type Cinder struct {
+	// Unique identifier for the volume.
+	ID string `json:"id"`
+	// Human-readable display name for the volume.
+	Name string `json:"name"`
+	// Current status of the volume.
+	Status string `json:"status"`
+	// Size of the volume in GB.
+	Size int `json:"size"`
+	// Human-readable description for the volume.
+	Description string `json:"description"`
+	// The type of volume to create, either SATA or SSD.
+	VolumeType string `json:"volume_type"`
+	// AvailabilityZone is which availability zone the volume is in.
+	AvailabilityZone string `json:"availability_zone"`
+	// Instances onto which the volume is attached.
+	Attachments []Attachment `json:"attachments"`
+	// Specifies the disk URI.
+	Links []Link `json:"links"`
+	// The metadata of the disk image.
+	ImageMetadata map[string]string `json:"volume_image_metadata"`
+	// The ID of the snapshot from which the volume was created
+	SnapshotID string `json:"snapshot_id"`
+	// The ID of another block storage volume from which the current volume was created
+	SourceVolID string `json:"source_volid"`
+	// Specifies the ID of the tenant to which the disk belongs. The tenant ID is actually the project ID.
+	OsVolTenantAttrTenantID string `json:"os-vol-tenant-attr:tenant_id"`
+	// Specifies the service type. The value can be EVS, DSS or DESS.
+	ServiceType string `json:"service_type"`
+	// Indicates whether this is a bootable volume.
+	Bootable string `json:"bootable"`
+	// Multiattach denotes if the volume is multi-attach capable.
+	Multiattach bool `json:"multiattach"`
+	// Specifies the ID of the DSS storage pool accommodating the disk.
+	DedicatedStorageID string `json:"dedicated_storage_id"`
+	// Specifies the name of the DSS storage pool accommodating the disk.
+	DedicatedStorageName string `json:"dedicated_storage_name"`
+	// Encrypted denotes if the volume is encrypted.
+	Encrypted bool `json:"encrypted"`
+	// wwn of the volume.
+	WWN string `json:"wwn"`
+	// enterprise project ID bound to the volume
+	EnterpriseProjectID string `json:"enterprise_project_id"`
+	// ReplicationStatus is the status of replication.
+	ReplicationStatus string `json:"replication_status"`
+	// ConsistencyGroupID is the consistency group ID.
+	ConsistencyGroupID string `json:"consistencygroup_id"`
+	// Arbitrary key-value pairs defined by the metadata field table.
+	Metadata VolumeMetadata `json:"metadata"`
+	// Arbitrary key-value pairs defined by the user.
+	Tags map[string]string `json:"tags"`
+	// UserID is the id of the user who created the volume.
+	UserID string `json:"user_id"`
+	// Shareable denotes if the volume is shareable.
+	Shareable string `json:"shareable"`
+	// The date when this volume was created.
+	CreatedAt string `json:"created_at"`
+	// The date when this volume was last updated
+	UpdatedAt string `json:"updated_at"`
+}

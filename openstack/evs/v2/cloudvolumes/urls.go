@@ -8,6 +8,10 @@ func createURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL(resourcePath)
 }
 
+func createCinderURL(c *golangsdk.ServiceClient) string {
+	return c.ServiceURL("volumes")
+}
+
 func resourceURL(c *golangsdk.ServiceClient, id string) string {
 	return c.ServiceURL(resourcePath, id)
 }

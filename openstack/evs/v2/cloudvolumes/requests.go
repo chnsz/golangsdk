@@ -343,3 +343,54 @@ func ListPage(client *golangsdk.ServiceClient, opts ListOptsBuilder) ([]Volume, 
 	err = rst.ExtractInto(&r)
 	return r.Volumes, err
 }
+
+type CreateCinderOpts struct {
+	Volume    CinderOpts     `json:"volume" required:"true"`
+	Scheduler *SchedulerOpts `json:"OS-SCH-HNT:scheduler_hints,omitempty"`
+}
+
+type CinderOpts struct {
+	// The availability zone
+	AvailabilityZone string `json:"availability_zone" required:"true"`
+	// The associated volume type
+	VolumeType string `json:"volume_type" required:"true"`
+	// The volume name
+	Name string `json:"name,omitempty"`
+	// The volume description
+	Description string `json:"description,omitempty"`
+	// The size of the volume, in GB
+	Size int `json:"size,omitempty"`
+	// The number to be created in a batch
+	Count int `json:"count,omitempty"`
+	// the ID of the existing volume snapshot
+	SnapshotID string `json:"snapshot_id,omitempty"`
+	// the ID of the image in IMS
+	ImageID string `json:"imageRef,omitempty"`
+	// Shared disk
+	Multiattach bool `json:"multiattach,omitempty"`
+	// One or more metadata key and value pairs to associate with the volume
+	Metadata map[string]string `json:"metadata,omitempty"`
+}
+
+func CreateCinder(client *golangsdk.ServiceClient, opts CreateCinderOpts) (*Cinder, error) {
+	b, err := golangsdk.BuildRequestBody(opts, "")
+	if err != nil {
+		return nil, err
+	}
+
+	var rst golangsdk.Result
+	_, err = client.Post(createCinderURL(client), b, &rst.Body, &golangsdk.RequestOpts{
+		OkCodes:     []int{202},
+		MoreHeaders: requestOpts.MoreHeaders,
+	})
+
+	if err == nil {
+		var r struct {
+			Volume Cinder `json:"volume"`
+		}
+		if err = rst.ExtractInto(&r); err == nil {
+			return &r.Volume, nil
+		}
+	}
+	return nil, err
+}
