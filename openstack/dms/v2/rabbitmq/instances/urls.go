@@ -3,11 +3,12 @@ package instances
 import "github.com/chnsz/golangsdk"
 
 // endpoint/instances
+const engine = "rabbitmq"
 const resourcePath = "instances"
 
 // createURL will build the rest query url of creation
 func createURL(client *golangsdk.ServiceClient) string {
-	return client.ServiceURL(client.ProjectID, resourcePath)
+	return client.ServiceURL(engine, client.ProjectID, resourcePath)
 }
 
 // deleteURL will build the url of deletion

@@ -3,11 +3,12 @@ package instances
 import "github.com/chnsz/golangsdk"
 
 // endpoint/instances
+const engine = "kafka"
 const resourcePath = "instances"
 
 // createURL will build the rest query url of creation
 func createURL(client *golangsdk.ServiceClient) string {
-	return client.ServiceURL(client.ProjectID, resourcePath)
+	return client.ServiceURL(engine, client.ProjectID, resourcePath)
 }
 
 // deleteURL will build the url of deletion
@@ -30,7 +31,7 @@ func listURL(client *golangsdk.ServiceClient) string {
 }
 
 func extend(client *golangsdk.ServiceClient, id string) string {
-	return client.ServiceURL(client.ProjectID, resourcePath, id, "extend")
+	return client.ServiceURL(engine, client.ProjectID, resourcePath, id, "extend")
 }
 
 func crossVpcURL(client *golangsdk.ServiceClient, id string) string {
