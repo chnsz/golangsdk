@@ -68,7 +68,7 @@ func Update(c *golangsdk.ServiceClient, hostID string, opts UpdateOptsBuilder) (
 	return
 }
 
-//Deletes the DeH using the specified hostID.
+// Deletes the DeH using the specified hostID.
 func Delete(c *golangsdk.ServiceClient, hostid string) (r DeleteResult) {
 	_, r.Err = c.Delete(resourceURL(c, hostid), nil)
 	return

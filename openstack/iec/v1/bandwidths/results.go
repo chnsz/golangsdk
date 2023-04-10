@@ -9,7 +9,7 @@ type commonResult struct {
 	golangsdk.Result
 }
 
-//BandWidthObject 带宽的结构体，用于创建和更新请求
+// BandWidthObject 带宽的结构体，用于创建和更新请求
 type BandWidthObject struct {
 	BandWidth common.Bandwidth `json:"bandwidth"`
 }

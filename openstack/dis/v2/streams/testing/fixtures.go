@@ -9,7 +9,7 @@ import (
 	"github.com/chnsz/golangsdk/testhelper/client"
 )
 
-//mock response body string
+// mock response body string
 var (
 	mockListResponse = `
 {

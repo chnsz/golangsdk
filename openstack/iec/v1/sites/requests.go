@@ -5,7 +5,7 @@ import (
 	"github.com/chnsz/golangsdk/pagination"
 )
 
-//ListSiteOptsBuilder list sites builder
+// ListSiteOptsBuilder list sites builder
 type ListSiteOptsBuilder interface {
 	ToListSiteQuery() (string, error)
 }

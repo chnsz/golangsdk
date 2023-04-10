@@ -298,7 +298,7 @@ func (opts DeleteAccessOpts) ToDeleteAccessMap() (map[string]interface{}, error)
 	return golangsdk.BuildRequestBody(opts, "os-deny_access")
 }
 
-//Deletes the Access Rule
+// Deletes the Access Rule
 func DeleteAccess(client *golangsdk.ServiceClient, share_id string, opts DeleteAccessOptsBuilder) (r DeleteAccessResult) {
 	b, err := opts.ToDeleteAccessMap()
 	if err != nil {
@@ -311,7 +311,7 @@ func DeleteAccess(client *golangsdk.ServiceClient, share_id string, opts DeleteA
 	return
 }
 
-//Gets the Mount/Export Locations of the SFS specified
+// Gets the Mount/Export Locations of the SFS specified
 func GetExportLocations(client *golangsdk.ServiceClient, id string) (r GetExportLocationsResult) {
 	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200},
 		MoreHeaders: RequestOpts.MoreHeaders}

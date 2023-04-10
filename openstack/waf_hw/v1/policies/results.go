@@ -15,7 +15,7 @@ type Policy struct {
 	BindHosts     []BindHost   `json:"bind_host"`
 }
 
-//Action contains actions after the attack is detected
+// Action contains actions after the attack is detected
 type Action struct {
 	Category         string `json:"category,omitempty"`
 	FollowedActionId string `json:"followed_action_id,omitempty"`

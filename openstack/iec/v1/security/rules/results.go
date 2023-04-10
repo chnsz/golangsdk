@@ -9,7 +9,7 @@ type commonResult struct {
 	golangsdk.Result
 }
 
-//RespSecurityGroupRule 获取安全组规则详情的结构体
+// RespSecurityGroupRule 获取安全组规则详情的结构体
 type RespSecurityGroupRule struct {
 	SecurityGroupRule common.RespSecurityGroupRuleEntity `json:"security_group_rule"`
 }

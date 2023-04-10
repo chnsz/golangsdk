@@ -8,18 +8,18 @@ import (
 	"github.com/chnsz/golangsdk/pagination"
 )
 
-//Create function
+// Create function
 type CreateOptsBuilder interface {
 	ToCreateFunctionMap() (map[string]interface{}, error)
 }
 
-//funcCode struct
+// funcCode struct
 type FunctionCodeOpts struct {
 	File string `json:"file" required:"true"`
 	Link string `json:"-"`
 }
 
-//function struct
+// function struct
 type CreateOpts struct {
 	FuncName            string            `json:"func_name" required:"true"`
 	MemorySize          int               `json:"memory_size" required:"true"`
@@ -50,7 +50,7 @@ func (opts CreateOpts) ToCreateFunctionMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-//create funtion
+// create funtion
 func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	f, err := opts.ToCreateFunctionMap()
 	if err != nil {
@@ -61,7 +61,7 @@ func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult)
 	return
 }
 
-//functions list struct
+// functions list struct
 type ListOpts struct {
 	Marker   string `q:"marker"`
 	MaxItems string `q:"maxitems"`
@@ -76,7 +76,7 @@ type ListOptsBuilder interface {
 	ToMetricsListQuery() (string, error)
 }
 
-//functions list
+// functions list
 func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
@@ -91,19 +91,19 @@ func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Page
 	})
 }
 
-//Querying the Metadata Information of a Function
+// Querying the Metadata Information of a Function
 func GetMetadata(c *golangsdk.ServiceClient, functionUrn string) (r GetResult) {
 	_, r.Err = c.Get(getMetadataURL(c, functionUrn), &r.Body, nil)
 	return
 }
 
-//Querying the Code of a Function
+// Querying the Code of a Function
 func GetCode(c *golangsdk.ServiceClient, functionUrn string) (r GetResult) {
 	_, r.Err = c.Get(getCodeURL(c, functionUrn), &r.Body, nil)
 	return
 }
 
-//Deleting a Function or Function Version
+// Deleting a Function or Function Version
 func Delete(c *golangsdk.ServiceClient, functionUrn string) (r DeleteResult) {
 	_, r.Err = c.Delete(deleteURL(c, functionUrn), nil)
 	return
@@ -113,7 +113,7 @@ type UpdateOptsBuilder interface {
 	ToUpdateMap() (map[string]interface{}, error)
 }
 
-//Function struct for update
+// Function struct for update
 type UpdateCodeOpts struct {
 	CodeType     string           `json:"code_type" required:"true"`
 	CodeUrl      string           `json:"code_url,omitempty"`
@@ -126,7 +126,7 @@ func (opts UpdateCodeOpts) ToUpdateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-//Modifying the Code of a Function
+// Modifying the Code of a Function
 func UpdateCode(c *golangsdk.ServiceClient, functionUrn string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToUpdateMap()
 	if err != nil {
@@ -137,7 +137,7 @@ func UpdateCode(c *golangsdk.ServiceClient, functionUrn string, opts UpdateOptsB
 	return
 }
 
-//Metadata struct for update
+// Metadata struct for update
 type UpdateMetadataOpts struct {
 	Handler            string       `json:"handler" required:"true"`
 	MemorySize         int          `json:"memory_size" required:"true"`
@@ -161,7 +161,7 @@ func (opts UpdateMetadataOpts) ToUpdateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-//Modifying the Metadata Information of a Function
+// Modifying the Metadata Information of a Function
 func UpdateMetadata(c *golangsdk.ServiceClient, functionUrn string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToUpdateMap()
 	if err != nil {
@@ -172,7 +172,7 @@ func UpdateMetadata(c *golangsdk.ServiceClient, functionUrn string, opts UpdateO
 	return
 }
 
-//verstion struct
+// verstion struct
 type CreateVersionOpts struct {
 	Digest      string `json:"digest,omitempty"`
 	Description string `json:"description,omitempty"`
@@ -183,7 +183,7 @@ func (opts CreateVersionOpts) ToCreateFunctionMap() (map[string]interface{}, err
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-//Publishing a Function Version
+// Publishing a Function Version
 func CreateVersion(c *golangsdk.ServiceClient, opts CreateOptsBuilder, functionUrn string) (r CreateResult) {
 	b, err := opts.ToCreateFunctionMap()
 	if err != nil {
@@ -194,7 +194,7 @@ func CreateVersion(c *golangsdk.ServiceClient, opts CreateOptsBuilder, functionU
 	return
 }
 
-//Querying the Alias Information of a Function Version
+// Querying the Alias Information of a Function Version
 func ListVersions(c *golangsdk.ServiceClient, opts ListOptsBuilder, functionUrn string) pagination.Pager {
 	url := listVersionURL(c, functionUrn)
 	if opts != nil {
@@ -209,7 +209,7 @@ func ListVersions(c *golangsdk.ServiceClient, opts ListOptsBuilder, functionUrn 
 	})
 }
 
-//Alias struct
+// Alias struct
 type CreateAliasOpts struct {
 	Name    string `json:"name" required:"true"`
 	Version string `json:"version" required:"true"`
@@ -219,7 +219,7 @@ func (opts CreateAliasOpts) ToCreateFunctionMap() (map[string]interface{}, error
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-//Creating an Alias for a Function Version
+// Creating an Alias for a Function Version
 func CreateAlias(c *golangsdk.ServiceClient, opts CreateOptsBuilder, functionUrn string) (r CreateResult) {
 	b, err := opts.ToCreateFunctionMap()
 	if err != nil {
@@ -230,7 +230,7 @@ func CreateAlias(c *golangsdk.ServiceClient, opts CreateOptsBuilder, functionUrn
 	return
 }
 
-//Alias struct for update
+// Alias struct for update
 type UpdateAliasOpts struct {
 	Version     string `json:"version" required:"true"`
 	Description string `json:"description,omitempty"`
@@ -240,7 +240,7 @@ func (opts UpdateAliasOpts) ToUpdateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-//Modifying the Alias Information of a Function Version
+// Modifying the Alias Information of a Function Version
 func UpdateAlias(c *golangsdk.ServiceClient, functionUrn, aliasName string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToUpdateMap()
 	if err != nil {
@@ -251,26 +251,26 @@ func UpdateAlias(c *golangsdk.ServiceClient, functionUrn, aliasName string, opts
 	return
 }
 
-//Deleting an Alias of a Function Version
+// Deleting an Alias of a Function Version
 func DeleteAlias(c *golangsdk.ServiceClient, functionUrn, aliasName string) (r DeleteResult) {
 	_, r.Err = c.Delete(deleteAliasURL(c, functionUrn, aliasName), &golangsdk.RequestOpts{OkCodes: []int{204}})
 	return
 }
 
-//Querying the Alias Information of a Function Version
+// Querying the Alias Information of a Function Version
 func GetAlias(c *golangsdk.ServiceClient, functionUrn, aliasName string) (r GetResult) {
 	_, r.Err = c.Get(getAliasURL(c, functionUrn, aliasName), &r.Body, &golangsdk.RequestOpts{OkCodes: []int{200}})
 	return
 }
 
-//Querying the Aliases of a Function's All Versions
+// Querying the Aliases of a Function's All Versions
 func ListAlias(c *golangsdk.ServiceClient, functionUrn string) pagination.Pager {
 	return pagination.NewPager(c, listAliasURL(c, functionUrn), func(r pagination.PageResult) pagination.Page {
 		return FunctionPage{pagination.SinglePageBase(r)}
 	})
 }
 
-//Executing a Function Synchronously
+// Executing a Function Synchronously
 func Invoke(c *golangsdk.ServiceClient, m map[string]interface{}, functionUrn string) (r CreateResult) {
 	var resp *http.Response
 	resp, r.Err = c.Post(invokeURL(c, functionUrn), m, nil, &golangsdk.RequestOpts{
@@ -285,7 +285,7 @@ func Invoke(c *golangsdk.ServiceClient, m map[string]interface{}, functionUrn st
 	return
 }
 
-//Executing a Function Asynchronously
+// Executing a Function Asynchronously
 func AsyncInvoke(c *golangsdk.ServiceClient, m map[string]interface{}, functionUrn string) (r CreateResult) {
 	_, r.Err = c.Post(asyncInvokeURL(c, functionUrn), m, &r.Body, &golangsdk.RequestOpts{OkCodes: []int{202}})
 	return

@@ -76,7 +76,7 @@ type UpdateOptsBuilder interface {
 	ToNatGatewayUpdateMap() (map[string]interface{}, error)
 }
 
-//UpdateOpts is a struct which represents the request body of update method
+// UpdateOpts is a struct which represents the request body of update method
 type UpdateOpts struct {
 	Name        string `json:"name,omitempty"`
 	Description string `json:"description,omitempty"`
@@ -96,7 +96,7 @@ type ListOptsBuilder interface {
 	ToNatGatewayListQuery() (string, error)
 }
 
-//Update allows nat gateway resources to be updated.
+// Update allows nat gateway resources to be updated.
 func Update(c *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToNatGatewayUpdateMap()
 	if err != nil {

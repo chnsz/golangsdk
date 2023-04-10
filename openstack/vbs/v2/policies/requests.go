@@ -110,7 +110,7 @@ func (opts UpdateOpts) ToPolicyUpdateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-//Update will Update an existing backup Policy based on the values in UpdateOpts.To extract
+// Update will Update an existing backup Policy based on the values in UpdateOpts.To extract
 // the Policy object from the response, call the Extract method on the
 // UpdateResult.
 func Update(c *golangsdk.ServiceClient, policyID string, opts UpdateOptsBuilder) (r UpdateResult) {
@@ -124,13 +124,13 @@ func Update(c *golangsdk.ServiceClient, policyID string, opts UpdateOptsBuilder)
 	return
 }
 
-//Delete will delete the specified backup policy.
+// Delete will delete the specified backup policy.
 func Delete(c *golangsdk.ServiceClient, policyID string) (r DeleteResult) {
 	_, r.Err = c.Delete(resourceURL(c, policyID), nil)
 	return
 }
 
-//ListOpts allows filtering policies
+// ListOpts allows filtering policies
 type ListOpts struct {
 	//Backup policy ID
 	ID string

@@ -2,46 +2,49 @@
 Package peerings enables management and retrieval of vpc peering connections
 
 Example to List a Vpc Peering Connections
-		listOpts:=peerings.ListOpts{}
 
-		peering,err :=peerings.List(client,sub).AllPages()
-		if err != nil{
-			fmt.Println(err)
-		}
+	listOpts:=peerings.ListOpts{}
 
-		peerings,err:=peerings.ExtractPeerings(peering)
-		if err != nil{
-			fmt.Println(err)
-		}
+	peering,err :=peerings.List(client,sub).AllPages()
+	if err != nil{
+		fmt.Println(err)
+	}
+
+	peerings,err:=peerings.ExtractPeerings(peering)
+	if err != nil{
+		fmt.Println(err)
+	}
 
 Example to Get a Vpc Peering Connection
-		peeringID := "6bbacb0f-9f94-4fe8-a6b6-1818bdccb2a3"
-		peering,err :=peerings.Get(client,peeringID).Extract()
+
+	peeringID := "6bbacb0f-9f94-4fe8-a6b6-1818bdccb2a3"
+	peering,err :=peerings.Get(client,peeringID).Extract()
+	if err != nil{
+		fmt.Println(err)
+	}
+
+Example to Accept a Vpc Peering Connection Request
+
+	 // Note:- The TenantId should be of accepter
+
+	    peeringID := "6bbacb0f-9f94-4fe8-a6b6-1818bdccb2a3"
+
+	    peering,err:=peerings.Accept(client,peeringID).ExtractResult()
+
 		if err != nil{
 			fmt.Println(err)
 		}
 
-Example to Accept a Vpc Peering Connection Request
- // Note:- The TenantId should be of accepter
-
-    peeringID := "6bbacb0f-9f94-4fe8-a6b6-1818bdccb2a3"
-
-    peering,err:=peerings.Accept(client,peeringID).ExtractResult()
-
-	if err != nil{
-		fmt.Println(err)
-	}
-
-
 Example to Reject a Vpc Peering Connection Request
- // Note:- The TenantId should be of accepter
-    peeringID := "6bbacb0f-9f94-4fe8-a6b6-1818bdccb2a3"
 
-    peering,err:=peerings.Reject(client,peeringID).ExtractResult()
+	 // Note:- The TenantId should be of accepter
+	    peeringID := "6bbacb0f-9f94-4fe8-a6b6-1818bdccb2a3"
 
-	if err != nil{
-		fmt.Println(err)
-	}
+	    peering,err:=peerings.Reject(client,peeringID).ExtractResult()
+
+		if err != nil{
+			fmt.Println(err)
+		}
 
 Example to Create a Vpc Peering Connection
 
@@ -56,7 +59,6 @@ Example to Create a Vpc Peering Connection
 		fmt.Println(err)
 	}
 
-
 Example to Update a VpcPeeringConnection
 
 	peeringID := "6bbacb0f-9f94-4fe8-a6b6-1818bdccb2a3"
@@ -68,7 +70,6 @@ Example to Update a VpcPeeringConnection
 	if err != nil{
 		fmt.Println(err)
 	}
-
 
 Example to Delete a VpcPeeringConnection
 

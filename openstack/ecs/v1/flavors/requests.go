@@ -11,7 +11,7 @@ type ListOptsBuilder interface {
 	ToFlavorListMap() (string, error)
 }
 
-//ListOpts allows the filtering and sorting of paginated collections through the API.
+// ListOpts allows the filtering and sorting of paginated collections through the API.
 type ListOpts struct {
 	// Specifies the AZ name.
 	AvailabilityZone string `q:"availability_zone"`

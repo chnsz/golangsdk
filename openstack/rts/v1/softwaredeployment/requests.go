@@ -144,12 +144,12 @@ func Get(c *golangsdk.ServiceClient, id string) (r GetResult) {
 	return
 }
 
-//UpdateOptsBuilder is an interface by which can be able to build the request body of software deployment.
+// UpdateOptsBuilder is an interface by which can be able to build the request body of software deployment.
 type UpdateOptsBuilder interface {
 	ToSoftwareDeploymentUpdateMap() (map[string]interface{}, error)
 }
 
-//UpdateOpts is a struct which represents the request body of update method.
+// UpdateOpts is a struct which represents the request body of update method.
 type UpdateOpts struct {
 	// Specifies the stack action that triggers this deployment resource.
 	Action string `json:"action,omitempty"`
@@ -165,12 +165,12 @@ type UpdateOpts struct {
 	StatusReason string `json:"status_reason,omitempty"`
 }
 
-//ToSoftwareDeploymentUpdateMap builds a update request body from UpdateOpts.
+// ToSoftwareDeploymentUpdateMap builds a update request body from UpdateOpts.
 func (opts UpdateOpts) ToSoftwareDeploymentUpdateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-//Update is a method which can be able to update the name of software deployment.
+// Update is a method which can be able to update the name of software deployment.
 func Update(client *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToSoftwareDeploymentUpdateMap()
 	if err != nil {

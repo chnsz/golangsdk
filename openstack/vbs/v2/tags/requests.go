@@ -29,7 +29,7 @@ func (opts CreateOpts) ToTagCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-//Adds a tag to a backup policy based on the values in CreateOpts. To extract
+// Adds a tag to a backup policy based on the values in CreateOpts. To extract
 // the tag object from the response, call the Extract method on the
 // CreateResult.
 func Create(client *golangsdk.ServiceClient, policyID string, opts CreateOptsBuilder) (r CreateResult) {
@@ -43,7 +43,7 @@ func Create(client *golangsdk.ServiceClient, policyID string, opts CreateOptsBui
 	return
 }
 
-//deletes a tag ,specified in the key for a backup policy.
+// deletes a tag ,specified in the key for a backup policy.
 func Delete(c *golangsdk.ServiceClient, policyID string, key string) (r DeleteResult) {
 	_, r.Err = c.Delete(deleteURL(c, policyID, key), nil)
 	return
@@ -91,7 +91,7 @@ func (opts ListOpts) ToTagsListMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-//ListResources retrives a backup policy details using tags.To extract
+// ListResources retrives a backup policy details using tags.To extract
 // the tag object from the response, call the ExtractResources method on the
 // QueryResults.
 func ListResources(client *golangsdk.ServiceClient, opts ListOptsBuilder) (r QueryResults) {
@@ -120,7 +120,7 @@ type BatchOpts struct {
 	Action ActionType `json:"action" required:"true"`
 }
 
-//ActionType specifies the type of batch operation action to be performed
+// ActionType specifies the type of batch operation action to be performed
 type ActionType string
 
 var (
@@ -137,7 +137,7 @@ func (opts BatchOpts) ToTagsBatchMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-//BatchAction is used to create ,update or delete the tags of a specified backup policy.
+// BatchAction is used to create ,update or delete the tags of a specified backup policy.
 func BatchAction(client *golangsdk.ServiceClient, policyID string, opts BatchOptsBuilder) (r ActionResults) {
 	b, err := opts.ToTagsBatchMap()
 	if err != nil {

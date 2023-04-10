@@ -11,7 +11,7 @@ type VpcInfo struct {
 }
 
 // Peering represents a Neutron VPC peering connection.
-//Manage and perform other operations on VPC peering connections,
+// Manage and perform other operations on VPC peering connections,
 // including querying VPC peering connections as well as
 // creating, querying, deleting, and updating a VPC peering connection.
 type Peering struct {

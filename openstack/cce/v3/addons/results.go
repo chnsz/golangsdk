@@ -26,7 +26,7 @@ type Addon struct {
 	Status Status `json:"status"`
 }
 
-//Metadata required to create an addon
+// Metadata required to create an addon
 type MetaData struct {
 	// Addon unique name
 	Name string `json:"name"`
@@ -38,7 +38,7 @@ type MetaData struct {
 	Annotations map[string]string `json:"annotaions"`
 }
 
-//Specifications to create an addon
+// Specifications to create an addon
 type Spec struct {
 	// For the addon version.
 	Version string `json:"version"`

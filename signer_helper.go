@@ -57,7 +57,7 @@ func (cache *MemoryCache) Get(cacheKey string) string {
 	return cache.cacheHolder[cacheKey]
 }
 
-//caseInsencitiveStringArray represents string case insensitive sorting operations
+// caseInsencitiveStringArray represents string case insensitive sorting operations
 type caseInsencitiveStringArray []string
 
 // noEscape specifies whether the character should be encoded or not
@@ -112,13 +112,13 @@ const SignAlgorithmHMACSHA256 = "SDK-HMAC-SHA256"
 // The header key of content hash value
 const ContentSha256HeaderKey = "x-sdk-content-sha256"
 
-//A regular for searching empty string
+// A regular for searching empty string
 var spaceRegexp = regexp.MustCompile(`\s+`)
 
 // cache sign key
 var cache = NewCache(300)
 
-//Sign manipulates the http.Request instance with some required authentication headers for SK/SK auth
+// Sign manipulates the http.Request instance with some required authentication headers for SK/SK auth
 func Sign(req *http.Request, signOptions SignOptions) {
 	signOptions.AccessKey = strings.TrimSpace(signOptions.AccessKey)
 	signOptions.SecretKey = strings.TrimSpace(signOptions.SecretKey)
@@ -158,7 +158,7 @@ func Sign(req *http.Request, signOptions SignOptions) {
 	req.Header.Set("Authorization", buildAuthorizationHeader(signParams, signature))
 }
 
-//ReSign manipulates the http.Request instance with some required authentication headers for SK/SK auth
+// ReSign manipulates the http.Request instance with some required authentication headers for SK/SK auth
 func ReSign(req *http.Request, signOptions SignOptions) {
 	signOptions.AccessKey = strings.TrimSpace(signOptions.AccessKey)
 	signOptions.SecretKey = strings.TrimSpace(signOptions.SecretKey)
@@ -233,7 +233,7 @@ func buildSignKey(signParam reqSignParams) []byte {
 	return computeSignature("sdk_request", kService, signParam.SignAlgorithm)
 }
 
-//HmacSha256 implements the  Keyed-Hash Message Authentication Code computation
+// HmacSha256 implements the  Keyed-Hash Message Authentication Code computation
 func HmacSha256(data string, key []byte) []byte {
 	mac := hmac.New(sha256.New, key)
 	mac.Write([]byte(data))
@@ -308,9 +308,9 @@ func getCanonicalizedResourcePath(signParas reqSignParams) string {
 
 // urlEncode encodes url path and url querystring according to the following rules:
 // The alphanumeric characters "a" through "z", "A" through "Z" and "0" through "9" remain the same.
-//The special characters ".", "-", "*", and "_" remain the same.
-//The space character " " is converted into a plus sign "%20".
-//All other characters are unsafe and are first converted into one or more bytes using some encoding scheme.
+// The special characters ".", "-", "*", and "_" remain the same.
+// The space character " " is converted into a plus sign "%20".
+// All other characters are unsafe and are first converted into one or more bytes using some encoding scheme.
 func urlEncode(url string, urlPath bool) string {
 	var buf bytes.Buffer
 	for i := 0; i < len(url); i++ {

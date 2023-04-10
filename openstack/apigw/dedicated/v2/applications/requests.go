@@ -52,7 +52,7 @@ func Update(client *golangsdk.ServiceClient, instanceId, appId string, opts AppO
 	return
 }
 
-//Get is a method to obtain the specified application according to the instanceId and appId.
+// Get is a method to obtain the specified application according to the instanceId and appId.
 func Get(client *golangsdk.ServiceClient, instanceId, appId string) (r GetResult) {
 	_, r.Err = client.Get(resourceURL(client, instanceId, appId), &r.Body, nil)
 	return
@@ -221,7 +221,7 @@ func ListAppCode(client *golangsdk.ServiceClient, instanceId, appId string, opts
 	})
 }
 
-//RemoveAppCode is a method to delete an existing code from a specified application.
+// RemoveAppCode is a method to delete an existing code from a specified application.
 func RemoveAppCode(client *golangsdk.ServiceClient, instanceId, appId, codeId string) (r DeleteResult) {
 	_, r.Err = client.Delete(codeResourceURL(client, instanceId, appId, codeId), nil)
 	return

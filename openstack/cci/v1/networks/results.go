@@ -17,7 +17,7 @@ type Network struct {
 	Status Status `json:"status"`
 }
 
-//Metadata required to create a network
+// Metadata required to create a network
 type MetaData struct {
 	//Network unique name
 	Name string `json:"name"`

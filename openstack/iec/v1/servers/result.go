@@ -21,7 +21,7 @@ type Server struct {
 	CommonFiled
 }
 
-//CommonFiled is common filed
+// CommonFiled is common filed
 type CommonFiled struct {
 	ServerID      string             `json:"origin_server_id,omitempty"`
 	EdgeCloudID   string             `json:"edgecloud_id,omitempty"`
@@ -79,14 +79,14 @@ type ServerIDs struct {
 	IDs []string `json:"server_ids"`
 }
 
-//ExtractServer is used to extract server struct in response
+// ExtractServer is used to extract server struct in response
 func (r commonResult) ExtractServer() (ServerIDs, error) {
 	var s ServerIDs
 	err := r.ExtractInto(&s)
 	return s, err
 }
 
-//CreateCloudServerResponse is a structure for creating server return values
+// CreateCloudServerResponse is a structure for creating server return values
 type CreateCloudServerResponse struct {
 	Job       Job
 	ServerIDs ServerIDs

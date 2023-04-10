@@ -660,8 +660,8 @@ func NewSharedFileSystemV2(client *golangsdk.ProviderClient, eo golangsdk.Endpoi
 	return initClientOpts(client, eo, "sharev2")
 }
 
-//NewHwSFSV2 creates a service client that is used for Huawei cloud  for SFS , it replaces the EVS type.
-//TODO: Need to change to sfs client type from evs once available
+// NewHwSFSV2 creates a service client that is used for Huawei cloud  for SFS , it replaces the EVS type.
+// TODO: Need to change to sfs client type from evs once available
 func NewHwSFSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "network")
 	sc.Endpoint = strings.Replace(sc.Endpoint, "vpc", "sfs", 1)
@@ -669,7 +669,7 @@ func NewHwSFSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*g
 	return sc, err
 }
 
-//NewHwSFSTurboV1 creates a service client that is used for Huawei cloud for SFS Turbo.
+// NewHwSFSTurboV1 creates a service client that is used for Huawei cloud for SFS Turbo.
 func NewHwSFSTurboV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "network")
 	sc.Endpoint = strings.Replace(sc.Endpoint, "vpc", "sfs-turbo", 1)
@@ -759,8 +759,8 @@ func NewRDSV3(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*gol
 	return sc, err
 }
 
-//NewRdsServiceV1 creates the a ServiceClient that may be used to access the v1
-//rds service which is a service of db instances management.
+// NewRdsServiceV1 creates the a ServiceClient that may be used to access the v1
+// rds service which is a service of db instances management.
 func NewRdsServiceV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	newsc, err := initClientOpts(client, eo, "compute")
 	rdsendpoint := strings.Replace(strings.Replace(newsc.Endpoint, "ecs", "rds", 1), "/v2/", "/rds/v1/", 1)
@@ -793,8 +793,8 @@ func NewDRSServiceV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts
 	return sc, err
 }
 
-//NewAutoScalingService creates a ServiceClient that may be used to access the
-//auto-scaling service of huawei public cloud
+// NewAutoScalingService creates a ServiceClient that may be used to access the
+// auto-scaling service of huawei public cloud
 func NewAutoScalingService(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "asv1")
 	if err != nil {
@@ -1079,7 +1079,7 @@ func NewGeminiDBV3(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) 
 	return sc, nil
 }
 
-//NewSberIamV3 creates a ServiceClient that may be used with SberCloud IAM client
+// NewSberIamV3 creates a ServiceClient that may be used with SberCloud IAM client
 func NewSberIamV3(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc := new(golangsdk.ServiceClient)
 	sc.ProviderClient = client
@@ -1089,7 +1089,7 @@ func NewSberIamV3(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (
 	return sc, nil
 }
 
-//NewSberDNSV2 creates a ServiceClient that may be used with SberCloud DNS client
+// NewSberDNSV2 creates a ServiceClient that may be used with SberCloud DNS client
 func NewSberDNSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc := new(golangsdk.ServiceClient)
 	sc.ProviderClient = client

@@ -29,7 +29,7 @@ type Clusters struct {
 	Status Status `json:"status"`
 }
 
-//Metadata required to create a cluster
+// Metadata required to create a cluster
 type MetaData struct {
 	//Cluster unique name
 	Name string `json:"name"`
@@ -41,7 +41,7 @@ type MetaData struct {
 	Annotations map[string]string `json:"annotations,omitempty"`
 }
 
-//Specifications to create a cluster
+// Specifications to create a cluster
 type Spec struct {
 	//Cluster Type: VirtualMachine, BareMetal, or Windows
 	Type string `json:"type" required:"true"`
@@ -86,7 +86,7 @@ type HostNetworkSpec struct {
 	SecurityGroup string `json:"SecurityGroup,omitempty"`
 }
 
-//Container network parameters
+// Container network parameters
 type ContainerNetworkSpec struct {
 	//Container network type: overlay_l2 , underlay_ipvlan or vpc-router
 	Mode string `json:"mode" required:"true"`
@@ -101,7 +101,7 @@ type EniNetworkSpec struct {
 	Cidr string `json:"eniSubnetCIDR" required:"true"`
 }
 
-//Authentication parameters
+// Authentication parameters
 type AuthenticationSpec struct {
 	//Authentication mode: rbac , x509 or authenticating_proxy
 	Mode                string            `json:"mode" required:"true"`
@@ -206,8 +206,8 @@ type CertContext struct {
 }
 
 // UnmarshalJSON helps to unmarshal Status fields into needed values.
-//OTC and Huawei have different data types and child fields for `endpoints` field in Cluster Status.
-//This function handles the unmarshal for both
+// OTC and Huawei have different data types and child fields for `endpoints` field in Cluster Status.
+// This function handles the unmarshal for both
 func (r *Status) UnmarshalJSON(b []byte) error {
 	type tmp Status
 	var s struct {

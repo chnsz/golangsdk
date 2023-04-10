@@ -108,12 +108,12 @@ func List(client *golangsdk.ServiceClient, ops ListOptsBuilder) pagination.Pager
 	})
 }
 
-//UpdateOptsBuilder is an interface which can build the map paramter of update function
+// UpdateOptsBuilder is an interface which can build the map paramter of update function
 type UpdateOptsBuilder interface {
 	ToReplicationConsistencyGroupUpdateMap() (map[string]interface{}, error)
 }
 
-//UpdateOpts is a struct which represents the parameters of update function
+// UpdateOpts is a struct which represents the parameters of update function
 type UpdateOpts struct {
 	// The name of the replication consistency group.
 	// The name can contain a maximum of 255 bytes.

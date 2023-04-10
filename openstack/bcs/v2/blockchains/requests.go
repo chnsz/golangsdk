@@ -4,7 +4,7 @@ import (
 	"github.com/chnsz/golangsdk"
 )
 
-//CreateOpts is a struct which will be used to create a bcs instance
+// CreateOpts is a struct which will be used to create a bcs instance
 type CreateOpts struct {
 	Name                string          `json:"name" required:"true"`
 	ClusterType         string          `json:"cluster_type" required:"true"`
@@ -39,14 +39,14 @@ type CreateOpts struct {
 	InvitorInfo         *InvitorInfo    `json:"invitor_infos,omitempty"`
 }
 
-//CCEClusterInfo is the CCE cluster struct that will be used to associate when creating a bcs instance
+// CCEClusterInfo is the CCE cluster struct that will be used to associate when creating a bcs instance
 type CCEClusterInfo struct {
 	ID   string `json:"cluster_id" required:"true"`
 	Name string `json:"cluster_name" required:"true"`
 }
 
-//CCECreateInfo is the struct that will be used to specify the creation of a new CCE cluster
-//when creating a bcs instance
+// CCECreateInfo is the struct that will be used to specify the creation of a new CCE cluster
+// when creating a bcs instance
 type CCECreateInfo struct {
 	NodeNum          int    `json:"node_num" required:"true"`
 	Flavor           string `json:"node_flavor" required:"true"`
@@ -56,33 +56,33 @@ type CCECreateInfo struct {
 	PlatformType     string `json:"cluster_platform_type" required:"true"`
 }
 
-//IEFNode is the IEF node struct that will be used to associate when creating a bcs instance
+// IEFNode is the IEF node struct that will be used to associate when creating a bcs instance
 type IEFNode struct {
 	ID        string `json:"id" required:"true"`
 	Status    string `json:"status" required:"true"`
 	IPAddress string `json:"public_ip_address" required:"true"`
 }
 
-//PeerOrg is the peer organization struct that will be used to creating a bcs instance
+// PeerOrg is the peer organization struct that will be used to creating a bcs instance
 type PeerOrg struct {
 	Name      string `json:"name" required:"true"`
 	NodeCount int    `json:"node_count" required:"true"`
 }
 
-//ChannelInfo is the channel struct that will be used to creating a bcs instance
+// ChannelInfo is the channel struct that will be used to creating a bcs instance
 type ChannelInfo struct {
 	Name        string   `json:"name" required:"true"`
 	OrgNames    []string `json:"org_names" required:"true"`
 	Description string   `json:"desctiption,omitempty"`
 }
 
-//CouchDBInfo is the couch database struct that will be used to creating a bcs instance
+// CouchDBInfo is the couch database struct that will be used to creating a bcs instance
 type CouchDBInfo struct {
 	UserName string `json:"user_name" required:"true"`
 	Password string `json:"password" required:"true"`
 }
 
-//SFSTurbo is the turbo struct that will be used to creating a bcs instance
+// SFSTurbo is the turbo struct that will be used to creating a bcs instance
 type SFSTurbo struct {
 	ShareType        string `json:"share_type" required:"true"`
 	Type             string `json:"type" required:"true"`
@@ -90,21 +90,21 @@ type SFSTurbo struct {
 	Flavor           string `json:"resource_spec_code" required:"true"`
 }
 
-//BlockInfo is the turbo struct that will be used to creating a bcs instance
+// BlockInfo is the turbo struct that will be used to creating a bcs instance
 type BlockInfo struct {
 	BatchTimeout      int `json:"batch_timeout,omitempty"`
 	MaxMessageCount   int `json:"max_message_count,omitempty"`
 	PreferredMaxbytes int `json:"preferred_maxbytes,omitempty"`
 }
 
-//KafkaInfo is the block generation struct that be used to config when creating a bcs instance
+// KafkaInfo is the block generation struct that be used to config when creating a bcs instance
 type KafkaInfo struct {
 	Flavor           string `json:"spec" required:"true"`
 	Storage          int    `json:"storage" required:"true"`
 	AvailabilityZone string `json:"az" required:"true"`
 }
 
-//InvitorInfo is the invitor struct that be used to config when creating a bcs instance
+// InvitorInfo is the invitor struct that be used to config when creating a bcs instance
 type InvitorInfo struct {
 	TenantID     string `json:"tenant_id" required:"true"`
 	ProjectID    string `json:"project_id" required:"true"`
@@ -123,7 +123,7 @@ func (opts CreateOpts) ToInstancesCreateMap() (map[string]interface{}, error) {
 	return b, nil
 }
 
-//Create is a method by which can be able to access the create function that create a bcs instance
+// Create is a method by which can be able to access the create function that create a bcs instance
 func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToInstancesCreateMap()
 	if err != nil {
@@ -137,7 +137,7 @@ func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateRe
 	return
 }
 
-//DeleteOpts is a struct which will be used to delete an existing bcs instance
+// DeleteOpts is a struct which will be used to delete an existing bcs instance
 type DeleteOpts struct {
 	IsDeleteStorage  bool `q:"is_delete_storage"`
 	IsDeleteOBS      bool `q:"is_delete_obs"`
@@ -156,7 +156,7 @@ func (opts DeleteOpts) ToInstanceDeleteQuery() (string, error) {
 	return q.String(), err
 }
 
-//Delete is a method to delete an existing bcs instance
+// Delete is a method to delete an existing bcs instance
 func Delete(client *golangsdk.ServiceClient, opts DeleteOptsBuilder, id string) (r DeleteResult) {
 	url := resourceURL(client, id)
 	if opts != nil {
@@ -175,37 +175,37 @@ func Delete(client *golangsdk.ServiceClient, opts DeleteOptsBuilder, id string) 
 	return
 }
 
-//Get is a method to obtain the detailed information of an existing bcs instance
+// Get is a method to obtain the detailed information of an existing bcs instance
 func Get(client *golangsdk.ServiceClient, id string) (r ShowResult) {
 	_, r.Err = client.Get(resourceURL(client, id), &r.Body, nil)
 	return
 }
 
-//GetStatus is a method to obtain all block status of an existing bcs instance
+// GetStatus is a method to obtain all block status of an existing bcs instance
 func GetStatus(client *golangsdk.ServiceClient, id string) (r StatusResult) {
 	_, r.Err = client.Get(extraURL(client, id, "status"), &r.Body, nil)
 	return
 }
 
-//List is a method to obtain the detailed information list of all existing bcs instance
+// List is a method to obtain the detailed information list of all existing bcs instance
 func List(client *golangsdk.ServiceClient) (r ListResult) {
 	_, r.Err = client.Get(rootURL(client), &r.Body, nil)
 	return
 }
 
-//GetNodes is a method to obtain the node information list of an existing bcs instance
+// GetNodes is a method to obtain the node information list of an existing bcs instance
 func GetNodes(client *golangsdk.ServiceClient, id string) (r NodesResult) {
 	_, r.Err = client.Get(extraURL(client, id, "nodes"), &r.Body, nil)
 	return
 }
 
-//UpdateOpts is a struct which will be used to update an existing bcs instance
+// UpdateOpts is a struct which will be used to update an existing bcs instance
 type UpdateOpts struct {
 	NodePeer  []NodePeer `json:"node_orgs" required:"true"`
 	PublicIPs []IEFNode  `json:"publicips,omitempty"`
 }
 
-//NodePeer is the peer organization struct that will be used to add a peer organization to an existing bcs instance
+// NodePeer is the peer organization struct that will be used to add a peer organization to an existing bcs instance
 type NodePeer struct {
 	Name    string `json:"name" required:"true"`
 	Count   int    `json:"node_count" required:"true"`
@@ -224,7 +224,7 @@ func (opts UpdateOpts) ToInstancesUpdateMap() (map[string]interface{}, error) {
 	return b, nil
 }
 
-//Update is a method to update an existing bcs instance
+// Update is a method to update an existing bcs instance
 func Update(client *golangsdk.ServiceClient, opts UpdateOptsBuilder, id string) (r UpdateResult) {
 	b, err := opts.ToInstancesUpdateMap()
 	if err != nil {

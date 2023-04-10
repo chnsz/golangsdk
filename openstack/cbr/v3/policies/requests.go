@@ -43,7 +43,7 @@ func (opts CreateOpts) ToPolicyCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "policy")
 }
 
-//Create is a method by which to create function that create a CBR policy
+// Create is a method by which to create function that create a CBR policy
 func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	reqBody, err := opts.ToPolicyCreateMap()
 	if err != nil {
@@ -74,8 +74,8 @@ func (opts ListOpts) ToPolicyListQuery() (string, error) {
 	return q.String(), err
 }
 
-//List is a method to obtain the specified CBR policy according to the vault ID or operation type.
-//This method can also obtain all the CBR policies through the default parameter settings.
+// List is a method to obtain the specified CBR policy according to the vault ID or operation type.
+// This method can also obtain all the CBR policies through the default parameter settings.
 func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := rootURL(client)
 	if opts != nil {
@@ -91,7 +91,7 @@ func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Page
 	})
 }
 
-//Get is a method to obtain the specified CBR policy according to the policy ID.
+// Get is a method to obtain the specified CBR policy according to the policy ID.
 func Get(client *golangsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = client.Get(resourceURL(client, id), &r.Body, nil)
 	return
@@ -112,7 +112,7 @@ func (opts UpdateOpts) ToPolicyUpdateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "policy")
 }
 
-//Delete is a method to update an existing CBR policy
+// Delete is a method to update an existing CBR policy
 func Update(client *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	reqBody, err := opts.ToPolicyUpdateMap()
 	if err != nil {
@@ -126,7 +126,7 @@ func Update(client *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) 
 	return
 }
 
-//Delete is a method to delete an existing CBR policy
+// Delete is a method to delete an existing CBR policy
 func Delete(client *golangsdk.ServiceClient, id string) (r DeleteResult) {
 	_, r.Err = client.Delete(resourceURL(client, id), nil)
 	return

@@ -83,7 +83,6 @@ func (opts CreateOpts) ToRouteCreateMap() (map[string]interface{}, error) {
 // Create accepts a CreateOpts struct and uses the values to create a new
 // logical routes. When it is created, the routes does not have an internal
 // interface - it is not associated to any routes.
-//
 func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToRouteCreateMap()
 	if err != nil {

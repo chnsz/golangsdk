@@ -198,7 +198,6 @@ func (opts CreateOpts) ToSubnetCreateMap() (map[string]interface{}, error) {
 // Create accepts a CreateOpts struct and uses the values to create a new
 // logical subnets. When it is created, the subnets does not have an internal
 // interface - it is not associated to any subnet.
-//
 func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToSubnetCreateMap()
 	if err != nil {

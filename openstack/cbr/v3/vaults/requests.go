@@ -149,8 +149,8 @@ type ListOptsBuilder interface {
 	ToPolicyListQuery() (string, error)
 }
 
-//List is a method to obtain the specified CBR vaults according to the vault ID, vault name and so on.
-//This method can also obtain all the CBR vaults through the default parameter settings.
+// List is a method to obtain the specified CBR vaults according to the vault ID, vault name and so on.
+// This method can also obtain all the CBR vaults through the default parameter settings.
 func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := rootURL(client)
 	if opts != nil {

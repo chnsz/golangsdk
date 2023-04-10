@@ -93,7 +93,7 @@ func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateRe
 	return
 }
 
-//Update update vpc info,name especially
+// Update update vpc info,name especially
 func Update(client *golangsdk.ServiceClient, vpcID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToVPCUpdateMap()
 	if err != nil {
@@ -114,7 +114,7 @@ func Update(client *golangsdk.ServiceClient, vpcID string, opts UpdateOptsBuilde
 	return
 }
 
-//Delete delete the vpc
+// Delete delete the vpc
 func Delete(client *golangsdk.ServiceClient, vpcID string) (r DeleteResult) {
 	deleteURL := DeleteURL(client, vpcID)
 

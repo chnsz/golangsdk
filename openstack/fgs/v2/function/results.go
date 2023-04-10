@@ -63,7 +63,7 @@ type FuncMount struct {
 	SaveType       int                `json:"-"` //仅仅在数据处理时用到，如果需要保存新的映射关系，则将其置为1，如要删除老的，将其置为2
 }
 
-//noinspection GoNameStartsWithPackageName
+// noinspection GoNameStartsWithPackageName
 type FunctionVersion struct {
 	Id                 string        `json:"-"`
 	FuncId             string        `json:"-"`
@@ -124,13 +124,13 @@ type MountConfig struct {
 	FuncMounts []FuncMount `json:"func_mounts" required:"true"`
 }
 
-//noinspection GoNameStartsWithPackageName
+// noinspection GoNameStartsWithPackageName
 type FunctionCode struct {
 	File string `json:"file"`
 	Link string `json:"link"`
 }
 
-//noinspection GoNameStartsWithPackageName
+// noinspection GoNameStartsWithPackageName
 type FunctionBase struct {
 	Id          string `json:"-"`
 	FuncName    string `json:"func_name"`
@@ -186,7 +186,7 @@ func (r commonResult) Extract() (*Function, error) {
 	return &f, err
 }
 
-//noinspection GoNameStartsWithPackageName
+// noinspection GoNameStartsWithPackageName
 type FunctionList struct {
 	Functions  []Function `json:"functions"`
 	NextMarker int        `json:"next_marker"`

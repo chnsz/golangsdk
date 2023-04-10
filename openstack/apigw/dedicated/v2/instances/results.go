@@ -21,7 +21,7 @@ type CreateResp struct {
 	Message string `json:"message"`
 }
 
-//Call its Extract method to interpret it as a Instance Id.
+// Call its Extract method to interpret it as a Instance Id.
 func (r CreateResult) Extract() (*CreateResp, error) {
 	var s CreateResp
 	err := r.ExtractInto(&s)

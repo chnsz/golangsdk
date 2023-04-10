@@ -3,6 +3,7 @@ Package backup policies enables management and retrieval of
 backup servers periodically.
 
 Example to List Backup Policies
+
 	listpolicies := policies.ListOpts{}
 	allpolicies, err := policies.List(client,listpolicies)
 	if err != nil {
@@ -10,9 +11,8 @@ Example to List Backup Policies
 	}
 	fmt.Println(allpolicies)
 
-
-
 Example to Create a Backup Policy
+
 	policy:=policies.CreateOpts{
 				Name : "c2c-policy",
 				Description : "My plan",
@@ -44,8 +44,8 @@ Example to Create a Backup Policy
 	fmt.Println(out)
 	fmt.Println(err)
 
-
 Example to Update a Backup Policy
+
 	updatepolicy:=policies.UpdateOpts{
 								Name:"my-plan-c2c-update",
 								Parameters : policies.PolicyParamUpdate{
@@ -71,6 +71,7 @@ Example to Update a Backup Policy
 		fmt.Println(out)
 
 Example to Delete a Backup Policy
+
 	out:=policies.Delete(client,"16d4bf9e-85b2-41e2-a482-e48ace2ad726")
 	fmt.Println(out)
 	if err != nil {
@@ -78,9 +79,9 @@ Example to Delete a Backup Policy
 	}
 
 Example to Get Backup Policy
+
 	result:=policies.Get(client,"5af626d2-19b9-4dc4-8e95-ddba008318b3")
 	out,err:=result.Extract()
 	fmt.Println(out)
-
 */
 package policies

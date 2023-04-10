@@ -181,12 +181,12 @@ type AccessRightsResult struct {
 	golangsdk.Result
 }
 
-//DeleteAccessResult contains the response body from DeleteAccess rights
+// DeleteAccessResult contains the response body from DeleteAccess rights
 type DeleteAccessResult struct {
 	golangsdk.Result
 }
 
-//GetExportLocationsResult contains the response body from GetExportLocations
+// GetExportLocationsResult contains the response body from GetExportLocations
 type GetExportLocationsResult struct {
 	golangsdk.Result
 }

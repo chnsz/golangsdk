@@ -101,7 +101,7 @@ func Update(client *golangsdk.ServiceClient, opts UpdateOptsBuilder, groupID, ho
 	return
 }
 
-//Delete is a method which can be able to access to delete the existing hook of the autoscaling service.
+// Delete is a method which can be able to access to delete the existing hook of the autoscaling service.
 func Delete(client *golangsdk.ServiceClient, groupID, hookName string) (r DeleteResult) {
 	_, r.Err = client.Delete(resourceURL(client, groupID, hookName), nil)
 	return

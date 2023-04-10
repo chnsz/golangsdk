@@ -3,9 +3,9 @@ The Anti-DDoS traffic cleaning service (Anti-DDoS for short) defends resources (
 
 Example to query alarm configuration.
 
-    actual, err := alarmreminding.WarnAlert(client.ServiceClient()).Extract()
-    if err != nil {
-      panic(err)
-    }
+	actual, err := alarmreminding.WarnAlert(client.ServiceClient()).Extract()
+	if err != nil {
+	  panic(err)
+	}
 */
 package alarmreminding

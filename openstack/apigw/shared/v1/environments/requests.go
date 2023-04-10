@@ -18,7 +18,8 @@ type ListOpts struct {
 
 // List is a method to obtain an array of one or more environments according to the query parameters.
 // Note: The list returned by the function only contains the environment of the first page. This is because the return
-//       body does not contain page number information, so the page number of the next page cannot be obtained.
+//
+//	body does not contain page number information, so the page number of the next page cannot be obtained.
 func List(c *golangsdk.ServiceClient, opts ListOpts) ([]Environment, error) {
 	url := rootURL(c)
 	query, err := golangsdk.BuildQueryString(opts)

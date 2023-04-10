@@ -108,7 +108,7 @@ type Annotations struct {
 	AddonInstallType string `json:"addon.install/type" required:"true"`
 }
 
-//Specifications to create an addon
+// Specifications to create an addon
 type RequestSpec struct {
 	// For the addon version.
 	Version string `json:"version" required:"true"`

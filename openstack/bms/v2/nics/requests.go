@@ -36,7 +36,7 @@ func List(c *golangsdk.ServiceClient, serverId string, opts ListOpts) ([]Nic, er
 	return FilterNICs(allNICs, opts)
 }
 
-//FilterNICs used to filter nics using id and status.
+// FilterNICs used to filter nics using id and status.
 func FilterNICs(nics []Nic, opts ListOpts) ([]Nic, error) {
 
 	var refinedNICs []Nic

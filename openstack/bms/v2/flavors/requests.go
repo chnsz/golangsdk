@@ -14,8 +14,8 @@ type ListOptsBuilder interface {
 	ToFlavorListQuery() (string, error)
 }
 
-//The AccessType arguement is optional, and if it is not supplied, OpenStack
-//returns the PublicAccess flavors.
+// The AccessType arguement is optional, and if it is not supplied, OpenStack
+// returns the PublicAccess flavors.
 type AccessType string
 
 const (
@@ -79,7 +79,7 @@ func List(c *golangsdk.ServiceClient, opts ListOpts) ([]Flavor, error) {
 	return FilterFlavors(allFlavors, opts)
 }
 
-//FilterFlavors used to filter flavors using Id and Name
+// FilterFlavors used to filter flavors using Id and Name
 func FilterFlavors(flavors []Flavor, opts ListOpts) ([]Flavor, error) {
 
 	var refinedFlavors []Flavor

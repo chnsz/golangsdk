@@ -6,7 +6,7 @@ import (
 	"github.com/chnsz/golangsdk"
 )
 
-//ListOptsBuilder list builder
+// ListOptsBuilder list builder
 type ListOptsBuilder interface {
 	ToListQuery() (string, error)
 }

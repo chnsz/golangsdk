@@ -42,14 +42,14 @@ type ListResult struct {
 	golangsdk.Result
 }
 
-//Extract is a function that accepts a result and extracts metrics.
+// Extract is a function that accepts a result and extracts metrics.
 func ExtractMetrics(r pagination.Page) (Metrics, error) {
 	var s Metrics
 	err := r.(MetricsPage).ExtractInto(&s)
 	return s, err
 }
 
-//Extract is a function that all accepts a result and extracts metrics.
+// Extract is a function that all accepts a result and extracts metrics.
 func ExtractAllPagesMetrics(r pagination.Page) (Metrics, error) {
 	var s Metrics
 	s.Metrics = make([]Metric, 0)

@@ -194,7 +194,7 @@ type SetObjectMetadataInput struct {
 	Metadata                map[string]string
 }
 
-//SetObjectMetadataOutput is the result of SetObjectMetadata function
+// SetObjectMetadataOutput is the result of SetObjectMetadata function
 type SetObjectMetadataOutput struct {
 	BaseModel
 	MetadataDirective       MetadataDirectiveType

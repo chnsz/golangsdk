@@ -66,7 +66,7 @@ func Get(client *golangsdk.ServiceClient, keyPairID string) (r GetResult) {
 	return
 }
 
-//Delete delete the key pair
+// Delete delete the key pair
 func Delete(client *golangsdk.ServiceClient, keyPairID string) (r DeleteResult) {
 	deleteURL := DeleteURL(client, keyPairID)
 

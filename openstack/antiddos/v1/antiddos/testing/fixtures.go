@@ -530,7 +530,7 @@ var WeeklyReportOutput = `
 }
 `
 
-//init the loc
+// init the loc
 var responsePeriodTime = time.Date(2018, 3, 1, 0, 0, 0, 0, time.UTC)
 
 var WeeklyReportResponse = antiddos.WeeklyReportResponse{

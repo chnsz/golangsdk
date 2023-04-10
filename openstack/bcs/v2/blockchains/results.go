@@ -6,7 +6,7 @@ type commonResult struct {
 	golangsdk.Result
 }
 
-//CreateResult is a struct that represents the result of CreateNewBlockchain
+// CreateResult is a struct that represents the result of CreateNewBlockchain
 type CreateResult struct {
 	commonResult
 }
@@ -22,7 +22,7 @@ func (r CreateResult) Extract() (*CreateResponse, error) {
 	return &res, err
 }
 
-//DeleteResult is a struct that represents the result of DeleteBlockchain
+// DeleteResult is a struct that represents the result of DeleteBlockchain
 type DeleteResult struct {
 	commonResult
 }
@@ -31,7 +31,7 @@ func (r DeleteResult) Extract() error {
 	return r.Err
 }
 
-//ShowResult is a struct that represents the result of ShowBlockchainDetail
+// ShowResult is a struct that represents the result of ShowBlockchainDetail
 type ShowResult struct {
 	commonResult
 }
@@ -181,7 +181,7 @@ func (r ShowResult) Extract() (*BCSInstance, error) {
 	return &res, err
 }
 
-//ListResult is a struct that represents the result of ListBlockchain
+// ListResult is a struct that represents the result of ListBlockchain
 type ListResult struct {
 	commonResult
 }
@@ -199,7 +199,7 @@ func (r ListResult) Extract() (*[]BlockChain, error) {
 	return &s.BlockChains, err
 }
 
-//StatusResult is a struct that represents the result of ShowBlockchainStatus
+// StatusResult is a struct that represents the result of ShowBlockchainStatus
 type StatusResult struct {
 	commonResult
 }
@@ -232,7 +232,7 @@ func (r StatusResult) Extract() (*Status, error) {
 	return &s, err
 }
 
-//NodesResult is a struct that represents the result of ShowBlockchainNode
+// NodesResult is a struct that represents the result of ShowBlockchainNode
 type NodesResult struct {
 	commonResult
 }
@@ -256,7 +256,7 @@ func (r NodesResult) Extract() (*map[string]Org, error) {
 	return &s.NodeOrgs, err
 }
 
-//UpdateResult is a struct which represents the result of UpdateBlockchain
+// UpdateResult is a struct which represents the result of UpdateBlockchain
 type UpdateResult struct {
 	commonResult
 }

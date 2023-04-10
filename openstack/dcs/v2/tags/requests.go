@@ -6,7 +6,7 @@ var RequestOpts = golangsdk.RequestOpts{
 	MoreHeaders: map[string]string{"Content-Type": "application/json", "X-Language": "en-us"},
 }
 
-//ResourceTag is in key-value format
+// ResourceTag is in key-value format
 type ResourceTag struct {
 	Key string `json:"key" required:"ture"`
 	// Value is not required, but it must be included in the parameter.

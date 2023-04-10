@@ -9,7 +9,7 @@ type commonResult struct {
 	golangsdk.Result
 }
 
-//RespSecurityGroupEntity 获取安全组信息时候，返回结构体
+// RespSecurityGroupEntity 获取安全组信息时候，返回结构体
 type RespSecurityGroupEntity struct {
 	ID                 string                               `json:"id"`
 	Name               string                               `json:"name"`

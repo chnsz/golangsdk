@@ -150,8 +150,8 @@ func Get(c *golangsdk.ServiceClient, id string) (r GetResult) {
 	return
 }
 
-//DeleteOptsBuilder is an interface which can be able to build the query string
-//of share deletion.
+// DeleteOptsBuilder is an interface which can be able to build the query string
+// of share deletion.
 type DeleteOptsBuilder interface {
 	ToShareDeleteQuery() (string, error)
 }
@@ -166,7 +166,7 @@ func (opts DeleteOpts) ToShareDeleteQuery() (string, error) {
 	return q.String(), err
 }
 
-//Delete is a method by which can be able to delete one or all shares of a backup.
+// Delete is a method by which can be able to delete one or all shares of a backup.
 func Delete(client *golangsdk.ServiceClient, id string, opts DeleteOptsBuilder) (r DeleteResult) {
 	url := resourceURL(client, id)
 	if opts != nil {
