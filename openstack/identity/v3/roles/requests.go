@@ -382,3 +382,11 @@ func UnassignAllResources(client *golangsdk.ServiceClient, domainID, groupID, ro
 	})
 	return
 }
+
+// CheckAllResourcesPermission is provided for the administrator to check whether a user group has specified permissions for all resources.
+func CheckAllResourcesPermission(client *golangsdk.ServiceClient, domainID, groupID, roleID string) (r CheckResult) {
+	_, r.Err = client.Head(assignInheritedURL(client, domainID, groupID, roleID), &golangsdk.RequestOpts{
+		OkCodes: []int{204},
+	})
+	return
+}
