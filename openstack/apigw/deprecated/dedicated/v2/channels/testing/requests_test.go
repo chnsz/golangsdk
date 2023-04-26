@@ -3,7 +3,7 @@ package testing
 import (
 	"testing"
 
-	"github.com/chnsz/golangsdk/openstack/apigw/dedicated/v2/channels"
+	"github.com/chnsz/golangsdk/openstack/apigw/deprecated/dedicated/v2/channels"
 
 	th "github.com/chnsz/golangsdk/testhelper"
 	"github.com/chnsz/golangsdk/testhelper/client"
