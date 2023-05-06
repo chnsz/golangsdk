@@ -27,14 +27,15 @@ func TestListVpcPeerings(t *testing.T) {
         {
             "status": "PENDING_ACCEPTANCE",
             "accept_vpc_info": {
-              	"vpc_id": "c6efbdb7-dca4-4178-b3ec-692f125c1e25",
-               	"tenant_id": "17fbda95add24720a4038ba4b1c705ed"
-            	},
+                "vpc_id": "c6efbdb7-dca4-4178-b3ec-692f125c1e25",
+                "tenant_id": "17fbda95add24720a4038ba4b1c705ed"
+            },
             "request_vpc_info": {
                 "vpc_id": "3127e30b-5f8e-42d1-a3cc-fdadf412c5bf",
                 "tenant_id": "87a56a48977e42068f70ad3280c50f0e"
-           		 },
+            },
             "name": "test_peering",
+            "description": "this is a description",
             "id": "22a3e5b1-1150-408e-99f7-5e25a391cead"
         },
         {
@@ -42,11 +43,11 @@ func TestListVpcPeerings(t *testing.T) {
             "accept_vpc_info": {
                 "vpc_id": "93e94d8e-31a6-4c22-bdf7-8b23c7b67329",
                 "tenant_id": "87a56a48977e42068f70ad3280c50f0e"
-            	},
+            },
             "request_vpc_info": {
                 "vpc_id": "b0d686e5-312c-4279-b69c-eedbc779ae69",
                 "tenant_id": "bf74229f30c0421fae270386a43315ee"
-            	},
+            },
             "name": "peering-7750-sunway",
             "id": "283aabd7-dab4-409d-96ff-6c878b9a0219"
         },
@@ -55,17 +56,16 @@ func TestListVpcPeerings(t *testing.T) {
             "accept_vpc_info": {
                 "vpc_id": "3127e30b-5f8e-42d1-a3cc-fdadf412c5bf",
                 "tenant_id": "87a56a48977e42068f70ad3280c50f0e"
-            	},
+            },
             "request_vpc_info": {
                 "vpc_id": "4117d38e-4c8f-4624-a505-bd96b97d024c",
                 "tenant_id": "87a56a48977e42068f70ad3280c50f0e"
-            	},
+            },
             "name": "test",
             "id": "71d64714-bd4e-44c4-917a-d8d1239e5292"
         }
-        ]
- }
-			`)
+    ]
+}`)
 	})
 
 	//count := 0
@@ -80,6 +80,7 @@ func TestListVpcPeerings(t *testing.T) {
 			ID:             "22a3e5b1-1150-408e-99f7-5e25a391cead",
 			Name:           "test_peering",
 			Status:         "PENDING_ACCEPTANCE",
+			Description:    "this is a description",
 			RequestVpcInfo: peerings.VpcInfo{VpcId: "3127e30b-5f8e-42d1-a3cc-fdadf412c5bf", TenantId: "87a56a48977e42068f70ad3280c50f0e"},
 			AcceptVpcInfo:  peerings.VpcInfo{VpcId: "c6efbdb7-dca4-4178-b3ec-692f125c1e25", TenantId: "17fbda95add24720a4038ba4b1c705ed"},
 		},
@@ -115,16 +116,16 @@ func TestCreateVpcPeeringConnection(t *testing.T) {
 {
     "peering": {
         "name": "test",
-
+        "description": "this is a test",
         "request_vpc_info": {
            "vpc_id": "4117d38e-4c8f-4624-a505-bd96b97d024c"
         },
         "accept_vpc_info": {
             "vpc_id": "c6efbdb7-dca4-4178-b3ec-692f125c1e25",
-			"tenant_id": "17fbda95add24720a4038ba4b1c705ed"
+            "tenant_id": "17fbda95add24720a4038ba4b1c705ed"
         }
     }
-}		`)
+}`)
 
 		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
@@ -142,21 +143,23 @@ func TestCreateVpcPeeringConnection(t *testing.T) {
             "tenant_id": "87a56a48977e42068f70ad3280c50f0e"
         },
         "name": "test",
+        "description": "this is a test",
         "id": "4e6ca99d-8344-4eb2-b2c9-b77368db3704"
     }
-}	`)
+}`)
 	})
 
 	options := peerings.CreateOpts{
 		Name:           "test",
+		Description:    "this is a test",
 		RequestVpcInfo: peerings.VpcInfo{VpcId: "4117d38e-4c8f-4624-a505-bd96b97d024c"},
 		AcceptVpcInfo:  peerings.VpcInfo{VpcId: "c6efbdb7-dca4-4178-b3ec-692f125c1e25", TenantId: "17fbda95add24720a4038ba4b1c705ed"},
 	}
 	n, err := peerings.Create(fake.ServiceClient(), options).Extract()
 	th.AssertNoErr(t, err)
 	th.AssertEquals(t, "test", n.Name)
+	th.AssertEquals(t, "this is a test", n.Description)
 	th.AssertEquals(t, "4e6ca99d-8344-4eb2-b2c9-b77368db3704", n.ID)
-
 	th.AssertEquals(t, peerings.VpcInfo{VpcId: "4117d38e-4c8f-4624-a505-bd96b97d024c", TenantId: "87a56a48977e42068f70ad3280c50f0e"}, n.RequestVpcInfo)
 	th.AssertEquals(t, peerings.VpcInfo{VpcId: "c6efbdb7-dca4-4178-b3ec-692f125c1e25", TenantId: "17fbda95add24720a4038ba4b1c705ed"}, n.AcceptVpcInfo)
 	th.AssertEquals(t, "PENDING_ACCEPTANCE", n.Status)
@@ -174,7 +177,8 @@ func TestUpdateVpcPeeringConnection(t *testing.T) {
 		th.TestJSONRequest(t, r, `
 {
     "peering": {
-        "name": "test2"
+        "name": "test2",
+        "description": "this is a test2"
     }
 }`)
 
@@ -194,17 +198,22 @@ func TestUpdateVpcPeeringConnection(t *testing.T) {
             "tenant_id": "87a56a48977e42068f70ad3280c50f0e"
         },
         "name": "test2",
+        "description": "this is a test2",
         "id": "4e6ca99d-8344-4eb2-b2c9-b77368db3704"
     }
-}
-		`)
+}`)
 	})
 
-	options := peerings.UpdateOpts{Name: "test2"}
+	desc := "this is a test2"
+	options := peerings.UpdateOpts{
+		Name:        "test2",
+		Description: &desc,
+	}
 
 	n, err := peerings.Update(fake.ServiceClient(), "4e6ca99d-8344-4eb2-b2c9-b77368db3704", options).Extract()
 	th.AssertNoErr(t, err)
 	th.AssertEquals(t, "test2", n.Name)
+	th.AssertEquals(t, desc, n.Description)
 	th.AssertEquals(t, "4e6ca99d-8344-4eb2-b2c9-b77368db3704", n.ID)
 	th.AssertEquals(t, peerings.VpcInfo{VpcId: "4117d38e-4c8f-4624-a505-bd96b97d024c", TenantId: "87a56a48977e42068f70ad3280c50f0e"}, n.RequestVpcInfo)
 	th.AssertEquals(t, peerings.VpcInfo{VpcId: "c6efbdb7-dca4-4178-b3ec-692f125c1e25", TenantId: "17fbda95add24720a4038ba4b1c705ed"}, n.AcceptVpcInfo)
