@@ -51,24 +51,25 @@ type RebootResult struct {
 }
 
 type Instance struct {
-	Id                  string         `json:"id"`
-	Name                string         `json:"name"`
-	Status              string         `json:"status"`
-	Datastore           Datastore      `json:"datastore"`
-	Ha                  Ha             `json:"ha"`
-	ConfigurationId     string         `json:"configuration_id"`
-	Port                string         `json:"port"`
-	BackupStrategy      BackupStrategy `json:"backup_strategy"`
-	EnterpriseProjectId string         `json:"enterprise_project_id"`
-	DiskEncryptionId    string         `json:"disk_encryption_id"`
-	FlavorRef           string         `json:"flavor_ref"`
-	Volume              Volume         `json:"volume"`
-	Region              string         `json:"region"`
-	AvailabilityZone    string         `json:"availability_zone"`
-	VpcId               string         `json:"vpc_id"`
-	SubnetId            string         `json:"subnet_id"`
-	SecurityGroupId     string         `json:"security_group_id"`
-	ChargeInfo          ChargeResponse `json:"charge_info"`
+	Id                  string            `json:"id"`
+	Name                string            `json:"name"`
+	Status              string            `json:"status"`
+	Datastore           Datastore         `json:"datastore"`
+	Ha                  Ha                `json:"ha"`
+	ConfigurationId     string            `json:"configuration_id"`
+	Port                string            `json:"port"`
+	BackupStrategy      BackupStrategy    `json:"backup_strategy"`
+	EnterpriseProjectId string            `json:"enterprise_project_id"`
+	DiskEncryptionId    string            `json:"disk_encryption_id"`
+	FlavorRef           string            `json:"flavor_ref"`
+	Volume              Volume            `json:"volume"`
+	Region              string            `json:"region"`
+	AvailabilityZone    string            `json:"availability_zone"`
+	VpcId               string            `json:"vpc_id"`
+	SubnetId            string            `json:"subnet_id"`
+	SecurityGroupId     string            `json:"security_group_id"`
+	ChargeInfo          ChargeResponse    `json:"charge_info"`
+	UnchangeableParam   UnchangeableParam `json:"unchangeable_param"`
 }
 
 type ChargeResponse struct {
