@@ -6,26 +6,27 @@ import (
 )
 
 type CreateOpts struct {
-	Name                string          `json:"name"  required:"true"`
-	Datastore           *Datastore      `json:"datastore" required:"true"`
-	Ha                  *Ha             `json:"ha,omitempty"`
-	ConfigurationId     string          `json:"configuration_id,omitempty"`
-	Port                string          `json:"port,omitempty"`
-	Password            string          `json:"password" required:"true"`
-	BackupStrategy      *BackupStrategy `json:"backup_strategy,omitempty"`
-	EnterpriseProjectId string          `json:"enterprise_project_id,omitempty"`
-	DiskEncryptionId    string          `json:"disk_encryption_id,omitempty"`
-	FlavorRef           string          `json:"flavor_ref" required:"true"`
-	Volume              *Volume         `json:"volume" required:"true"`
-	Region              string          `json:"region" required:"true"`
-	AvailabilityZone    string          `json:"availability_zone" required:"true"`
-	VpcId               string          `json:"vpc_id" required:"true"`
-	SubnetId            string          `json:"subnet_id" required:"true"`
-	SecurityGroupId     string          `json:"security_group_id" required:"true"`
-	ChargeInfo          *ChargeInfo     `json:"charge_info,omitempty"`
-	TimeZone            string          `json:"time_zone,omitempty"`
-	FixedIp             string          `json:"data_vip,omitempty"`
-	Collation           string          `json:"collation,omitempty"`
+	Name                string             `json:"name"  required:"true"`
+	Datastore           *Datastore         `json:"datastore" required:"true"`
+	Ha                  *Ha                `json:"ha,omitempty"`
+	ConfigurationId     string             `json:"configuration_id,omitempty"`
+	Port                string             `json:"port,omitempty"`
+	Password            string             `json:"password" required:"true"`
+	BackupStrategy      *BackupStrategy    `json:"backup_strategy,omitempty"`
+	EnterpriseProjectId string             `json:"enterprise_project_id,omitempty"`
+	DiskEncryptionId    string             `json:"disk_encryption_id,omitempty"`
+	FlavorRef           string             `json:"flavor_ref" required:"true"`
+	Volume              *Volume            `json:"volume" required:"true"`
+	Region              string             `json:"region" required:"true"`
+	AvailabilityZone    string             `json:"availability_zone" required:"true"`
+	VpcId               string             `json:"vpc_id" required:"true"`
+	SubnetId            string             `json:"subnet_id" required:"true"`
+	SecurityGroupId     string             `json:"security_group_id" required:"true"`
+	ChargeInfo          *ChargeInfo        `json:"charge_info,omitempty"`
+	TimeZone            string             `json:"time_zone,omitempty"`
+	FixedIp             string             `json:"data_vip,omitempty"`
+	Collation           string             `json:"collation,omitempty"`
+	UnchangeableParam   *UnchangeableParam `json:"unchangeable_param,omitempty"`
 }
 
 type CreateReplicaOpts struct {
@@ -48,6 +49,10 @@ type Datastore struct {
 type Ha struct {
 	Mode            string `json:"mode" required:"true"`
 	ReplicationMode string `json:"replication_mode,omitempty"`
+}
+
+type UnchangeableParam struct {
+	LowerCaseTableNames string `json:"lower_case_table_names"`
 }
 
 type BackupStrategy struct {
