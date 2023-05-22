@@ -145,13 +145,12 @@ func (current ImagePage) NextPageURL() (string, error) {
 	currentURL := current.URL
 	q := currentURL.Query()
 
-	if resp.Current+1 < resp.Pages {
-		q.Set("offset", strconv.Itoa(next))
-	} else {
-		// This page is not the last page.
+	if resp.Current+1 >= resp.Pages {
+		// This page is the last page.
 		return "", nil
 	}
 
+	q.Set("offset", strconv.Itoa(next))
 	currentURL.RawQuery = q.Encode()
 	return currentURL.String(), nil
 }
