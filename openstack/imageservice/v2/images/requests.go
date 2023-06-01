@@ -1,6 +1,7 @@
 package images
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/url"
 	"time"
@@ -229,6 +230,11 @@ func Update(client *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) 
 		r.Err = err
 		return r
 	}
+	fmt.Println("====================")
+	fmt.Println("b info: ", b)
+	bytes, _ := json.Marshal(b)
+	fmt.Println("bytes info: ", string(bytes))
+	fmt.Println("====================")
 	_, r.Err = client.Patch(updateURL(client, id), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes:     []int{200},
 		MoreHeaders: map[string]string{"Content-Type": "application/openstack-images-v2.1-json-patch"},
@@ -347,20 +353,17 @@ const (
 
 // UpdateImageProperty represents an update property request.
 type UpdateImageProperty struct {
-	Op    UpdateOp
+	Op    string
 	Name  string
-	Value string
+	Value interface{}
 }
 
 // ToImagePatchMap assembles a request body based on UpdateImageProperty.
 func (r UpdateImageProperty) ToImagePatchMap() map[string]interface{} {
 	updateMap := map[string]interface{}{
-		"op":   r.Op,
-		"path": fmt.Sprintf("/%s", r.Name),
-	}
-
-	if r.Value != "" {
-		updateMap["value"] = r.Value
+		"op":    r.Op,
+		"path":  fmt.Sprintf("/%s", r.Name),
+		"value": r.Value,
 	}
 
 	return updateMap
