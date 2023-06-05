@@ -181,6 +181,9 @@ type UpdateOpts struct {
 type UpdateSpec struct {
 	// Cluster description
 	Description string `json:"description,omitempty"`
+
+	//Custom san list for certificates
+	CustomSan []string `json:"customSan,omitempty"`
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
