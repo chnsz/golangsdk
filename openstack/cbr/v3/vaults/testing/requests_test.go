@@ -65,26 +65,48 @@ func TestListV3Vault(t *testing.T) {
 	th.AssertDeepEquals(t, expectedListResponseData, actual)
 }
 
-func TestPolicyBindingV3Vault(t *testing.T) {
+func TestBackupPolicyBindingV3Vault(t *testing.T) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
-	handleVaultBindPolicy(t)
+	handleVaultBindBackupPolicy(t)
 
 	actual, err := vaults.BindPolicy(client.ServiceClient(), "ad7627ae-5b0b-492e-b6bd-cd809b745197",
-		bindPolicyOpts).Extract()
+		bindBackupPolicyOpts).Extract()
 	th.AssertNoErr(t, err)
-	th.AssertDeepEquals(t, expectedPolicyBindingResponseData, actual)
+	th.AssertDeepEquals(t, expectedBackupPolicyBindResponseData, actual)
 }
 
-func TestPolicyUnbindingV3Vault(t *testing.T) {
+func TestReplicationPolicyBindingV3Vault(t *testing.T) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
-	handleVaultUnbindPolicy(t)
+	handleVaultBindReplicationPolicy(t)
+
+	actual, err := vaults.BindPolicy(client.ServiceClient(), "ad7627ae-5b0b-492e-b6bd-cd809b745197",
+		bindReplicationPolicyOpts).Extract()
+	th.AssertNoErr(t, err)
+	th.AssertDeepEquals(t, expectedReplicationPolicyBindResponseData, actual)
+}
+
+func TestBackupPolicyUnbindingV3Vault(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+	handleVaultUnbindBackupPolicy(t)
 
 	actual, err := vaults.UnbindPolicy(client.ServiceClient(), "ad7627ae-5b0b-492e-b6bd-cd809b745197",
-		bindPolicyOpts).Extract()
+		unbindPolicyOpts).Extract()
 	th.AssertNoErr(t, err)
-	th.AssertDeepEquals(t, expectedPolicyBindingResponseData, actual)
+	th.AssertDeepEquals(t, expectedBackupPolicyBindResponseData, actual)
+}
+
+func TestReplicationPolicyUnbindingV3Vault(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+	handleVaultUnbindReplicationPolicy(t)
+
+	actual, err := vaults.UnbindPolicy(client.ServiceClient(), "ad7627ae-5b0b-492e-b6bd-cd809b745197",
+		unbindPolicyOpts).Extract()
+	th.AssertNoErr(t, err)
+	th.AssertDeepEquals(t, expectedReplicationPolicyBindResponseData, actual)
 }
 
 func TestAssociateResourcesV3Vault(t *testing.T) {
