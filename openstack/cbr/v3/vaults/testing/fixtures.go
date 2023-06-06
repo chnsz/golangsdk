@@ -147,19 +147,37 @@ const (
   "count" : 1
 }`
 
-	expectedPolicyBindingResponse = `
+	expectedBackupPolicyBindResponse = `
 {
   "associate_policy" : {
-    "vault_id" : "ad7627ae-5b0b-492e-b6bd-cd809b745197",
-    "policy_id" : "7075c397-25a0-43e2-a83a-bb16eaca3ee5"
+    "policy_id" : "7075c397-25a0-43e2-a83a-bb16eaca3ee5",
+    "vault_id" : "ad7627ae-5b0b-492e-b6bd-cd809b745197"
   }
 }`
 
-	expectedPolicyUnbindingResponse = `
+	expectedReplicationPolicyBindResponse = `
+{
+  "associate_policy" : {
+    "destination_vault_id" : "1876cfb0-abe5-4eab-97ec-79d3b28a4d92",
+    "policy_id" : "7075c397-25a0-43e2-a83a-bb16eaca3ee5",
+    "vault_id" : "ad7627ae-5b0b-492e-b6bd-cd809b745197"
+  }
+}`
+
+	expectedBackupPolicyUnbindResponse = `
 {
   "dissociate_policy" : {
-    "vault_id" : "ad7627ae-5b0b-492e-b6bd-cd809b745197",
-    "policy_id" : "7075c397-25a0-43e2-a83a-bb16eaca3ee5"
+    "policy_id" : "7075c397-25a0-43e2-a83a-bb16eaca3ee5",
+    "vault_id" : "ad7627ae-5b0b-492e-b6bd-cd809b745197"
+  }
+}`
+
+	expectedReplicationPolicyUnbindResponse = `
+{
+  "dissociate_policy" : {
+    "destination_vault_id" : "1876cfb0-abe5-4eab-97ec-79d3b28a4d92",
+    "policy_id" : "7075c397-25a0-43e2-a83a-bb16eaca3ee5",
+    "vault_id" : "ad7627ae-5b0b-492e-b6bd-cd809b745197"
   }
 }`
 
@@ -340,13 +358,28 @@ var (
 		},
 	}
 
-	bindPolicyOpts = &vaults.BindPolicyOpts{
+	bindBackupPolicyOpts = &vaults.BindPolicyOpts{
 		PolicyID: "7075c397-25a0-43e2-a83a-bb16eaca3ee5",
 	}
 
-	expectedPolicyBindingResponseData = &vaults.PolicyBinding{
+	bindReplicationPolicyOpts = &vaults.BindPolicyOpts{
+		DestinationVaultId: "1876cfb0-abe5-4eab-97ec-79d3b28a4d92",
+		PolicyID:           "7075c397-25a0-43e2-a83a-bb16eaca3ee5",
+	}
+
+	unbindPolicyOpts = &vaults.BindPolicyOpts{
+		PolicyID: "7075c397-25a0-43e2-a83a-bb16eaca3ee5",
+	}
+
+	expectedBackupPolicyBindResponseData = &vaults.PolicyBinding{
 		VaultID:  "ad7627ae-5b0b-492e-b6bd-cd809b745197",
 		PolicyID: "7075c397-25a0-43e2-a83a-bb16eaca3ee5",
+	}
+
+	expectedReplicationPolicyBindResponseData = &vaults.PolicyBinding{
+		DestinationVaultId: "1876cfb0-abe5-4eab-97ec-79d3b28a4d92",
+		VaultID:            "ad7627ae-5b0b-492e-b6bd-cd809b745197",
+		PolicyID:           "7075c397-25a0-43e2-a83a-bb16eaca3ee5",
 	}
 
 	associateResourcesOpts = &vaults.AssociateResourcesOpts{
@@ -423,25 +456,47 @@ func handleVaultList(t *testing.T) {
 	})
 }
 
-func handleVaultBindPolicy(t *testing.T) {
+func handleVaultBindBackupPolicy(t *testing.T) {
 	th.Mux.HandleFunc("/vaults/ad7627ae-5b0b-492e-b6bd-cd809b745197/associatepolicy",
 		func(w http.ResponseWriter, r *http.Request) {
 			th.TestMethod(t, r, "POST")
 			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
 			w.Header().Add("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
-			_, _ = fmt.Fprint(w, expectedPolicyBindingResponse)
+			_, _ = fmt.Fprint(w, expectedBackupPolicyBindResponse)
 		})
 }
 
-func handleVaultUnbindPolicy(t *testing.T) {
+func handleVaultBindReplicationPolicy(t *testing.T) {
+	th.Mux.HandleFunc("/vaults/ad7627ae-5b0b-492e-b6bd-cd809b745197/associatepolicy",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "POST")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			_, _ = fmt.Fprint(w, expectedReplicationPolicyBindResponse)
+		})
+}
+
+func handleVaultUnbindBackupPolicy(t *testing.T) {
 	th.Mux.HandleFunc("/vaults/ad7627ae-5b0b-492e-b6bd-cd809b745197/dissociatepolicy",
 		func(w http.ResponseWriter, r *http.Request) {
 			th.TestMethod(t, r, "POST")
 			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
 			w.Header().Add("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
-			_, _ = fmt.Fprint(w, expectedPolicyUnbindingResponse)
+			_, _ = fmt.Fprint(w, expectedBackupPolicyUnbindResponse)
+		})
+}
+
+func handleVaultUnbindReplicationPolicy(t *testing.T) {
+	th.Mux.HandleFunc("/vaults/ad7627ae-5b0b-492e-b6bd-cd809b745197/dissociatepolicy",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "POST")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			_, _ = fmt.Fprint(w, expectedReplicationPolicyUnbindResponse)
 		})
 }
 
