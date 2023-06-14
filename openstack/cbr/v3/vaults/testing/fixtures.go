@@ -15,6 +15,7 @@ const (
 	expectedCreateRequest = `
 {
   "vault" : {
+    "backup_name_prefix": "",
     "backup_policy_id" : "6dd81d7d-a4cb-443e-b8ed-1af0bd3a261b",
     "billing" : {
       "cloud_type" : "public",
@@ -47,6 +48,7 @@ const (
 	expectedCreateResponse = `
 {
   "vault" : {
+    "backup_name_prefix": "",
     "provider_id" : "0daac4c5-6707-4851-97ba-169e36266b66",
     "description" : "vault_description",
     "tags" : [ {
@@ -103,6 +105,7 @@ const (
 	expectedListResponse = `
 {
   "vaults" : [ {
+    "backup_name_prefix": "",
     "provider_id" : "0daac4c5-6707-4851-97ba-169e36266b66",
     "description" : "vault_description",
     "tags" : [ {
