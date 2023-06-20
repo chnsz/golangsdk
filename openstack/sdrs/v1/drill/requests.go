@@ -18,10 +18,10 @@ type CreateOptsBuilder interface {
 type CreateOpts struct {
 	// Protection Group ID
 	GroupID string `json:"server_group_id" required:"true"`
-	// Drill vpc id
-	DrillVpcID string `json:"drill_vpc_id" required:"true"`
 	//DR-Drill Name
 	Name string `json:"name" required:"true"`
+	// Drill vpc id
+	DrillVpcID string `json:"drill_vpc_id,omitempty"`
 }
 
 // ToDrillCreateMap builds a create request body from CreateOpts.
