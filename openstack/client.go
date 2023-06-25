@@ -294,13 +294,15 @@ func getProjectID(client *golangsdk.ServiceClient, name string) (string, error) 
 	}
 
 	projects, err := projects.ExtractProjects(allPages)
-
 	if err != nil {
 		return "", err
 	}
 
 	if len(projects) < 1 {
-		return "", fmt.Errorf("[DEBUG] cannot find the tenant: %s", name)
+		err := &golangsdk.ErrResourceNotFound{}
+		err.ResourceType = "IAM project ID"
+		err.Name = name
+		return "", err
 	}
 
 	return projects[0].ID, nil
