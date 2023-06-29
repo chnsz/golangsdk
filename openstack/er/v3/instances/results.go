@@ -25,6 +25,8 @@ type Instance struct {
 	EnterpriseProjectId string `json:"enterprise_project_id"`
 	// The project ID.
 	ProjectId string `json:"project_id"`
+	// The BGP AS number of the ER instance.
+	ASN int `json:"asn"`
 	// Whether to enable the propagation of the default route table.
 	EnableDefaultPropagation bool `json:"enable_default_propagation"`
 	// Whether to enable the association of the default route table.
