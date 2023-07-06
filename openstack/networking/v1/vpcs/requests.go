@@ -143,10 +143,11 @@ type CreateOptsBuilder interface {
 // CreateOpts contains all the values needed to create a new vpc. There are
 // no required values.
 type CreateOpts struct {
-	Name                string `json:"name,omitempty"`
-	CIDR                string `json:"cidr,omitempty"`
-	Description         string `json:"description,omitempty"`
-	EnterpriseProjectID string `json:"enterprise_project_id,omitempty"`
+	Name                string   `json:"name,omitempty"`
+	CIDR                string   `json:"cidr,omitempty"`
+	Description         string   `json:"description,omitempty"`
+	EnterpriseProjectID string   `json:"enterprise_project_id,omitempty"`
+	Tags                []string `json:"tags,omitempty"`
 }
 
 // ToVpcCreateMap builds a create request body from CreateOpts.
