@@ -81,7 +81,7 @@ type CreateOpts struct {
 	ProtectionStatus string `json:"protection_status,omitempty"`
 
 	// Update protection reason
-	ProtectionReason string `json:"protection_reason,omitempty"`
+	ProtectionReason *string `json:"protection_reason,omitempty"`
 }
 
 // BandwidthRef
@@ -238,7 +238,7 @@ type UpdateOpts struct {
 	ProtectionStatus string `json:"protection_status,omitempty"`
 
 	// Update protection reason
-	ProtectionReason string `json:"protection_reason,omitempty"`
+	ProtectionReason *string `json:"protection_reason,omitempty"`
 }
 
 // ToLoadBalancerUpdateMap builds a request body from UpdateOpts.
