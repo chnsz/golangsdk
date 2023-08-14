@@ -88,6 +88,8 @@ type Spec struct {
 type NodeNicSpec struct {
 	// The primary Nic of the Node
 	PrimaryNic PrimaryNic `json:"primaryNic,omitempty"`
+	// The extension Nics of the Node
+	ExtNics []ExtNic `json:"extNics,omitempty"`
 }
 
 // Gives the Primary Nic of the node
@@ -96,6 +98,15 @@ type PrimaryNic struct {
 	SubnetId string `json:"subnetId,omitempty"`
 	// Fixed ips of the primary Nic
 	FixedIps []string `json:"fixedIps,omitempty"`
+}
+
+type ExtNic struct {
+	// The Subnet ID of the extension Nic
+	SubnetId string `json:"subnetId,omitempty"`
+	// Fixed ips of the extension Nic
+	FixedIps []string `json:"fixedIps,omitempty"`
+	// IP block of the extension Nic
+	IPBlock string `json:"ipBlock,omitempty"`
 }
 
 // TaintSpec to created nodes to configure anti-affinity
