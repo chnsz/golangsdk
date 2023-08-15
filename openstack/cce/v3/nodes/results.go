@@ -82,6 +82,8 @@ type Spec struct {
 	Taints []TaintSpec `json:"taints,omitempty"`
 	// The name of the created partition
 	Partition string `json:"partition,omitempty"`
+	// The initialized conditions
+	InitializedConditions []string `json:"initializedConditions,omitempty"`
 }
 
 // Gives the Nic spec of the node
