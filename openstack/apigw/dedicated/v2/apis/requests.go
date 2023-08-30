@@ -225,7 +225,7 @@ type ReqParamBase struct {
 	// This parameter is valid when type is set to STRING.
 	MaxSize *int `json:"max_size,omitempty"`
 	// Indicates whether to transparently transfer the parameter. The valid values are 1 (yes) and 2 (no).
-	PassThrough string `json:"pass_through,omitempty"`
+	PassThrough int `json:"pass_through,omitempty"`
 }
 
 // PolicyMock is an object which will be build up a backend policy of the mock.
