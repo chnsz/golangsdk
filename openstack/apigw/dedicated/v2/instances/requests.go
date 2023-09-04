@@ -333,3 +333,39 @@ func ListFeatures(c *golangsdk.ServiceClient, instanceId string, opts ListFeatur
 	}
 	return ExtractFeatures(pages)
 }
+
+// TagsUpdateOpts is the structure used to modify instance tags.
+type TagsUpdateOpts struct {
+	// Dedicated instance ID.
+	InstanceId string `json:"-" required:"true"`
+	// Operation identification.
+	// + create
+	// + delete
+	Action string `json:"action" required:"true"`
+	// Tag list.
+	// An instance supports the creation of up to 20 tags by default.
+	Tags []tags.ResourceTag `json:"tags" required:"true"`
+}
+
+// UpdateTags
+func UpdateTags(c *golangsdk.ServiceClient, opts *TagsUpdateOpts) error {
+	b, err := golangsdk.BuildRequestBody(opts, "")
+	if err != nil {
+		return err
+	}
+
+	_, err = c.Post(modifyTagsURL(c, opts.InstanceId), b, nil, &golangsdk.RequestOpts{
+		MoreHeaders: requestOpts.MoreHeaders,
+		OkCodes:     []int{200, 201, 204},
+	})
+	return err
+}
+
+// GetTags is a method used to obtain the list of instance tags.
+func GetTags(c *golangsdk.ServiceClient, instanceId string) ([]tags.ResourceTag, error) {
+	var r struct {
+		Tags []tags.ResourceTag `json:"tags"`
+	}
+	_, err := c.Get(queryTagsURL(c, instanceId), &r, nil)
+	return r.Tags, err
+}
