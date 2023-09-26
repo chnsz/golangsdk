@@ -36,7 +36,7 @@ func List(client *golangsdk.ServiceClient, opts AssetsBuilder) (r ListAssetsResu
 	}
 
 	_, r.Err = client.Get(url, &r.Body, &golangsdk.RequestOpts{
-		OkCodes:     []int{200},
+		OkCodes: []int{200},
 	})
 	return
 }
