@@ -40,6 +40,7 @@ type CreateOpts struct {
 	Type                string            `json:"type,omitempty"`
 	UserData            string            `json:"user_data,omitempty"`
 	Xrole               string            `json:"xrole,omitempty"`
+	LogConfig           *FuncLogConfig    `json:"log_config,omitempty"`
 }
 
 type CustomImage struct {
