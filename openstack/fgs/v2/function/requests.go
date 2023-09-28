@@ -169,7 +169,7 @@ type UpdateMetadataOpts struct {
 	// Enterprise project ID.
 	EnterpriseProjectID string `json:"enterprise_project_id,omitempty"`
 	// Function log configuration.
-	LogConfig FuncLogConfig `json:"log_config,omitempty"`
+	LogConfig *FuncLogConfig `json:"log_config,omitempty"`
 	// Network configuration.
 	NetworkController NetworkControlConfig `json:"network_controller,omitempty"`
 	// Whether stateful functions are supported.
