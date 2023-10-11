@@ -9,6 +9,7 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations under the License.
+
 package obs
 
 import (
@@ -246,9 +247,10 @@ type Transition struct {
 
 // Expiration defines expiration property in LifecycleRule
 type Expiration struct {
-	XMLName xml.Name  `xml:"Expiration"`
-	Date    time.Time `xml:"Date,omitempty"`
-	Days    int       `xml:"Days,omitempty"`
+	XMLName                   xml.Name  `xml:"Expiration"`
+	Date                      time.Time `xml:"Date,omitempty"`
+	Days                      int       `xml:"Days,omitempty"`
+	ExpiredObjectDeleteMarker string    `xml:"ExpiredObjectDeleteMarker,omitempty"`
 }
 
 // NoncurrentVersionTransition defines noncurrentVersion transition property in LifecycleRule
@@ -264,15 +266,29 @@ type NoncurrentVersionExpiration struct {
 	NoncurrentDays int      `xml:"NoncurrentDays"`
 }
 
+// AbortIncompleteMultipartUpload defines abortIncomplete expiration property in LifecycleRule
+type AbortIncompleteMultipartUpload struct {
+	XMLName             xml.Name `xml:"AbortIncompleteMultipartUpload"`
+	DaysAfterInitiation int      `xml:"DaysAfterInitiation"`
+}
+
 // LifecycleRule defines lifecycle rule
 type LifecycleRule struct {
-	ID                           string                        `xml:"ID,omitempty"`
-	Prefix                       string                        `xml:"Prefix"`
-	Status                       RuleStatusType                `xml:"Status"`
-	Transitions                  []Transition                  `xml:"Transition,omitempty"`
-	Expiration                   Expiration                    `xml:"Expiration,omitempty"`
-	NoncurrentVersionTransitions []NoncurrentVersionTransition `xml:"NoncurrentVersionTransition,omitempty"`
-	NoncurrentVersionExpiration  NoncurrentVersionExpiration   `xml:"NoncurrentVersionExpiration,omitempty"`
+	ID                             string                         `xml:"ID,omitempty"`
+	Prefix                         string                         `xml:"Prefix"`
+	Status                         RuleStatusType                 `xml:"Status"`
+	Transitions                    []Transition                   `xml:"Transition,omitempty"`
+	Expiration                     Expiration                     `xml:"Expiration,omitempty"`
+	NoncurrentVersionTransitions   []NoncurrentVersionTransition  `xml:"NoncurrentVersionTransition,omitempty"`
+	NoncurrentVersionExpiration    NoncurrentVersionExpiration    `xml:"NoncurrentVersionExpiration,omitempty"`
+	AbortIncompleteMultipartUpload AbortIncompleteMultipartUpload `xml:"AbortIncompleteMultipartUpload,omitempty"`
+	Filter                         LifecycleFilter                `xml:"Filter,omitempty"`
+}
+
+type LifecycleFilter struct {
+	XMLName xml.Name `xml:"Filter"`
+	Prefix  string   `xml:"And>Prefix,omitempty"`
+	Tags    []Tag    `xml:"And>Tag,omitempty"`
 }
 
 // BucketEncryptionConfiguration defines the bucket encryption configuration
@@ -281,24 +297,6 @@ type BucketEncryptionConfiguration struct {
 	SSEAlgorithm   string   `xml:"Rule>ApplyServerSideEncryptionByDefault>SSEAlgorithm"`
 	KMSMasterKeyID string   `xml:"Rule>ApplyServerSideEncryptionByDefault>KMSMasterKeyID,omitempty"`
 	ProjectID      string   `xml:"Rule>ApplyServerSideEncryptionByDefault>ProjectID,omitempty"`
-}
-
-// ReplicationRule defines bucket cross-region replication rule
-type ReplicationRule struct {
-	ID                          string           `xml:"ID,omitempty"`
-	Prefix                      string           `xml:"Prefix"`
-	Status                      RuleStatusType   `xml:"Status"`
-	DestinationBucket           string           `xml:"Destination>Bucket"`
-	StorageClass                StorageClassType `xml:"Destination>StorageClass,omitempty"`
-	DeleteDate                  EnabledType      `xml:"Destination>DeleteDate,omitempty"`
-	HistoricalObjectReplication EnabledType      `xml:"HistoricalObjectReplication,omitempty"`
-}
-
-// BucketReplicationConfiguration defines the bucket cross-region replication configuration
-type BucketReplicationConfiguration struct {
-	XMLName          xml.Name          `xml:"ReplicationConfiguration"`
-	Agency           string            `xml:"Agency"`
-	ReplicationRules []ReplicationRule `xml:"Rule"`
 }
 
 // Tag defines tag property in BucketTagging
@@ -378,4 +376,14 @@ type Part struct {
 type BucketPayer struct {
 	XMLName xml.Name  `xml:"RequestPaymentConfiguration"`
 	Payer   PayerType `xml:"Payer"`
+}
+
+// HttpHeader defines the standard metadata
+type HttpHeader struct {
+	CacheControl       string
+	ContentDisposition string
+	ContentEncoding    string
+	ContentLanguage    string
+	ContentType        string
+	HttpExpires        string
 }
