@@ -5,9 +5,9 @@ import (
 )
 
 type LogtankGet struct {
-	Id          string `json:"id"`
-	LogGroupId  string `json:"log_group_id"`
-	LogStreamId string `json:"log_stream_id"`
+	ID          string `json:"id"`
+	LogGroupID  string `json:"log_group_id"`
+	LogStreamID string `json:"log_stream_id"`
 	CreateTime  string `json:"create_time"`
 	UpdateTime  string `json:"update_time"`
 }
@@ -30,6 +30,11 @@ type DeleteResult struct {
 
 type ListResult struct {
 	commonResult
+}
+
+// Extract will get the return error out of result
+func (r DeleteResult) Extract() error {
+	return r.Err
 }
 
 // Extract will get the logtank object out of the commonResult object.
