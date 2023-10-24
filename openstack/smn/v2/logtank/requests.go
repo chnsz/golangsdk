@@ -12,7 +12,7 @@ var RequestOpts = golangsdk.RequestOpts{
 type Ops struct {
 	LogGroupID string `json:"log_group_id" required:"true"`
 
-	LogStreamId string `json:"log_stream_id" required:"true"`
+	LogStreamID string `json:"log_stream_id" required:"true"`
 }
 
 // Create a logtank with given parameters.
