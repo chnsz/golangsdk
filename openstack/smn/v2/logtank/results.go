@@ -5,9 +5,9 @@ import (
 )
 
 type LogtankGet struct {
-	Id          string `json:"id"`
-	LogGroupId  string `json:"log_group_id"`
-	LogStreamId string `json:"log_stream_id"`
+	ID          string `json:"id"`
+	LogGroupID  string `json:"log_group_id"`
+	LogStreamID string `json:"log_stream_id"`
 	CreateTime  string `json:"create_time"`
 	UpdateTime  string `json:"update_time"`
 }
