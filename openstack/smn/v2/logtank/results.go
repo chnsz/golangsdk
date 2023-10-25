@@ -32,6 +32,11 @@ type ListResult struct {
 	commonResult
 }
 
+// Extract will get the return error out of result
+func (r DeleteResult) Extract() error {
+	return r.Err
+}
+
 // Extract will get the logtank object out of the commonResult object.
 func (r commonResult) Extract() (LogtankGet, error) {
 	var s LogtankGet
