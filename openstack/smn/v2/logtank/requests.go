@@ -16,8 +16,8 @@ type Opts struct {
 }
 
 // Create a logtank with given parameters.
-func Create(client *golangsdk.ServiceClient, topicUrn string, ops Opts) (r CreateResult) {
-	b, err := golangsdk.BuildRequestBody(ops, "")
+func Create(client *golangsdk.ServiceClient, topicUrn string, opts Opts) (r CreateResult) {
+	b, err := golangsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		r.Err = err
 		return
@@ -39,8 +39,8 @@ func List(client *golangsdk.ServiceClient, topicUrn string) (r ListResult) {
 }
 
 // Update a logtank with given parameters.
-func Update(client *golangsdk.ServiceClient, topicUrn string, logTankID string, ops Opts) (r UpdateResult) {
-	b, err := golangsdk.BuildRequestBody(ops, "")
+func Update(client *golangsdk.ServiceClient, topicUrn string, logTankID string, opts Opts) (r UpdateResult) {
+	b, err := golangsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		r.Err = err
 		return
