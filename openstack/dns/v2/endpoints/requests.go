@@ -8,10 +8,26 @@ import (
 )
 
 type ListOpts struct {
-	Direction string `q:"direction"`
-	VpcID     string `q:"vpc_id"`
-	Limit     int    `q:"limit"`
-	Offset    int    `q:"offset"`
+	Direction string `q:"direction" required:"true"`
+	VpcID     string `q:"vpc_id,omitempty"`
+	Limit     int    `q:"limit,omitempty"`
+	Offset    int    `q:"offset,omitempty"`
+}
+
+type CreateOpt struct {
+	Name        string        `json:"name" required:"true"`
+	Direction   string        `json:"direction" required:"true"`
+	Region      string        `json:"region" required:"true"`
+	IPAddresses []IPAddresses `json:"ipaddresses" required:"true"`
+}
+
+type IPAddresses struct {
+	SubnetID string `json:"subnet_id" required:"true"`
+	IP       string `json:"ip,omitempty"`
+}
+
+type UpdateOpts struct {
+	Name string `json:"name" required:"true"`
 }
 
 func Create(c *golangsdk.ServiceClient, opts CreateOpt) (r CreateResult) {
@@ -61,6 +77,5 @@ func List(c *golangsdk.ServiceClient, opts ListOpts) ([]Endpoint, error) {
 	if err = json.Unmarshal(body, &e); err != nil {
 		return nil, err
 	}
-
 	return e.Instances, nil
 }
