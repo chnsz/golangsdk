@@ -18,15 +18,6 @@ type DeleteResult struct {
 	golangsdk.ErrResult
 }
 
-type CreateOpts struct {
-	IPAddress `json:"ipaddress"`
-}
-
-type IPAddress struct {
-	SubnetID string `json:"subnet_id"`
-	IP       string `json:"ip"`
-}
-
 type ListObject struct {
 	Status     string `json:"status"`
 	ID         string `json:"id"`
@@ -59,7 +50,7 @@ func (c CreateResult) Extract() (EndpointResp, error) {
 
 func (l ListResult) Extract() ([]ListObject, error) {
 	type result struct {
-		IPAddress []ListObject `json:"ipaddress"`
+		IPAddress []ListObject `json:"ipaddresses"`
 	}
 	var r result
 	err := l.ExtractInto(&r)

@@ -2,6 +2,15 @@ package ipaddress
 
 import "github.com/chnsz/golangsdk"
 
+type CreateOpts struct {
+	IPAddress `json:"ipaddress" required:"true"`
+}
+
+type IPAddress struct {
+	SubnetID string `json:"subnet_id" required:"true"`
+	IP       string `json:"ip,omitempty"`
+}
+
 func Create(c *golangsdk.ServiceClient, opts CreateOpts, endpointID string) (r CreateResult) {
 	body, err := golangsdk.BuildRequestBody(opts, "")
 	if err != nil {
