@@ -32,11 +32,11 @@ type ScheduledPolicy struct {
 // InstanceNumber is the structure that used to create the numbers of scaling group instance for planned task.
 type InstanceNumber struct {
 	// The max number of instances of the scaling group to which the planned task belongs.
-	Max int `json:"max,omitempty"`
+	Max *int `json:"max,omitempty"`
 	// The min number of instances of the scaling group to which the planned task belongs.
-	Min int `json:"min,omitempty"`
+	Min *int `json:"min,omitempty"`
 	// The desire number of instances of the scaling group to which the planned task belongs.
-	Desire int `json:"desire,omitempty"`
+	Desire *int `json:"desire,omitempty"`
 }
 
 var requestOpts = golangsdk.RequestOpts{
