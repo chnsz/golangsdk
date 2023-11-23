@@ -32,7 +32,7 @@ type listResp struct {
 }
 
 type PolicyRule struct {
-	RuleIndex   int8     `json:"rule_index"`
+	RuleIndex   int      `json:"rule_index"`
 	Source      string   `json:"source"`
 	Destination []string `json:"destination"`
 }
@@ -44,7 +44,7 @@ type IkePolicy struct {
 	EncryptionAlgorithm     string `json:"encryption_algorithm"`
 	DhGroup                 string `json:"dh_group"`
 	AuthenticationMethod    string `json:"authentication_method"`
-	LifetimeSeconds         int32  `json:"lifetime_seconds"`
+	LifetimeSeconds         int    `json:"lifetime_seconds"`
 	LocalIdType             string `json:"local_id_type"`
 	LocalId                 string `json:"local_id"`
 	PeerIdType              string `json:"peer_id_type"`
@@ -53,8 +53,8 @@ type IkePolicy struct {
 }
 
 type Dpd struct {
-	Timeout  int8   `json:"timeout"`
-	Interval int16  `json:"interval"`
+	Timeout  int    `json:"timeout"`
+	Interval int    `json:"interval"`
 	Msg      string `json:"msg"`
 }
 
