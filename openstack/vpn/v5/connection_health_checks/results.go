@@ -1,4 +1,4 @@
-package connection_monitors
+package connection_health_checks
 
 type ConnectionMonitor struct {
 	ID                 string                  `json:"id"`
@@ -17,7 +17,7 @@ type ConnectionMonitorInfo struct {
 }
 
 type ListResp struct {
-	ConnectionMonitors []ConnectionMonitor `json:"connection_monitors"`
+	ConnectionMonitors []ConnectionMonitor `json:"connection_health_checks"`
 	TotalCount         int                 `json:"total_count"`
 	RequestId          string              `json:"request_id"`
 }

@@ -1,4 +1,4 @@
-package connection_monitors
+package connection_health_checks
 
 import (
 	"github.com/chnsz/golangsdk"
