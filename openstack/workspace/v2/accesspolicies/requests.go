@@ -10,7 +10,7 @@ type CreateOpts struct {
 	// Access policy detail.
 	Policy AccessPolicy `json:"policy" required:"true"`
 	// List of policy objects.
-	PolicyObjectsList []AccessPolicyObjectInfo `json:"policy_object_list,omitempty"`
+	PolicyObjectsList []AccessPolicyObjectInfo `json:"policy_objects_list,omitempty"`
 }
 
 // AccessPolicy is the structure that represents the basic configuration of the access policy.
