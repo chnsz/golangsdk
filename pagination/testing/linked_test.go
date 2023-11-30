@@ -110,3 +110,38 @@ func TestAllPagesLinked(t *testing.T) {
 	testhelper.AssertNoErr(t, err)
 	testhelper.CheckDeepEquals(t, expected, actual)
 }
+
+func TestAllPagesLinkedTimeout(t *testing.T) {
+	pager := unlimiteLinked(t)
+	defer testhelper.TeardownHTTP()
+
+	_, err := pager.AllPages()
+	if err != nil {
+		expectErr := fmt.Errorf("A timeout occurred")
+		testhelper.CheckDeepEquals(t, expectErr, err)
+	} else {
+		testhelper.AssertNoErr(t, fmt.Errorf("the test should be failed"))
+	}
+}
+
+func unlimiteLinked(t *testing.T) pagination.Pager {
+	testhelper.SetupHTTP()
+
+	testhelper.Mux.HandleFunc("/page1", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, `{ "ints": [1, 2, 3], "links": { "next": "%s/page2" } }`, testhelper.Server.URL)
+	})
+
+	testhelper.Mux.HandleFunc("/page2", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, `{ "ints": [4, 5, 6], "links": { "next": "%s/page1" } }`, testhelper.Server.URL)
+	})
+
+	client := createClient()
+
+	createPage := func(r pagination.PageResult) pagination.Page {
+		return LinkedPageResult{pagination.LinkedPageBase{PageResult: r}}
+	}
+
+	return pagination.NewPager(client, testhelper.Server.URL+"/page1", createPage)
+}
