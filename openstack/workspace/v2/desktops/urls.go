@@ -33,3 +33,7 @@ func eipsURL(c *golangsdk.ServiceClient) string {
 func bindEipURL(c *golangsdk.ServiceClient, bindType string) string {
 	return c.ServiceURL("eips", bindType)
 }
+
+func networkURL(c *golangsdk.ServiceClient, desktopId string) string {
+	return c.ServiceURL("desktops", desktopId, "networks")
+}

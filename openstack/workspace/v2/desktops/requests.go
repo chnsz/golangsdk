@@ -342,3 +342,39 @@ func UnbindEip(c *golangsdk.ServiceClient, opts UnbindEipOpt) error {
 	})
 	return err
 }
+
+// GetNetwork is the method that used to query desktop network infomation.
+func GetNetwork(c *golangsdk.ServiceClient, desktopId string) ([]NetworkInfos, error) {
+	var r NetworkResp
+	_, err := c.Get(networkURL(c, desktopId), &r, &golangsdk.RequestOpts{
+		MoreHeaders: requestOpts.MoreHeaders,
+	})
+	return r.Network, err
+}
+
+// UpdateNetworkOpts is the structure that used to modify desktop network.
+type UpdateNetworkOpts struct {
+	DesktopId string `json:"-"`
+	// The ID of the vpc to be change.
+	VpcId string `json:"vpc_id" required:"true"`
+	// The ID of the subnet to be change.
+	SubnetId string `json:"subnet_id" required:"true"`
+	// ID list of security group.
+	SecurityGroupIds []string `json:"security_group_ids" required:"true"`
+	// Specifies a private ID address.
+	PrivateId string `json:"private_ip,omitempty"`
+}
+
+// UpdateNetwork is the method that used to modify desktop network infomation using given parameters.
+func UpdateNetwork(c *golangsdk.ServiceClient, opts UpdateNetworkOpts) (*UpdateNetworkResp, error) {
+	b, err := golangsdk.BuildRequestBody(opts, "")
+	if err != nil {
+		return nil, err
+	}
+
+	var r UpdateNetworkResp
+	_, err = c.Put(networkURL(c, opts.DesktopId), b, &r, &golangsdk.RequestOpts{
+		MoreHeaders: requestOpts.MoreHeaders,
+	})
+	return &r, err
+}
