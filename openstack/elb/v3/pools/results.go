@@ -11,15 +11,20 @@ import (
 // types of persistence are supported:
 //
 // SOURCE_IP:   With this mode, all connections originating from the same source
-//              IP address, will be handled by the same Member of the Pool.
+//
+//	IP address, will be handled by the same Member of the Pool.
+//
 // HTTP_COOKIE: With this persistence mode, the load balancing function will
-//              create a cookie on the first request from a client. Subsequent
-//              requests containing the same cookie value will be handled by
-//              the same Member of the Pool.
+//
+//	create a cookie on the first request from a client. Subsequent
+//	requests containing the same cookie value will be handled by
+//	the same Member of the Pool.
+//
 // APP_COOKIE:  With this persistence mode, the load balancing function will
-//              rely on a cookie established by the backend application. All
-//              requests carrying the same cookie value will be handled by the
-//              same Member of the Pool.
+//
+//	rely on a cookie established by the backend application. All
+//	requests carrying the same cookie value will be handled by the
+//	same Member of the Pool.
 type SessionPersistence struct {
 	// The type of persistence mode.
 	Type string `json:"type"`
@@ -30,6 +35,66 @@ type SessionPersistence struct {
 	// Specifies the sticky session timeout duration in minutes.
 	// This parameter is invalid when type is set to APP_COOKIE.
 	PersistenceTimeout int `json:"persistence_timeout,omitempty"`
+}
+
+// MasterSlaveMember represents a list of member master and slave objects IDs.
+type MasterSlaveMember struct {
+	// The private IP address bound to the backend server.
+	Address string `json:"address"`
+
+	// The port used by the backend server to receive requests.
+	ProtocolPort int `json:"protocol_port,omitempty"`
+
+	// The type of the backend server.
+	Role string `json:"role,omitempty"`
+
+	// The administrative status of the backend server.
+	AdminStateUp bool `json:"admin_state_up,omitempty"`
+
+	// The backend server name.
+	Name string `json:"name,omitempty"`
+
+	// The backend server id.
+	ID string `json:"id,omitempty"`
+
+	// The ID of the IPv4 or IPv6  subnet where the backend server resides.
+	SubnetCidrId string `json:"subnet_cidr_id,omitempty"`
+}
+
+// MasterSlaveHealthMonitor represents the health check for active/standby backend server group.
+type MasterSlaveHealthMonitor struct {
+	// The interval between health checks, in seconds.
+	Delay int `json:"delay"`
+
+	// The number of consecutive health checks when the health check result of a backend server changes from OFFLINE to ONLINE.
+	MaxRetries int `json:"max_retries,omitempty"`
+
+	// The maximum time required for waiting for a response from the health check, in seconds.
+	Timeout int `json:"timeout,omitempty"`
+
+	// The health check protocol.
+	Type string `json:"type,omitempty"`
+
+	// The domain name that HTTP requests are sent to during the health check.
+	DomainName string `json:"domain_name,omitempty"`
+
+	// The expected HTTP status code.
+	ExpectedCodes string `json:"expected_codes,omitempty"`
+
+	// The HTTP method.
+	HttpMethod string `json:"http_method,omitempty"`
+
+	// The number of consecutive health checks when the health check result of a backend server changes from ONLINE to OFFLINE.
+	MaxRetriesDown int `json:"max_retries_down,omitempty"`
+
+	// The port used for the health check.
+	MonitorPort int `json:"monitor_port,omitempty"`
+
+	// The health check name.
+	Name string `json:"name,omitempty"`
+
+	// The HTTP request path for the health check.
+	UrlPath string `json:"url_path,omitempty"`
 }
 
 // LoadBalancerID represents a load balancer.
@@ -54,6 +119,9 @@ type Pool struct {
 
 	// The protocol of the Pool, which is TCP, HTTP, or HTTPS.
 	Protocol string `json:"protocol"`
+
+	// Whether active/standby pool.
+	PoolType string `json:"pool_type"`
 
 	// Description for the Pool.
 	Description string `json:"description"`
@@ -119,6 +187,67 @@ type Pool struct {
 	UpdatedAt string `json:"updated_at"`
 }
 
+// MasterSlavePool represents the request body for creating an active/standby backend server group.
+type MasterSlavePool struct {
+	// The load-balancer algorithm, which is round-robin, least-connections, and
+	// so on. This value, which must be supported, is dependent on the provider.
+	// Round-robin must be supported.
+	LBMethod string `json:"lb_algorithm"`
+
+	// Whether master and slave pool.
+	PoolType string `json:"pool_type"`
+
+	// The protocol of the Pool, which is TCP, HTTP, or HTTPS.
+	Protocol string `json:"protocol"`
+
+	// Description for the Pool.
+	Description string `json:"description"`
+
+	// A list of listeners objects IDs.
+	Listeners []ListenerID `json:"listeners"` // []map[string]interface{}
+
+	// A list of member master and slave objects IDs.
+	MasterSlaveMembers []MasterSlaveMember `json:"members"`
+
+	//Health monitor is the health check for active/standby backend server group.
+	HealthMonitor MasterSlaveHealthMonitor `json:"healthmonitor"`
+
+	// The network on which the members of the Pool will be located. Only members
+	// that are on this network can be added to the Pool.
+	SubnetID string `json:"subnet_id"`
+
+	// Pool name. Does not have to be unique.
+	Name string `json:"name"`
+
+	// The unique ID for the Pool.
+	ID string `json:"id"`
+
+	// A list of load balancer objects IDs.
+	Loadbalancers []LoadBalancerID `json:"loadbalancers"`
+
+	// Indicates whether connections in the same session will be processed by the
+	// same Pool member or not.
+	Persistence SessionPersistence `json:"session_persistence"`
+
+	// The IP address version.
+	IpVersion string `json:"ip_version"`
+
+	// Slow start.
+	SlowStart SlowStart `json:"slow_start"`
+
+	// The type of the backend server group.
+	Type string `json:"type"`
+
+	// The ID of the VPC where the backend server group works.
+	VpcId string `json:"vpc_id"`
+
+	// The creation time.
+	CreatedAt string `json:"created_at"`
+
+	// The updated time.
+	UpdatedAt string `json:"updated_at"`
+}
+
 // PoolPage is the page returned by a pager when traversing over a
 // collection of pools.
 type PoolPage struct {
@@ -167,6 +296,15 @@ func (r commonResult) Extract() (*Pool, error) {
 	}
 	err := r.ExtractInto(&s)
 	return s.Pool, err
+}
+
+// Extract is a function that accepts a result and extracts a master and slave pool.
+func (r commonResult) MasterSlaveExtract() (*MasterSlavePool, error) {
+	var s struct {
+		MasterSlavePool *MasterSlavePool `json:"pool"`
+	}
+	err := r.ExtractInto(&s)
+	return s.MasterSlavePool, err
 }
 
 // CreateResult represents the result of a Create operation. Call its Extract

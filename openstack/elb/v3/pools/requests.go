@@ -96,6 +96,14 @@ type CreateOpts struct {
 	// Omit this field to prevent session persistence.
 	Persistence *SessionPersistence `json:"session_persistence,omitempty"`
 
+	// Members are the backend servers in the active/standby server group
+	// Only two backend servers can be added, one serving as the active server and the other as the standby server.
+	Members *[]MasterSlaveMember `json:"members,omitempty"`
+
+	//Health monitor is the health check for active/standby backend server group.
+	//Health check is enabled by default and cannot be disabled.
+	HealthMonitor *MasterSlaveHealthMonitor `json:"healthmonitor,omitempty"`
+
 	// The administrative state of the Pool. A valid value is true (UP)
 	// or false (DOWN).
 	AdminStateUp *bool `json:"admin_state_up,omitempty"`
@@ -144,9 +152,27 @@ func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult)
 	return
 }
 
+// Create accepts a CreateOpts struct and uses the values to create a new
+// active/standby load balancer pool.
+func CreateMasterSlave(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+	b, err := opts.ToPoolCreateMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	_, r.Err = c.Post(masterSlaveRootURL(c), b, &r.Body, nil)
+	return
+}
+
 // Get retrieves a particular pool based on its unique ID.
 func Get(c *golangsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = c.Get(resourceURL(c, id), &r.Body, nil)
+	return
+}
+
+// Get retrieves a particular active/standby pool based on its unique ID.
+func GetMasterSlave(c *golangsdk.ServiceClient, id string) (r GetResult) {
+	_, r.Err = c.Get(masterSlaveResourceURL(c, id), &r.Body, nil)
 	return
 }
 
@@ -215,6 +241,12 @@ func Update(c *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r Up
 // Delete will permanently delete a particular pool based on its unique ID.
 func Delete(c *golangsdk.ServiceClient, id string) (r DeleteResult) {
 	_, r.Err = c.Delete(resourceURL(c, id), nil)
+	return
+}
+
+// Delete will permanently delete a particular active/standby pool based on its unique ID.
+func DeleteMasterSlave(c *golangsdk.ServiceClient, id string) (r DeleteResult) {
+	_, r.Err = c.Delete(masterSlaveResourceURL(c, id), nil)
 	return
 }
 
