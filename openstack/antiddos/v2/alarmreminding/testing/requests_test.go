@@ -13,7 +13,7 @@ func TestQueryTraffic(t *testing.T) {
 	defer th.TeardownHTTP()
 	HandleWarnAlertSuccessfully(t)
 
-	actual, err := alarmreminding.WarnAlert(client.ServiceClient()).Extract()
+	actual, err := alarmreminding.GetWarnAlert(client.ServiceClient()).Extract()
 	th.AssertNoErr(t, err)
 	th.CheckDeepEquals(t, &WarnAlertResponse, actual)
 }
