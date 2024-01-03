@@ -131,6 +131,15 @@ type ExtendSizeOpts struct {
 	NewSize int `json:"new_size" required:"true"`
 }
 
+type QoSUpdateOpts struct {
+	Iops       int `json:"iops" required:"true"`
+	Throughput int `json:"throughput",omitempty`
+}
+
+func (opts QoSUpdateOpts) ToVolumeUpdateQoSMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "")
+}
+
 // ExtendChargeOpts contains the charging parameters of the volume
 type ExtendChargeOpts struct {
 	IsAutoPay string `json:"isAutoPay,omitempty"`
@@ -156,6 +165,27 @@ func ExtendSize(client *golangsdk.ServiceClient, id string, opts ExtendOptsBuild
 	newClient.ResourceBase = strings.Replace(baseURL, "/v2/", "/v2.1/", 1)
 
 	_, r.Err = newClient.Post(actionURL(&newClient, id), b, &r.Body, &golangsdk.RequestOpts{
+		OkCodes: []int{202},
+	})
+	return
+}
+
+type UpdateQoSOptsBuilder interface {
+	ToVolumeUpdateQoSMap() (map[string]interface{}, error)
+}
+
+func UpdateQoS(client *golangsdk.ServiceClient, id string, opts UpdateQoSOptsBuilder) (r JobResult) {
+	b, err := opts.ToVolumeUpdateQoSMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	// the version of update Qos API is v5
+	newClient := *client
+	baseURL := newClient.ResourceBaseURL()
+	newClient.ResourceBase = strings.Replace(baseURL, "/v2/", "/v5/", 1)
+
+	_, r.Err = newClient.Post(qoSURL(&newClient, id), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{202},
 	})
 	return
