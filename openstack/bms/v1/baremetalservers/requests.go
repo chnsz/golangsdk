@@ -61,6 +61,10 @@ type Nic struct {
 	IpAddress string `json:"ip_address,omitempty"`
 }
 
+type DeleteNic struct {
+	ID string `json:"id" required:"true"`
+}
+
 type PublicIp struct {
 	Id  string `json:"id,omitempty"`
 	Eip *Eip   `json:"eip,omitempty"`
@@ -170,8 +174,24 @@ type UpdateOpts struct {
 	Name string `json:"name,omitempty"`
 }
 
+type DeleteNicsOpts struct {
+	Nics []DeleteNic `json:"nics" required:"true"`
+}
+
+type AddNicsOpts struct {
+	Nics []Nic `json:"nics" required:"true"`
+}
+
 type UpdateOptsBuilder interface {
 	ToServerUpdateMap() (map[string]interface{}, error)
+}
+
+type DeleteNicsOptsBuilder interface {
+	ToServerDeleteNicsMap() (map[string]interface{}, error)
+}
+
+type AddNicsOptsBuilder interface {
+	ToServerAddNicsMap() (map[string]interface{}, error)
 }
 
 func (opts UpdateOpts) ToServerUpdateMap() (map[string]interface{}, error) {
@@ -193,5 +213,40 @@ func Update(client *golangsdk.ServiceClient, id string, ops UpdateOptsBuilder) (
 	_, r.Err = client.Put(putURL(client, id), b, nil, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
+	return
+}
+
+func (opts DeleteNicsOpts) ToServerDeleteNicsMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "")
+}
+
+func (opts AddNicsOpts) ToServerAddNicsMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "")
+}
+
+func DeleteNics(client *golangsdk.ServiceClient, id string, ops DeleteNicsOptsBuilder) (r JobResult) {
+	reqBody, err := ops.ToServerDeleteNicsMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+
+	_, r.Err = client.Post(deleteNicsURL(client, id), reqBody, &r.Body, nil)
+	return
+}
+
+func AddNics(client *golangsdk.ServiceClient, id string, ops AddNicsOptsBuilder) (r JobResult) {
+	reqBody, err := ops.ToServerAddNicsMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+
+	_, r.Err = client.Post(addNicsURL(client, id), reqBody, &r.Body, nil)
+	return
+}
+
+func GetJobDetail(client *golangsdk.ServiceClient, jobID string) (r JobResult) {
+	_, r.Err = client.Get(jobURL(client, jobID), &r.Body, nil)
 	return
 }
