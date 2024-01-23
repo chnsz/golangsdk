@@ -199,7 +199,7 @@ type LockStatusResp struct {
 	// + 1: Indicates locked.
 	IsLocked int `json:"is_locked"`
 	// The lock time of the Workspace service.
-	LockTime int `json:"lock_time"`
+	LockTime string `json:"lock_time"`
 	// The reason of the Workspace service is locked.
 	LockReason string `json:"lock_reason"`
 }
