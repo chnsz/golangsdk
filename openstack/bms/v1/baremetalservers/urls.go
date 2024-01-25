@@ -28,3 +28,7 @@ func deleteNicsURL(sc *golangsdk.ServiceClient, serverID string) string {
 func addNicsURL(sc *golangsdk.ServiceClient, serverID string) string {
 	return sc.ServiceURL(resourcePath, serverID, "nics")
 }
+
+func serverStatusPostURL(sc *golangsdk.ServiceClient) string {
+	return sc.ServiceURL(resourcePath, "action")
+}
