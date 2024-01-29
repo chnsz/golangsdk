@@ -59,6 +59,10 @@ type CdnDomain struct {
 	ModifyTime time.Time `json:"-"`
 }
 
+type PrivateBucketAccessStatus struct {
+	Status bool `json:"status"`
+}
+
 type OriginSources struct {
 	// the domain name or the IP address of the origin server
 	Sources []DomainSources `json:"sources"`
@@ -72,6 +76,16 @@ type commonResult struct {
 // method to interpret it as a CDN domain.
 type GetResult struct {
 	commonResult
+}
+
+type PrivateBucketAccessResult struct {
+	commonResult
+}
+
+func (r PrivateBucketAccessResult) Extract() (*PrivateBucketAccessStatus, error) {
+	var response PrivateBucketAccessStatus
+	err := r.ExtractInto(&response)
+	return &response, err
 }
 
 func (r GetResult) Extract() (*CdnDomain, error) {
