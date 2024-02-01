@@ -60,7 +60,13 @@ type CdnDomain struct {
 }
 
 type PrivateBucketAccessStatus struct {
-	Status bool `json:"status"`
+	Status    bool      `json:"status"`
+	ErrorResp ErrorResp `json:"error"`
+}
+
+type ErrorResp struct {
+	ErrorCode string `json:"error_code"`
+	ErrorMsg  string `json:"error_msg"`
 }
 
 type OriginSources struct {
