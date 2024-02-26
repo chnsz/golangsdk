@@ -193,7 +193,7 @@ type StrategyConfig struct {
 	Concurrency *int `json:"concurrency,omitempty"`
 	// The number of concurrent requests supported by single instance. The valid value range is 1 to 1000.
 	//  This parameter is only supported by the `v2` version of the function.
-	ConcurrencyNum *int `json:"concurrent_num,omitempty"`
+	ConcurrencyNum *int `json:"concurrent_num" required:"true"`
 }
 
 type FuncLogConfig struct {
