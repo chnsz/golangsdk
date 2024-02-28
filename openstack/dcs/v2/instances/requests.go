@@ -303,3 +303,26 @@ func GetSsl(client *golangsdk.ServiceClient, id string) (*GetSslResponse, error)
 	}
 	return nil, err
 }
+
+type RestoreInstanceOpts struct {
+	BackupId string `json:"backup_id" required:"true"`
+	Remark   string `json:"remark,omitempty"`
+}
+
+func RestoreInstance(c *golangsdk.ServiceClient, instanceID string, opts RestoreInstanceOpts) (*Restore, error) {
+	b, err := golangsdk.BuildRequestBody(opts, "")
+	if err != nil {
+		return nil, err
+	}
+
+	var rst golangsdk.Result
+	_, err = c.Post(restoreURL(c, instanceID), b, &rst.Body, &golangsdk.RequestOpts{
+		MoreHeaders: RequestOpts.MoreHeaders,
+	})
+	if err == nil {
+		var r Restore
+		rst.ExtractInto(&r)
+		return &r, nil
+	}
+	return nil, err
+}

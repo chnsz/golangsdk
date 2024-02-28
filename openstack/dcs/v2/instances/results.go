@@ -117,3 +117,7 @@ type GetSslResponse struct {
 	DomainName   string `json:"domain_name"`
 	SslExpiredAt string `json:"ssl_expired_at"`
 }
+
+type Restore struct {
+	RestoreId string `json:"restore_id"`
+}

@@ -33,3 +33,7 @@ func configurationsURL(c *golangsdk.ServiceClient, instancesId string) string {
 func sslURL(client *golangsdk.ServiceClient, instancesId string) string {
 	return client.ServiceURL(client.ProjectID, "instances", instancesId, "ssl")
 }
+
+func restoreURL(client *golangsdk.ServiceClient, instanceId string) string {
+	return client.ServiceURL(client.ProjectID, "instances", instanceId, "restores")
+}
