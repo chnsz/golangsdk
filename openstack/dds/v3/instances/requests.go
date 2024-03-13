@@ -242,7 +242,7 @@ type AvailabilityZoneOpts struct {
 }
 
 type DescriptionOpts struct {
-	Remark string `json:"remark" required:"true"`
+	Remark string `json:"remark"`
 }
 
 // UpdateAvailabilityZone is a method to update the AvailabilityZone.
