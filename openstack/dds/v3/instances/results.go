@@ -172,8 +172,8 @@ type PortUpdateResp struct {
 	Port int `json:"port"`
 }
 
-type BackupPolicyResp struct {
-	BackupPolicy BackupStrategy `json:"backup_policy"`
+type BackupStrategyResp struct {
+	BackupStrategy `json:"backup_policy"`
 }
 
 type AvailabilityZoneResp struct {

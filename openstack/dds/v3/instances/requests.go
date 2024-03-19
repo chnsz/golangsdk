@@ -52,8 +52,8 @@ type BackupStrategy struct {
 	Period    string `json:"period,omitempty"`
 }
 
-type BackupPolicyOpts struct {
-	BackupPolicy BackupStrategy `json:"backup_policy" required:"true"`
+type BackupStrategyOpts struct {
+	BackupStrategy `json:"backup_policy" required:"true"`
 }
 
 type ChargeInfo struct {
@@ -283,27 +283,27 @@ func GetSecondsLevelMonitoring(c *golangsdk.ServiceClient, instanceId string) (*
 	return &r, err
 }
 
-// CreateBackupPolicy is a method to create the backup policy.
-func CreateBackupPolicy(c *golangsdk.ServiceClient, instanceId string, backPolicy BackupStrategy) (*BackupPolicyResp, error) {
-	opts := BackupPolicyOpts{
-		BackupPolicy: backPolicy,
+// CreateBackupStrategy is a method to create the backup strategy.
+func CreateBackupStrategy(c *golangsdk.ServiceClient, instanceId string, backStrategy BackupStrategy) (*BackupStrategyResp, error) {
+	opts := BackupStrategyOpts{
+		BackupStrategy: backStrategy,
 	}
 	b, err := golangsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
 
-	var r BackupPolicyResp
-	_, err = c.Put(backupPolicyURL(c, instanceId), b, &r, &golangsdk.RequestOpts{
+	var r BackupStrategyResp
+	_, err = c.Put(backupStrategyURL(c, instanceId), b, &r, &golangsdk.RequestOpts{
 		MoreHeaders: requestOpts.MoreHeaders,
 	})
 	return &r, err
 }
 
-// GetBackupPolicy is a method to get the backup policy.
-func GetBackupPolicy(c *golangsdk.ServiceClient, instanceId string) (*BackupPolicyResp, error) {
-	var r BackupPolicyResp
-	_, err := c.Get(backupPolicyURL(c, instanceId), &r, &golangsdk.RequestOpts{
+// GetBackupStrategy is a method to get the backup strategy.
+func GetBackupStrategy(c *golangsdk.ServiceClient, instanceId string) (*BackupStrategyResp, error) {
+	var r BackupStrategyResp
+	_, err := c.Get(backupStrategyURL(c, instanceId), &r, &golangsdk.RequestOpts{
 		MoreHeaders: requestOpts.MoreHeaders,
 	})
 	return &r, err

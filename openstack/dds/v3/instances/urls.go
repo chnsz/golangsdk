@@ -26,7 +26,7 @@ func secondsLevelMonitoringURL(c *golangsdk.ServiceClient, instanceId string) st
 	return c.ServiceURL("instances", instanceId, "monitoring-by-seconds/switch")
 }
 
-func backupPolicyURL(c *golangsdk.ServiceClient, instanceId string) string {
+func backupStrategyURL(c *golangsdk.ServiceClient, instanceId string) string {
 	return c.ServiceURL("instances", instanceId, "backups/policy")
 }
 
