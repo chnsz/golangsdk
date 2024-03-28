@@ -14,14 +14,6 @@ type CreateResult struct {
 	commonResult
 }
 
-type StartupResult struct {
-	commonResult
-}
-
-type ShutdownResult struct {
-	commonResult
-}
-
 type RenameResult struct {
 	commonResult
 }
