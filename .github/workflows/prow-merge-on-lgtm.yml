@@ -1,7 +1,7 @@
 name: Merge on LGTM Label
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/5 * * * *"
 jobs:
   merge-checker:
     runs-on: ubuntu-latest
