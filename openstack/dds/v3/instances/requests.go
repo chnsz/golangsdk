@@ -323,7 +323,7 @@ type ReplicaSetNameOpts struct {
 }
 
 type RestartOpts struct {
-	TargetTyep string `json:"target_type,omitempty"`
+	TargetType string `json:"target_type,omitempty"`
 	TargetId   string `json:"target_id" required:"true"`
 }
 
