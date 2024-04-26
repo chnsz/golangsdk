@@ -848,3 +848,31 @@ func ModifyReadWritePermissions(c *golangsdk.ServiceClient, opts ActionInstanceB
 	_, r.Err = c.Put(updateURL(c, instanceId, "readonly-status"), b, &r.Body, &golangsdk.RequestOpts{})
 	return
 }
+
+type ModifySecondLevelMonitoringOpts struct {
+	SwitchOption bool `json:"switch_option"`
+	Interval     int  `json:"interval" required:"true"`
+}
+
+func (opts ModifySecondLevelMonitoringOpts) ToActionInstanceMap() (map[string]interface{}, error) {
+	return toActionInstanceMap(opts)
+}
+
+// ModifySecondLevelMonitoring is a method used to switch second level monitoring of the instance.
+func ModifySecondLevelMonitoring(c *golangsdk.ServiceClient, opts ActionInstanceBuilder, instanceId string) (r ModifySecondLevelMonitoringResult) {
+	b, err := opts.ToActionInstanceMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	_, r.Err = c.Put(updateURL(c, instanceId, "second-level-monitor"), b, &r.Body, &golangsdk.RequestOpts{})
+	return
+}
+
+// GetSecondLevelMonitoring is a method used to obtain the second level monitoring.
+func GetSecondLevelMonitoring(c *golangsdk.ServiceClient, instanceId string) (r GetSecondLevelMonitoringResult) {
+	_, r.Err = c.Get(getURL(c, instanceId, "second-level-monitor"), &r.Body, &golangsdk.RequestOpts{
+		MoreHeaders: requestOpts.MoreHeaders,
+	})
+	return
+}
