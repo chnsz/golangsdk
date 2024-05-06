@@ -876,3 +876,22 @@ func GetSecondLevelMonitoring(c *golangsdk.ServiceClient, instanceId string) (r 
 	})
 	return
 }
+
+type ModifyPrivateDnsNamePrefixOpts struct {
+	DnsName string `json:"dns_name" required:"true"`
+}
+
+func (opts ModifyPrivateDnsNamePrefixOpts) ToActionInstanceMap() (map[string]interface{}, error) {
+	return toActionInstanceMap(opts)
+}
+
+// ModifyPrivateDnsNamePrefix is a method used to private dns name prefix of the instance.
+func ModifyPrivateDnsNamePrefix(c *golangsdk.ServiceClient, opts ActionInstanceBuilder, instanceId string) (r JobResult) {
+	b, err := opts.ToActionInstanceMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	_, r.Err = c.Put(updateURL(c, instanceId, "modify-dns"), b, &r.Body, &golangsdk.RequestOpts{})
+	return
+}
