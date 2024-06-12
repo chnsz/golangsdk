@@ -123,14 +123,25 @@ type CreateOpts struct {
 
 	// Whether to enable deletion protection for the load balancer.
 	DeletionProtectionEnable *bool `json:"member_deletion_protection_enable,omitempty"`
+
+	// Whether to enable delayed logout.
+	ConnectionDrain *ConnectionDrain `json:"connection_drain,omitempty"`
 }
 
 type SlowStart struct {
 	// Whether to enable slow start.
-	Enable bool `json:"enable,omitempty"`
+	Enable *bool `json:"enable,omitempty"`
 
 	// Slow start duration, in seconds.
 	Duration int `json:"duration,omitempty"`
+}
+
+type ConnectionDrain struct {
+	// Whether to enable delayed logout.
+	Enable *bool `json:"enable,omitempty"`
+
+	// Delayed logout timeout, in seconds.
+	Timeout int `json:"timeout,omitempty"`
 }
 
 // ToPoolCreateMap builds a request body from CreateOpts.
@@ -201,6 +212,9 @@ type UpdateOpts struct {
 
 	// Whether to enable deletion protection for the load balancer.
 	DeletionProtectionEnable *bool `json:"member_deletion_protection_enable,omitempty"`
+
+	// Whether to enable delayed logout.
+	ConnectionDrain *ConnectionDrain `json:"connection_drain,omitempty"`
 }
 
 // ToPoolUpdateMap builds a request body from UpdateOpts.
