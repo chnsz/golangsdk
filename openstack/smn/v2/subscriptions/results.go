@@ -22,8 +22,8 @@ type SubscriptionGet struct {
 }
 
 type FilterPolicy struct {
-	Name          string   `json:"name"`
-	String_equals []string `json:"string_equals"`
+	Name         string   `json:"name"`
+	StringEquals []string `json:"string_equals"`
 }
 
 // Extract will get the subscription object out of the commonResult object.
