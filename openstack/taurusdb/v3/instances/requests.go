@@ -443,7 +443,7 @@ func ListDeh(client *golangsdk.ServiceClient) pagination.Pager {
 }
 
 type RestartOpts struct {
-	Delay bool `json:"delay,omitempty"`
+	Delay bool `json:"delay"`
 }
 
 type RestartBuilder interface {
