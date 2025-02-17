@@ -7,7 +7,7 @@ type CreateOpts struct {
 	// User name.
 	Name string `json:"user_name" required:"true"`
 	// User email. The value can contain from 1 to 64 characters.
-	Email string `json:"user_email" required:"true"`
+	Email string `json:"user_email,omitempty"`
 	// The expires time of Workspace user. The format is "yyyy-MM-ddTHH:mm:ss.000 Z".
 	// 0 means it will never expire.
 	AccountExpires string `json:"account_expires,omitempty"`
@@ -82,7 +82,7 @@ func List(c *golangsdk.ServiceClient, opts ListOpts) (*QueryResp, error) {
 // UpdateOpts is the structure required by the Update method to change user information.
 type UpdateOpts struct {
 	// User email. The value can contain from 1 to 64 characters.
-	Email string `json:"user_email" required:"true"`
+	Email *string `json:"user_email,omitempty"`
 	// User description.
 	Description *string `json:"description,omitempty"`
 	// The expires time of Workspace user. The format is "yyyy-MM-ddTHH:mm:ss.000Z".
