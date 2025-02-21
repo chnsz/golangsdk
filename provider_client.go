@@ -12,6 +12,8 @@ import (
 	"sync"
 
 	"github.com/chnsz/golangsdk/auth"
+
+	"github.com/chnsz/golangsdk/auth/core/signer"
 )
 
 // DefaultUserAgent is the default User-Agent string set in the request header.
@@ -311,26 +313,37 @@ func (client *ProviderClient) doRequest(method, url string, options *RequestOpts
 
 	prereqtok := req.Header.Get("X-Auth-Token")
 
-	if client.AKSKAuthOptions.AccessKey != "" {
+	c := client.AKSKAuthOptions
+	if c.AccessKey != "" {
 		var err error
-		if client.AKSKAuthOptions.IsDerived {
-			err = auth.SignDerived(req, client.AKSKAuthOptions.AccessKey, client.AKSKAuthOptions.SecretKey,
-				client.AKSKAuthOptions.DerivedAuthServiceName, client.AKSKAuthOptions.Region)
+		if c.IsDerived {
+			err = auth.SignDerived(req, c.AccessKey, c.SecretKey, c.DerivedAuthServiceName, c.Region)
+		} else if c.SigningAlgorithm == "" || c.SigningAlgorithm == signer.HmacSHA256 {
+			err = auth.Sign(req, c.AccessKey, c.SecretKey)
 		} else {
-			err = auth.Sign(req, client.AKSKAuthOptions.AccessKey, client.AKSKAuthOptions.SecretKey)
+			sn, err := signer.GetSigner(signer.SigningAlgorithm(c.SigningAlgorithm))
+			if err != nil {
+				return nil, err
+			}
+
+			_, err = sn.Sign(req, c.AccessKey, c.SecretKey)
+			if err != nil {
+				return nil, err
+			}
+
 		}
 
 		if err != nil {
 			return nil, err
 		}
-		if client.AKSKAuthOptions.ProjectId != "" {
-			req.Header.Set("X-Project-Id", client.AKSKAuthOptions.ProjectId)
+		if c.ProjectId != "" {
+			req.Header.Set("X-Project-Id", c.ProjectId)
 		}
-		if client.AKSKAuthOptions.DomainID != "" {
-			req.Header.Set("X-Domain-Id", client.AKSKAuthOptions.DomainID)
+		if c.DomainID != "" {
+			req.Header.Set("X-Domain-Id", c.DomainID)
 		}
-		if client.AKSKAuthOptions.SecurityToken != "" {
-			req.Header.Set("X-Security-Token", client.AKSKAuthOptions.SecurityToken)
+		if c.SecurityToken != "" {
+			req.Header.Set("X-Security-Token", c.SecurityToken)
 		}
 	}
 
