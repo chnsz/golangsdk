@@ -3,7 +3,12 @@ module github.com/chnsz/golangsdk
 go 1.14
 
 require (
-	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
-	golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3
+	github.com/stretchr/testify v1.10.0
+	github.com/tjfoc/gmsm v1.4.1
+	go.mongodb.org/mongo-driver v1.17.2
+	golang.org/x/crypto v0.26.0
+	golang.org/x/net v0.25.0
 	gopkg.in/yaml.v2 v2.3.0
 )
+
+replace golang.org/x/crypto => golang.org/x/crypto v0.23.0
