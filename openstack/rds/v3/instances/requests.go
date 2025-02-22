@@ -903,3 +903,30 @@ func ModifySlowLogShowOriginalStatus(c *golangsdk.ServiceClient, instanceId, sta
 		&r.Body, &golangsdk.RequestOpts{})
 	return
 }
+
+type ModifyBillingModeToPeriodOpts struct {
+	PeriodType      string `json:"period_type" required:"true"`
+	PeriodNum       int    `json:"period_num" required:"true"`
+	AutoPayPolicy   string `json:"auto_pay_policy,omitempty"`
+	AutoRenewPolicy string `json:"auto_renew_policy,omitempty"`
+}
+
+func (opts ModifyBillingModeToPeriodOpts) ToActionInstanceMap() (map[string]interface{}, error) {
+	return toActionInstanceMap(opts)
+}
+
+// ModifyBillingModeToPeriod is a method used to modify instance billing mode from post-paid to pre-paid.
+func ModifyBillingModeToPeriod(c *golangsdk.ServiceClient, opts ActionInstanceBuilder, instanceId string) (r ModifyBillingModeToPeriodResult) {
+	b, err := opts.ToActionInstanceMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	_, r.Err = c.Post(updateURL(c, instanceId, "to-period"), b, &r.Body, &golangsdk.RequestOpts{
+		MoreHeaders: map[string]string{
+			"Content-Type": "application/json;charset=UTF-8",
+			"X-Language":   "en-us",
+		},
+	})
+	return
+}

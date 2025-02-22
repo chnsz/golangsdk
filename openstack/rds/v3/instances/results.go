@@ -78,6 +78,10 @@ type ModifySlowLogShowOriginalStatusResult struct {
 	commonResult
 }
 
+type ModifyBillingModeToPeriodResult struct {
+	commonResult
+}
+
 type JobResult struct {
 	commonResult
 }
@@ -499,4 +503,14 @@ type AutoExpansion struct {
 	// + 15
 	// + 20
 	TriggerThreshold int `json:"trigger_threshold"`
+}
+
+type ModifyBillingModeToPeriodResp struct {
+	OrderId string `json:"order_id"`
+}
+
+func (r ModifyBillingModeToPeriodResult) Extract() (*ModifyBillingModeToPeriodResp, error) {
+	var response ModifyBillingModeToPeriodResp
+	err := r.ExtractInto(&response)
+	return &response, err
 }
