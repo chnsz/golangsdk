@@ -68,6 +68,12 @@ type Listener struct {
 	// The client timeout of the Listener.
 	ClientTimeout int `json:"client_timeout"`
 
+	// The maximum number of concurrent connections that a listener can handle per second.
+	Connection int `json:"connection"`
+
+	// The maximum number of new connections that a listener can handle per second.
+	Cps int `json:"cps"`
+
 	// The member timeout of the Listener.
 	MemberTimeout int `json:"member_timeout"`
 
