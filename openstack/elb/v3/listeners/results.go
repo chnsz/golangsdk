@@ -86,6 +86,9 @@ type Listener struct {
 	// Transparent client ip enable
 	TransparentClientIP bool `json:"transparent_client_ip_enable"`
 
+	// The UUID of the enterprise project who owns the Loadbalancer.
+	EnterpriseProjectID string `json:"enterprise_project_id"`
+
 	// The creation time of the current listener
 	CreatedAt string `json:"created_at"`
 
