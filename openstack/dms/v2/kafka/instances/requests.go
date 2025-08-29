@@ -153,6 +153,9 @@ type CreateOps struct {
 
 	// The access mode of the Kafka instance.
 	PortProtocol *PortProtocol `json:"port_protocol,omitempty"`
+
+	// The private IP addresses of the Kafka instance.
+	TenantIps []string `json:"tenant_ips,omitempty"`
 }
 
 type BssParam struct {
