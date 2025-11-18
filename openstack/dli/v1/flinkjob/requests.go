@@ -215,9 +215,9 @@ type CreateJarJobOpts struct {
 	CuNumber *int `json:"cu_number,omitempty"`
 	// Number of CUs on the management node selected by the user for a job,
 	// which corresponds to the number of Flink job managers. The default value is 1.
-	ManagerCuNumber *int `json:"manager_cu_number,omitempty"`
+	ManagerCuNumber int `json:"manager_cu_number,omitempty"`
 	// Number of parallel operations selected for a job.
-	ParallelNumber *int `json:"parallel_number,omitempty"`
+	ParallelNumber int `json:"parallel_number,omitempty"`
 	// Whether to enable the job log function.
 	// true: indicates to enable the job log function.
 	// false: indicates to disable the job log function.
@@ -249,7 +249,7 @@ type CreateJarJobOpts struct {
 	// ClassName.class.getClassLoader().getResource("userData/fileName")
 	DependencyFiles []string `json:"dependency_files,omitempty"`
 	// Number of CUs for each TaskManager. The default value is 1.
-	TmCus *int `json:"tm_cus,omitempty"`
+	TmCus int `json:"tm_cus,omitempty"`
 	// Number of slots in each TaskManager. The default value is (parallel_number*tm_cus)/(cu_number-manager_cu_number).
 	TmSlotNum *int `json:"tm_slot_num,omitempty"`
 	// Job feature. Type of the Flink image used by a job.
@@ -306,10 +306,10 @@ type ResourceConfigOpts struct {
 	// capability of TaskManager, but also increase resource consumption.
 	// The number of Task Slots is related to the CPU number of TaskManager, because each CPU can provide a Task Slot.
 	// The default value is 1. The minimum parallel number cannot be less than 1.
-	MaxSlot *int `json:"max_slot,omitempty"`
+	MaxSlot int `json:"max_slot,omitempty"`
 	// The parallel number of the job, which is the number of sub-tasks executed in parallel by each operator in the job.
 	// The number of sub-tasks of an operator is the parallel degree of the operator. The default value is "1".
-	ParallelNumber *int `json:"parallel_number,omitempty"`
+	ParallelNumber int `json:"parallel_number,omitempty"`
 	// The resource specification of the JobManager.
 	JobManagerResourceSpec *JobOrTaskManagerResourceSpecOpts `json:"jobmanager_resource_spec,omitempty"`
 	// The resource specification of the TaskManager.
@@ -319,7 +319,7 @@ type ResourceConfigOpts struct {
 type JobOrTaskManagerResourceSpecOpts struct {
 	// The number of CPU cores that the JobManager or TaskManager can use.
 	// The default value is 1.0. The minimum value cannot be less than 0.5.
-	CPU *float64 `json:"cpu,omitempty"`
+	CPU float64 `json:"cpu,omitempty"`
 	// The memory size that the JobManager or TaskManager can use, in MB or GB (default).
 	// The default value is 4GB. The minimum value cannot be less than 2GB.
 	Memory string `json:"memory,omitempty"`
@@ -341,9 +341,9 @@ type UpdateJarJobOpts struct {
 	CuNumber *int `json:"cu_number,omitempty"`
 	// Number of CUs on the management node selected by the user for a job, which corresponds to the number of Flink
 	// job managers. The default value is 1.
-	ManagerCuNumber *int `json:"manager_cu_number,omitempty"`
+	ManagerCuNumber int `json:"manager_cu_number,omitempty"`
 	// Number of parallel operations selected for a job. The default value is 1.
-	ParallelNumber *int `json:"parallel_number,omitempty"`
+	ParallelNumber int `json:"parallel_number,omitempty"`
 	// Whether to enable the job log function.
 	// true: indicates to enable the job log function.
 	// false: indicates to disable the job log function.
@@ -371,7 +371,7 @@ type UpdateJarJobOpts struct {
 	// Example: myGroup/test.cvs,myGroup/test1.csv.
 	DependencyFiles []string `json:"dependency_files,omitempty"`
 	// Number of CUs for each TaskManager. The default value is 1.
-	TmCus *int `json:"tm_cus,omitempty"`
+	TmCus int `json:"tm_cus,omitempty"`
 	// Number of slots in each TaskManager. The default value is (parallel_number*tm_cus)/(cu_number-manager_cu_number).
 	TmSlotNum *int `json:"tm_slot_num,omitempty"`
 	// Job feature. Type of the Flink image used by a job.
