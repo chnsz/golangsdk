@@ -56,7 +56,7 @@ type Spec struct {
 	// System disk parameter of the node
 	RootVolume VolumeSpec `json:"rootVolume" required:"true"`
 	// The data disk parameter of the node must currently be a disk
-	DataVolumes []VolumeSpec `json:"dataVolumes" required:"true"`
+	DataVolumes []VolumeSpec `json:"dataVolumes,omitempty"`
 	// Disk initialization configuration management parameters
 	// If omit, disk management is performed according to the DockerLVMConfigOverride parameter in extendParam
 	Storage *StorageSpec `json:"storage,omitempty"`
@@ -114,7 +114,7 @@ type ExtNic struct {
 // TaintSpec to created nodes to configure anti-affinity
 type TaintSpec struct {
 	Key   string `json:"key" required:"true"`
-	Value string `json:"value" required:"true"`
+	Value string `json:"value,omitempty"`
 	// Available options are NoSchedule, PreferNoSchedule, and NoExecute
 	Effect string `json:"effect" required:"true"`
 }
@@ -131,12 +131,6 @@ type Status struct {
 	PrivateIP string `json:"privateIP"`
 	// The ID of the Job that is operating asynchronously in the Node
 	JobID string `json:"jobID"`
-	// Reasons for the Node to become current
-	Reason string `json:"reason"`
-	// Details of the node transitioning to the current state
-	Message string `json:"message"`
-	//The status of each component in the Node
-	Conditions Conditions `json:"conditions"`
 }
 
 type LoginSpec struct {
