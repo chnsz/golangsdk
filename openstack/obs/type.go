@@ -82,9 +82,6 @@ const (
 	// SubResourceEncryption subResource value: encryption
 	SubResourceEncryption SubResourceType = "encryption"
 
-	// SubResourceReplication subResource value: replication
-	SubResourceReplication SubResourceType = "replication"
-
 	// SubResourceTagging subResource value: tagging
 	SubResourceTagging SubResourceType = "tagging"
 
@@ -120,6 +117,18 @@ const (
 
 	// SubResourceMirrorBackToSource subResource value: mirrorBackToSource
 	SubResourceMirrorBackToSource SubResourceType = "mirrorBackToSource"
+
+	// SubResourceMirrorBackToSource subResource value: mirrorBackToSource
+	SubResourceAccesslabel SubResourceType = "x-obs-accesslabel"
+
+	// SubResourceMirrorBackToSource subResource value: publicAccessBlock
+	SubResourcePublicAccessBlock SubResourceType = "publicAccessBlock"
+
+	// SubResourcePublicBucketStatus subResource value: bucketStatus
+	SubResourceBucketPublicStatus SubResourceType = "bucketStatus"
+
+	// SubResourcePublicPolicyStatus subResource value: policyStatus
+	SubResourceBucketPolicyPublicStatus SubResourceType = "policyStatus"
 )
 
 // objectKeyType defines the objectKey value
@@ -163,6 +172,9 @@ const (
 
 	//StorageClassDeepArchive storage class: DEEP_ARCHIVE
 	StorageClassDeepArchive StorageClassType = "DEEP_ARCHIVE"
+
+	//StorageClassIntelligentTiering storage class: INTELLIGENT_TIERING
+	StorageClassIntelligentTiering StorageClassType = "INTELLIGENT_TIERING"
 
 	storageClassStandardIA StorageClassType = "STANDARD_IA"
 	storageClassGlacier    StorageClassType = "GLACIER"
@@ -211,14 +223,6 @@ const (
 
 	// GroupLogDelivery grantee uri type: LogDelivery
 	GroupLogDelivery GroupUriType = "LogDelivery"
-)
-
-// EnabledType defines a common status type
-type EnabledType string
-
-const (
-	Enabled  EnabledType = "Enabled"
-	Disabled EnabledType = "Disabled"
 )
 
 // VersioningStatusType defines bucket version status

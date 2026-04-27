@@ -70,13 +70,15 @@ type config struct {
 	customProxyFuncValue func(*url.URL) (*url.URL, error)
 }
 
-func (conf *config) String() string {
-	return fmt.Sprintf("[endpoint:%s, signature:%s, pathStyle:%v, region:%s"+
-		"\nconnectTimeout:%d, socketTimeout:%dheaderTimeout:%d, idleConnTimeout:%d"+
-		"\nmaxRetryCount:%d, maxConnsPerHost:%d, sslVerify:%v, maxRedirectCount:%d]",
+func (conf config) String() string {
+	return fmt.Sprintf("[endpoint:%s, signature:%s, pathStyle:%v, region:%s,"+
+		"\nconnectTimeout:%d, socketTimeout:%d, headerTimeout:%d, idleConnTimeout:%d,"+
+		"\nmaxRetryCount:%d, maxConnsPerHost:%d, sslVerify:%v, maxRedirectCount:%d,"+
+		"\ncname:%v, userAgent:%s, disableKeepAlive:%v, proxyFromEnv:%v]",
 		conf.endpoint, conf.signature, conf.pathStyle, conf.region,
 		conf.connectTimeout, conf.socketTimeout, conf.headerTimeout, conf.idleConnTimeout,
 		conf.maxRetryCount, conf.maxConnsPerHost, conf.sslVerify, conf.maxRedirectCount,
+		conf.cname, conf.userAgent, conf.disableKeepAlive, conf.proxyFromEnv,
 	)
 }
 
