@@ -36,22 +36,29 @@ func (opts CreateOpts) ToConfigurationCreateMap() (map[string]interface{}, error
 	return b, nil
 }
 
+type ResourceTagOpts struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}
+
 // InstanceConfigOpts is an inner struct of CreateOpts
 type InstanceConfigOpts struct {
-	InstanceID           string `json:"instance_id,omitempty"`
-	FlavorRef            string `json:"flavorRef,omitempty"`
-	ImageRef             string `json:"imageRef,omitempty"`
-	SSHKey               string `json:"key_name,omitempty"`
-	ServerGroupID        string `json:"server_group_id,omitempty"`
-	Tenancy              string `json:"tenancy,omitempty"`
-	DedicatedHostID      string `json:"dedicated_host_id,omitempty"`
-	FlavorPriorityPolicy string `json:"multi_flavor_priority_policy,omitempty"`
-	MarketType           string `json:"market_type,omitempty"`
+	InstanceID            string `json:"instance_id,omitempty"`
+	FlavorRef             string `json:"flavorRef,omitempty"`
+	ImageRef              string `json:"imageRef,omitempty"`
+	SSHKey                string `json:"key_name,omitempty"`
+	ServerGroupID         string `json:"server_group_id,omitempty"`
+	Tenancy               string `json:"tenancy,omitempty"`
+	DedicatedHostID       string `json:"dedicated_host_id,omitempty"`
+	FlavorPriorityPolicy  string `json:"multi_flavor_priority_policy,omitempty"`
+	MarketType            string `json:"market_type,omitempty"`
+	TagTransmissionPolicy string `json:"tag_transmission_policy,omitempty"`
 
 	Disk           []DiskOpts          `json:"disk,omitempty"`
 	Personality    []PersonalityOpts   `json:"personality,omitempty"`
 	PubicIP        *PublicIpOpts       `json:"public_ip,omitempty"`
 	SecurityGroups []SecurityGroupOpts `json:"security_groups,omitempty"`
+	Tags           []ResourceTagOpts   `json:"tags,omitempty"`
 
 	// UserData contains configuration information or scripts to use upon launch.
 	// Create will base64-encode it for you, if it isn't already.
